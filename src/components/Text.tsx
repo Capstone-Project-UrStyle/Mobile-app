@@ -1,10 +1,10 @@
-import React from 'react';
-import {Platform, StyleSheet, Text, TextStyle} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-import MaskedView from '@react-native-community/masked-view';
+import React from 'react'
+import { Platform, StyleSheet, Text, TextStyle } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import MaskedView from '@react-native-community/masked-view'
 
-import useTheme from '../hooks/useTheme';
-import {ITextProps} from '../constants/types';
+import useTheme from '../hooks/useTheme'
+import { ITextProps } from '../constants/types'
 
 const Typography = (props: ITextProps) => {
   const {
@@ -60,8 +60,8 @@ const Typography = (props: ITextProps) => {
     paddingRight,
     paddingLeft,
     ...rest
-  } = props;
-  const {colors, sizes, lines, weights, fonts} = useTheme();
+  } = props
+  const { colors, sizes, lines, weights, fonts } = useTheme()
 
   const colorIndex = primary
     ? 'primary'
@@ -83,12 +83,12 @@ const Typography = (props: ITextProps) => {
     ? 'success'
     : info
     ? 'info'
-    : null;
+    : null
   const textColor = color
     ? color
     : colorIndex
     ? colors?.[colorIndex]
-    : undefined;
+    : undefined
 
   const textStyles = StyleSheet.flatten([
     style,
@@ -98,7 +98,7 @@ const Typography = (props: ITextProps) => {
       lineHeight: lines.text,
       fontWeight: weights.text,
       fontFamily: fonts.text,
-      ...(textColor && {color: textColor}),
+      ...(textColor && { color: textColor }),
       ...(h1 && {
         fontSize: sizes.h1,
         lineHeight: lines.h1,
@@ -135,36 +135,36 @@ const Typography = (props: ITextProps) => {
         fontWeight: weights.p,
         fontFamily: fonts.p,
       }),
-      ...(marginBottom && {marginBottom}),
-      ...(marginTop && {marginTop}),
-      ...(marginHorizontal && {marginHorizontal}),
-      ...(marginVertical && {marginVertical}),
-      ...(marginRight && {marginRight}),
-      ...(marginLeft && {marginLeft}),
-      ...(paddingBottom && {paddingBottom}),
-      ...(paddingTop && {paddingTop}),
-      ...(paddingHorizontal && {paddingHorizontal}),
-      ...(paddingVertical && {paddingVertical}),
-      ...(paddingRight && {paddingRight}),
-      ...(paddingLeft && {paddingLeft}),
-      ...(center && {textAlign: 'center'}),
-      ...(align && {textAlign: align}),
-      ...(bold && {fontFamily: fonts.bold}),
-      ...(semibold && {fontFamily: fonts.semibold}),
-      ...(weight && {fontWeight: weight}),
-      ...(transform && {textTransform: transform}),
-      ...(font && {fontFamily: font}),
-      ...(size && {fontSize: size}),
-      ...(color && {color}),
-      ...(opacity && {opacity}),
-      ...(lineHeight && {lineHeight}),
-      ...(position && {position}),
-      ...(right !== undefined && {right}),
-      ...(left !== undefined && {left}),
-      ...(top !== undefined && {top}),
-      ...(bottom !== undefined && {bottom}),
+      ...(marginBottom && { marginBottom }),
+      ...(marginTop && { marginTop }),
+      ...(marginHorizontal && { marginHorizontal }),
+      ...(marginVertical && { marginVertical }),
+      ...(marginRight && { marginRight }),
+      ...(marginLeft && { marginLeft }),
+      ...(paddingBottom && { paddingBottom }),
+      ...(paddingTop && { paddingTop }),
+      ...(paddingHorizontal && { paddingHorizontal }),
+      ...(paddingVertical && { paddingVertical }),
+      ...(paddingRight && { paddingRight }),
+      ...(paddingLeft && { paddingLeft }),
+      ...(center && { textAlign: 'center' }),
+      ...(align && { textAlign: align }),
+      ...(bold && { fontFamily: fonts.bold }),
+      ...(semibold && { fontFamily: fonts.semibold }),
+      ...(weight && { fontWeight: weight }),
+      ...(transform && { textTransform: transform }),
+      ...(font && { fontFamily: font }),
+      ...(size && { fontSize: size }),
+      ...(color && { color }),
+      ...(opacity && { opacity }),
+      ...(lineHeight && { lineHeight }),
+      ...(position && { position }),
+      ...(right !== undefined && { right }),
+      ...(left !== undefined && { left }),
+      ...(top !== undefined && { top }),
+      ...(bottom !== undefined && { bottom }),
     },
-  ]) as TextStyle;
+  ]) as TextStyle
 
   /*
    * Calculate gradient height container based on text lineHeight or fontSize
@@ -177,11 +177,11 @@ const Typography = (props: ITextProps) => {
         textStyles?.marginTop ||
         textStyles?.marginBottom ||
         0,
-    );
+    )
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const textID =
-    Platform.OS === 'android' ? {accessibilityLabel: id} : {testID: id};
+    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
 
   if (gradient) {
     return (
@@ -190,22 +190,23 @@ const Typography = (props: ITextProps) => {
           <Text {...textID} {...rest} style={textStyles}>
             {children}
           </Text>
-        }>
+        }
+      >
         <LinearGradient
           colors={gradient}
           end={end || [0.2, 0]}
           start={start || [0, 0]}
-          style={{flex: 1, height: gradientHeight, flexWrap: 'wrap'}}
+          style={{ flex: 1, height: gradientHeight, flexWrap: 'wrap' }}
         />
       </MaskedView>
-    );
+    )
   }
 
   return (
     <Text {...textID} {...rest} style={textStyles}>
       {children}
     </Text>
-  );
-};
+  )
+}
 
-export default React.memo(Typography);
+export default React.memo(Typography)

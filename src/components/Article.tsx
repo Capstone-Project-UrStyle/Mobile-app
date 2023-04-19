@@ -1,12 +1,12 @@
-import React from 'react';
-import dayjs from 'dayjs';
-import {TouchableWithoutFeedback} from 'react-native';
+import React from 'react'
+import dayjs from 'dayjs'
+import { TouchableWithoutFeedback } from 'react-native'
 
-import Text from './Text';
-import Block from './Block';
-import Image from './Image';
-import {useTheme, useTranslation} from '../hooks/';
-import {IArticle} from '../constants/types';
+import Text from './Text'
+import Block from './Block'
+import Image from './Image'
+import { useTheme, useTranslation } from '../hooks/'
+import { IArticle } from '../constants/types'
 
 const Article = ({
   title,
@@ -19,15 +19,15 @@ const Article = ({
   user,
   onPress,
 }: IArticle) => {
-  const {t} = useTranslation();
-  const {colors, gradients, icons, sizes} = useTheme();
+  const { t } = useTranslation()
+  const { colors, gradients, icons, sizes } = useTheme()
 
   // render card for Newest & Fashion
   if (category?.id !== 1) {
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <Block card padding={sizes.sm} marginTop={sizes.sm}>
-          <Image height={170} resizeMode="cover" source={{uri: image}} />
+          <Image height={170} resizeMode="cover" source={{ uri: image }} />
           {/* article category */}
           {category?.name && (
             <Text
@@ -37,7 +37,8 @@ const Article = ({
               marginTop={sizes.s}
               transform="uppercase"
               marginLeft={sizes.xs}
-              gradient={gradients.primary}>
+              gradient={gradients.primary}
+            >
               {category?.name}
             </Text>
           )}
@@ -48,7 +49,8 @@ const Article = ({
               p
               marginTop={sizes.s}
               marginLeft={sizes.xs}
-              marginBottom={sizes.sm}>
+              marginBottom={sizes.sm}
+            >
               {description}
             </Text>
           )}
@@ -60,8 +62,8 @@ const Article = ({
                 radius={sizes.s}
                 width={sizes.xl}
                 height={sizes.xl}
-                source={{uri: user?.avatar}}
-                style={{backgroundColor: colors.white}}
+                source={{ uri: user?.avatar }}
+                style={{ backgroundColor: colors.white }}
               />
               <Block justify="center" marginLeft={sizes.s}>
                 <Text p semibold>
@@ -94,7 +96,7 @@ const Article = ({
           )}
         </Block>
       </TouchableWithoutFeedback>
-    );
+    )
   }
 
   // render card for Popular
@@ -105,7 +107,8 @@ const Article = ({
           background
           resizeMode="cover"
           radius={sizes.cardRadius}
-          source={{uri: image}}>
+          source={{ uri: image }}
+        >
           <Block color={colors.overlay} padding={sizes.padding}>
             <Text h4 white marginBottom={sizes.sm}>
               {title}
@@ -119,8 +122,8 @@ const Article = ({
                 radius={sizes.s}
                 width={sizes.xl}
                 height={sizes.xl}
-                source={{uri: user?.avatar}}
-                style={{backgroundColor: colors.white}}
+                source={{ uri: user?.avatar }}
+                style={{ backgroundColor: colors.white }}
               />
               <Block justify="center" marginLeft={sizes.s}>
                 <Text p white semibold>
@@ -135,7 +138,7 @@ const Article = ({
         </Image>
       </Block>
     </TouchableWithoutFeedback>
-  );
-};
+  )
+}
 
-export default Article;
+export default Article

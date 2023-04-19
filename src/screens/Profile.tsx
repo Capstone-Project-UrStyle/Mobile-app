@@ -1,41 +1,40 @@
-import React, {useCallback} from 'react';
-import {Platform, Linking} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
-import {useNavigation} from '@react-navigation/core';
+import React, { useCallback } from 'react'
+import { Platform, Linking } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/core'
 
-import {Block, Button, Image, Text} from '../components/';
-import {useData, useTheme, useTranslation} from '../hooks/';
+import { Block, Button, Image, Text } from '../components/'
+import { useData, useTheme, useTranslation } from '../hooks/'
 
-const isAndroid = Platform.OS === 'android';
+const isAndroid = Platform.OS === 'android'
 
 const Profile = () => {
-  const {user} = useData();
-  const {t} = useTranslation();
-  const navigation = useNavigation();
-  const {assets, colors, sizes} = useTheme();
+  const { user } = useData()
+  const { t } = useTranslation()
+  const navigation = useNavigation()
+  const { assets, colors, sizes } = useTheme()
 
-  const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3;
-  const IMAGE_VERTICAL_SIZE =
-    (sizes.width - (sizes.padding + sizes.sm) * 2) / 2;
-  const IMAGE_MARGIN = (sizes.width - IMAGE_SIZE * 3 - sizes.padding * 2) / 2;
+  const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3
+  const IMAGE_VERTICAL_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 2
+  const IMAGE_MARGIN = (sizes.width - IMAGE_SIZE * 3 - sizes.padding * 2) / 2
   const IMAGE_VERTICAL_MARGIN =
-    (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2;
+    (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2
 
   const handleSocialLink = useCallback(
     (type: 'twitter' | 'dribbble') => {
       const url =
         type === 'twitter'
           ? `https://twitter.com/${user?.social?.twitter}`
-          : `https://dribbble.com/${user?.social?.dribbble}`;
+          : `https://dribbble.com/${user?.social?.dribbble}`
 
       try {
-        Linking.openURL(url);
+        Linking.openURL(url)
       } catch (error) {
-        alert(`Cannot open URL: ${url}`);
+        alert(`Cannot open URL: ${url}`)
       }
     },
     [user],
-  );
+  )
 
   return (
     <Block safe marginTop={sizes.md}>
@@ -43,7 +42,8 @@ const Profile = () => {
         scroll
         paddingHorizontal={sizes.s}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: sizes.padding}}>
+        contentContainerStyle={{ paddingBottom: sizes.padding }}
+      >
         <Block flex={0}>
           <Image
             background
@@ -51,19 +51,21 @@ const Profile = () => {
             padding={sizes.sm}
             paddingBottom={sizes.l}
             radius={sizes.cardRadius}
-            source={assets.background}>
+            source={assets.background}
+          >
             <Button
               row
               flex={0}
               justify="flex-start"
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.goBack()}
+            >
               <Image
                 radius={0}
                 width={10}
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: '180deg' }]}
               />
               <Text p white marginLeft={sizes.s}>
                 {t('profile.title')}
@@ -74,7 +76,7 @@ const Profile = () => {
                 width={64}
                 height={64}
                 marginBottom={sizes.sm}
-                source={{uri: user?.avatar}}
+                source={{ uri: user?.avatar }}
               />
               <Text h5 center white>
                 {user?.name}
@@ -89,13 +91,15 @@ const Profile = () => {
                   shadow={false}
                   radius={sizes.m}
                   onPress={() => {
-                    alert(`Follow ${user?.name}`);
-                  }}>
+                    alert(`Follow ${user?.name}`)
+                  }}
+                >
                   <Block
                     justify="center"
                     radius={sizes.m}
                     paddingHorizontal={sizes.m}
-                    color="rgba(255,255,255,0.2)">
+                    color="rgba(255,255,255,0.2)"
+                  >
                     <Text white bold transform="uppercase">
                       {t('common.follow')}
                     </Text>
@@ -107,7 +111,8 @@ const Profile = () => {
                   marginHorizontal={sizes.sm}
                   color="rgba(255,255,255,0.2)"
                   outlined={String(colors.white)}
-                  onPress={() => handleSocialLink('twitter')}>
+                  onPress={() => handleSocialLink('twitter')}
+                >
                   <Ionicons
                     size={18}
                     name="logo-twitter"
@@ -119,7 +124,8 @@ const Profile = () => {
                   radius={sizes.m}
                   color="rgba(255,255,255,0.2)"
                   outlined={String(colors.white)}
-                  onPress={() => handleSocialLink('dribbble')}>
+                  onPress={() => handleSocialLink('dribbble')}
+                >
                   <Ionicons
                     size={18}
                     name="logo-dribbble"
@@ -137,7 +143,8 @@ const Profile = () => {
             shadow={!isAndroid} // disabled shadow on Android due to blur overlay + elevation issue
             marginTop={-sizes.l}
             marginHorizontal="8%"
-            color="rgba(255,255,255,0.2)">
+            color="rgba(255,255,255,0.2)"
+          >
             <Block
               row
               blur
@@ -148,7 +155,8 @@ const Profile = () => {
               tint={colors.blurTint}
               justify="space-evenly"
               paddingVertical={sizes.sm}
-              renderToHardwareTextureAndroid>
+              renderToHardwareTextureAndroid
+            >
               <Block align="center">
                 <Text h5>{user?.stats?.posts}</Text>
                 <Text>{t('profile.posts')}</Text>
@@ -219,7 +227,7 @@ const Profile = () => {
         </Block>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

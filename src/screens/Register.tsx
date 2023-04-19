@@ -1,57 +1,57 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Linking, Platform} from 'react-native';
-import {useNavigation} from '@react-navigation/core';
+import React, { useCallback, useEffect, useState } from 'react'
+import { Linking, Platform } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 
-import {useData, useTheme, useTranslation} from '../hooks/';
-import * as regex from '../constants/regex';
-import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
+import { useData, useTheme, useTranslation } from '../hooks/'
+import * as regex from '../constants/regex'
+import { Block, Button, Input, Image, Text, Checkbox } from '../components/'
 
-const isAndroid = Platform.OS === 'android';
+const isAndroid = Platform.OS === 'android'
 
 interface IRegistration {
-  name: string;
-  email: string;
-  password: string;
-  agreed: boolean;
+  name: string
+  email: string
+  password: string
+  agreed: boolean
 }
 interface IRegistrationValidation {
-  name: boolean;
-  email: boolean;
-  password: boolean;
-  agreed: boolean;
+  name: boolean
+  email: boolean
+  password: boolean
+  agreed: boolean
 }
 
 const Register = () => {
-  const {isDark} = useData();
-  const {t} = useTranslation();
-  const navigation = useNavigation();
+  const { isDark } = useData()
+  const { t } = useTranslation()
+  const navigation = useNavigation()
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
     name: false,
     email: false,
     password: false,
     agreed: false,
-  });
+  })
   const [registration, setRegistration] = useState<IRegistration>({
     name: '',
     email: '',
     password: '',
     agreed: false,
-  });
-  const {assets, colors, gradients, sizes} = useTheme();
+  })
+  const { assets, colors, gradients, sizes } = useTheme()
 
   const handleChange = useCallback(
     (value) => {
-      setRegistration((state) => ({...state, ...value}));
+      setRegistration((state) => ({ ...state, ...value }))
     },
     [setRegistration],
-  );
+  )
 
   const handleSignUp = useCallback(() => {
     if (!Object.values(isValid).includes(false)) {
       /** send/save registratin data */
-      console.log('handleSignUp', registration);
+      console.log('handleSignUp', registration)
     }
-  }, [isValid, registration]);
+  }, [isValid, registration])
 
   useEffect(() => {
     setIsValid((state) => ({
@@ -60,32 +60,34 @@ const Register = () => {
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
       agreed: registration.agreed,
-    }));
-  }, [registration, setIsValid]);
+    }))
+  }, [registration, setIsValid])
 
   return (
     <Block safe marginTop={sizes.md}>
       <Block paddingHorizontal={sizes.s}>
-        <Block flex={0} style={{zIndex: 0}}>
+        <Block flex={0} style={{ zIndex: 0 }}>
           <Image
             background
             resizeMode="cover"
             padding={sizes.sm}
             radius={sizes.cardRadius}
             source={assets.background}
-            height={sizes.height * 0.3}>
+            height={sizes.height * 0.3}
+          >
             <Button
               row
               flex={0}
               justify="flex-start"
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.goBack()}
+            >
               <Image
                 radius={0}
                 width={10}
                 height={18}
                 color={colors.white}
                 source={assets.arrow}
-                transform={[{rotate: '180deg'}]}
+                transform={[{ rotate: '180deg' }]}
               />
               <Text p white marginLeft={sizes.s}>
                 {t('common.goBack')}
@@ -101,7 +103,8 @@ const Register = () => {
         <Block
           keyboard
           behavior={!isAndroid ? 'padding' : 'height'}
-          marginTop={-(sizes.height * 0.2 - sizes.l)}>
+          marginTop={-(sizes.height * 0.2 - sizes.l)}
+        >
           <Block
             flex={0}
             radius={sizes.sm}
@@ -116,7 +119,8 @@ const Register = () => {
               overflow="hidden"
               justify="space-evenly"
               tint={colors.blurTint}
-              paddingVertical={sizes.sm}>
+              paddingVertical={sizes.sm}
+            >
               <Text p semibold center>
                 {t('register.subtitle')}
               </Text>
@@ -153,7 +157,8 @@ const Register = () => {
                 align="center"
                 justify="center"
                 marginBottom={sizes.sm}
-                paddingHorizontal={sizes.xxl}>
+                paddingHorizontal={sizes.xxl}
+              >
                 <Block
                   flex={0}
                   height={1}
@@ -183,7 +188,7 @@ const Register = () => {
                   placeholder={t('common.namePlaceholder')}
                   success={Boolean(registration.name && isValid.name)}
                   danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({name: value})}
+                  onChangeText={(value) => handleChange({ name: value })}
                 />
                 <Input
                   autoCapitalize="none"
@@ -193,7 +198,7 @@ const Register = () => {
                   placeholder={t('common.emailPlaceholder')}
                   success={Boolean(registration.email && isValid.email)}
                   danger={Boolean(registration.email && !isValid.email)}
-                  onChangeText={(value) => handleChange({email: value})}
+                  onChangeText={(value) => handleChange({ email: value })}
                 />
                 <Input
                   secureTextEntry
@@ -201,7 +206,7 @@ const Register = () => {
                   marginBottom={sizes.m}
                   label={t('common.password')}
                   placeholder={t('common.passwordPlaceholder')}
-                  onChangeText={(value) => handleChange({password: value})}
+                  onChangeText={(value) => handleChange({ password: value })}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
                 />
@@ -211,15 +216,16 @@ const Register = () => {
                 <Checkbox
                   marginRight={sizes.sm}
                   checked={registration?.agreed}
-                  onPress={(value) => handleChange({agreed: value})}
+                  onPress={(value) => handleChange({ agreed: value })}
                 />
                 <Text paddingRight={sizes.s}>
                   {t('common.agree')}
                   <Text
                     semibold
                     onPress={() => {
-                      Linking.openURL('https://www.creative-tim.com/terms');
-                    }}>
+                      Linking.openURL('https://www.creative-tim.com/terms')
+                    }}
+                  >
                     {t('common.terms')}
                   </Text>
                 </Text>
@@ -229,7 +235,8 @@ const Register = () => {
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
                 gradient={gradients.primary}
-                disabled={Object.values(isValid).includes(false)}>
+                disabled={Object.values(isValid).includes(false)}
+              >
                 <Text bold white transform="uppercase">
                   {t('common.signup')}
                 </Text>
@@ -240,7 +247,8 @@ const Register = () => {
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                onPress={() => navigation.navigate('Pro')}>
+                onPress={() => navigation.navigate('Pro')}
+              >
                 <Text bold primary transform="uppercase">
                   {t('common.signin')}
                 </Text>
@@ -250,7 +258,7 @@ const Register = () => {
         </Block>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

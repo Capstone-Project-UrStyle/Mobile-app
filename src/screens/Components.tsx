@@ -1,17 +1,25 @@
-import React, {useLayoutEffect, useState} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import React, { useLayoutEffect, useState } from 'react'
+import { FlatList, TouchableOpacity } from 'react-native'
 
-import {useNavigation} from '@react-navigation/core';
-import {useHeaderHeight} from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/core'
+import { useHeaderHeight } from '@react-navigation/stack'
 
-import {useTheme} from '../hooks/';
-import {Block, Button, Input, Image, Switch, Modal, Text} from '../components/';
+import { useTheme } from '../hooks/'
+import {
+  Block,
+  Button,
+  Input,
+  Image,
+  Switch,
+  Modal,
+  Text,
+} from '../components/'
 
 // buttons example
 const Buttons = () => {
-  const [showModal, setModal] = useState(false);
-  const [quantity, setQuantity] = useState('01');
-  const {assets, colors, gradients, sizes} = useTheme();
+  const [showModal, setModal] = useState(false)
+  const [quantity, setQuantity] = useState('01')
+  const { assets, colors, gradients, sizes } = useTheme()
 
   return (
     <Block paddingHorizontal={sizes.padding}>
@@ -27,7 +35,8 @@ const Buttons = () => {
         <Button
           flex={1}
           gradient={gradients.secondary}
-          marginBottom={sizes.base}>
+          marginBottom={sizes.base}
+        >
           <Text white bold transform="uppercase">
             Secondary
           </Text>
@@ -67,19 +76,21 @@ const Buttons = () => {
             flex={1}
             row
             gradient={gradients.dark}
-            onPress={() => setModal(true)}>
+            onPress={() => setModal(true)}
+          >
             <Block
               row
               align="center"
               justify="space-between"
-              paddingHorizontal={sizes.sm}>
+              paddingHorizontal={sizes.sm}
+            >
               <Text white bold transform="uppercase" marginRight={sizes.sm}>
                 {quantity}
               </Text>
               <Image
                 source={assets.arrow}
                 color={colors.white}
-                transform={[{rotate: '90deg'}]}
+                transform={[{ rotate: '90deg' }]}
               />
             </Block>
           </Button>
@@ -99,13 +110,14 @@ const Buttons = () => {
         <FlatList
           keyExtractor={(index) => `${index}`}
           data={['01', '02', '03', '04', '05']}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <Button
               marginBottom={sizes.sm}
               onPress={() => {
-                setQuantity(item);
-                setModal(false);
-              }}>
+                setQuantity(item)
+                setModal(false)
+              }}
+            >
               <Text p white semibold transform="uppercase">
                 {item}
               </Text>
@@ -114,12 +126,12 @@ const Buttons = () => {
         />
       </Modal>
     </Block>
-  );
-};
+  )
+}
 
 // texts example
 const Typography = () => {
-  const {sizes} = useTheme();
+  const { sizes } = useTheme()
 
   return (
     <Block marginTop={sizes.m} paddingHorizontal={sizes.padding}>
@@ -136,19 +148,20 @@ const Typography = () => {
         <Text marginBottom={sizes.xs}>Text</Text>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
 // inputs example
 const Inputs = () => {
-  const {colors, sizes} = useTheme();
+  const { colors, sizes } = useTheme()
 
   return (
     <Block
       color={colors.card}
       marginTop={sizes.m}
       paddingTop={sizes.m}
-      paddingHorizontal={sizes.padding}>
+      paddingHorizontal={sizes.padding}
+    >
       <Text p semibold marginBottom={sizes.s}>
         Inputs
       </Text>
@@ -166,20 +179,21 @@ const Inputs = () => {
         <Input disabled placeholder="Disabled" marginBottom={sizes.sm} />
       </Block>
     </Block>
-  );
-};
+  )
+}
 
 // switch example
 const Switches = () => {
-  const {colors, sizes} = useTheme();
-  const [switch1, setSwitch1] = useState(true);
-  const [switch2, setSwitch2] = useState(false);
+  const { colors, sizes } = useTheme()
+  const [switch1, setSwitch1] = useState(true)
+  const [switch2, setSwitch2] = useState(false)
 
   return (
     <Block
       color={colors.card}
       paddingVertical={sizes.m}
-      paddingHorizontal={sizes.padding}>
+      paddingHorizontal={sizes.padding}
+    >
       <Text p semibold marginBottom={sizes.s}>
         Switches
       </Text>
@@ -196,7 +210,8 @@ const Switches = () => {
           flex={0}
           align="center"
           justify="space-between"
-          marginTop={sizes.s}>
+          marginTop={sizes.s}
+        >
           <Text>Switch is {switch2 ? 'ON' : 'OFF'}</Text>
           <Switch
             checked={switch2}
@@ -205,12 +220,12 @@ const Switches = () => {
         </Block>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
 // social example
 const Social = () => {
-  const {sizes} = useTheme();
+  const { sizes } = useTheme()
 
   return (
     <Block paddingVertical={sizes.m} paddingHorizontal={sizes.padding}>
@@ -223,12 +238,12 @@ const Social = () => {
         <Button social="dribbble" />
       </Block>
     </Block>
-  );
-};
+  )
+}
 
 // cards example
 const Cards = () => {
-  const {assets, colors, gradients, sizes} = useTheme();
+  const { assets, colors, gradients, sizes } = useTheme()
 
   return (
     <Block marginTop={sizes.m} paddingHorizontal={sizes.padding}>
@@ -241,7 +256,7 @@ const Cards = () => {
           <Image
             resizeMode="contain"
             source={assets?.card1}
-            style={{height: 114}}
+            style={{ height: 114 }}
           />
           <Block padding={sizes.s} justify="space-between">
             <Text p>Adventures - Multi day trips with meals and stays.</Text>
@@ -262,7 +277,7 @@ const Cards = () => {
           <Image
             resizeMode="cover"
             source={assets?.card2}
-            style={{width: '100%'}}
+            style={{ width: '100%' }}
           />
           <Block padding={sizes.s} justify="space-between">
             <Text p marginBottom={sizes.s}>
@@ -282,7 +297,7 @@ const Cards = () => {
           <Image
             resizeMode="cover"
             source={assets?.card3}
-            style={{width: '100%'}}
+            style={{ width: '100%' }}
           />
           <Block padding={sizes.s} justify="space-between">
             <Text p marginBottom={sizes.s}>
@@ -304,28 +319,30 @@ const Cards = () => {
         <Image
           resizeMode="cover"
           source={assets?.card4}
-          style={{width: '100%'}}
+          style={{ width: '100%' }}
         />
         <Text
           h5
           bold
           transform="uppercase"
           gradient={gradients.primary}
-          marginTop={sizes.sm}>
+          marginTop={sizes.sm}
+        >
           Trending
         </Text>
         <Text
           p
           marginTop={sizes.s}
           marginLeft={sizes.xs}
-          marginBottom={sizes.sm}>
+          marginBottom={sizes.sm}
+        >
           The most beautiful and complex UI Kits built by Creative Tim.
         </Text>
         {/* user details */}
         <Block row marginLeft={sizes.xs} marginBottom={sizes.xs}>
           <Image
             source={assets.avatar1}
-            style={{width: sizes.xl, height: sizes.xl, borderRadius: sizes.s}}
+            style={{ width: sizes.xl, height: sizes.xl, borderRadius: sizes.s }}
           />
           <Block marginLeft={sizes.s}>
             <Text p semibold>
@@ -343,7 +360,8 @@ const Cards = () => {
           background
           resizeMode="cover"
           source={assets.card5}
-          radius={sizes.cardRadius}>
+          radius={sizes.cardRadius}
+        >
           <Block color="rgba(0,0,0,0.3)" padding={sizes.padding}>
             <Text h4 white marginBottom={sizes.sm}>
               Flexible office space means growth.
@@ -375,18 +393,17 @@ const Cards = () => {
         </Image>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
 // Photo gallery example
 const Gallery = () => {
-  const {assets, sizes} = useTheme();
-  const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3;
-  const IMAGE_VERTICAL_SIZE =
-    (sizes.width - (sizes.padding + sizes.sm) * 2) / 2;
-  const IMAGE_MARGIN = (sizes.width - IMAGE_SIZE * 3 - sizes.padding * 2) / 2;
+  const { assets, sizes } = useTheme()
+  const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3
+  const IMAGE_VERTICAL_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 2
+  const IMAGE_MARGIN = (sizes.width - IMAGE_SIZE * 3 - sizes.padding * 2) / 2
   const IMAGE_VERTICAL_MARGIN =
-    (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2;
+    (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2
 
   return (
     <Block marginTop={sizes.m} paddingHorizontal={sizes.padding}>
@@ -398,7 +415,7 @@ const Gallery = () => {
         <Image
           resizeMode="cover"
           source={assets.carousel1}
-          style={{width: '100%'}}
+          style={{ width: '100%' }}
         />
         <Text p secondary marginTop={sizes.sm}>
           Private Room • 1 Guests • 1 Sofa
@@ -524,13 +541,13 @@ const Gallery = () => {
         </Block>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
 const Components = () => {
-  const {assets, sizes} = useTheme();
-  const navigation = useNavigation();
-  const headerHeight = useHeaderHeight();
+  const { assets, sizes } = useTheme()
+  const navigation = useNavigation()
+  const headerHeight = useHeaderHeight()
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -543,15 +560,16 @@ const Components = () => {
           source={assets.header}
         />
       ),
-    });
-  }, [assets.header, navigation, sizes.width, headerHeight]);
+    })
+  }, [assets.header, navigation, sizes.width, headerHeight])
 
   return (
     <Block safe>
       <Block
         scroll
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingVertical: sizes.padding}}>
+        contentContainerStyle={{ paddingVertical: sizes.padding }}
+      >
         <Block>
           <Buttons />
           <Typography />
@@ -563,7 +581,7 @@ const Components = () => {
         </Block>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
-export default Components;
+export default Components

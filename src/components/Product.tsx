@@ -1,18 +1,18 @@
-import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import React from 'react'
+import { TouchableOpacity } from 'react-native'
 
-import Block from './Block';
-import Image from './Image';
-import Text from './Text';
-import {IProduct} from '../constants/types';
-import {useTheme, useTranslation} from '../hooks/';
+import Block from './Block'
+import Image from './Image'
+import Text from './Text'
+import { IProduct } from '../constants/types'
+import { useTheme, useTranslation } from '../hooks/'
 
-const Product = ({image, title, type, linkLabel}: IProduct) => {
-  const {t} = useTranslation();
-  const {assets, colors, sizes} = useTheme();
+const Product = ({ image, title, type, linkLabel }: IProduct) => {
+  const { t } = useTranslation()
+  const { assets, colors, sizes } = useTheme()
 
-  const isHorizontal = type !== 'vertical';
-  const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2;
+  const isHorizontal = type !== 'vertical'
+  const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2
 
   return (
     <Block
@@ -20,10 +20,11 @@ const Product = ({image, title, type, linkLabel}: IProduct) => {
       flex={0}
       row={isHorizontal}
       marginBottom={sizes.sm}
-      width={isHorizontal ? CARD_WIDTH * 2 + sizes.sm : CARD_WIDTH}>
+      width={isHorizontal ? CARD_WIDTH * 2 + sizes.sm : CARD_WIDTH}
+    >
       <Image
         resizeMode="cover"
-        source={{uri: image}}
+        source={{ uri: image }}
         style={{
           height: isHorizontal ? 114 : 110,
           width: !isHorizontal ? '100%' : sizes.width / 2.435,
@@ -33,7 +34,8 @@ const Product = ({image, title, type, linkLabel}: IProduct) => {
         paddingTop={sizes.s}
         justify="space-between"
         paddingLeft={isHorizontal ? sizes.sm : 0}
-        paddingBottom={isHorizontal ? sizes.s : 0}>
+        paddingBottom={isHorizontal ? sizes.s : 0}
+      >
         <Text p marginBottom={sizes.s}>
           {title}
         </Text>
@@ -44,7 +46,8 @@ const Product = ({image, title, type, linkLabel}: IProduct) => {
               color={colors.link}
               semibold
               size={sizes.linkSize}
-              marginRight={sizes.s}>
+              marginRight={sizes.s}
+            >
               {linkLabel || t('common.readArticle')}
             </Text>
             <Image source={assets.arrow} color={colors.link} />
@@ -52,7 +55,7 @@ const Product = ({image, title, type, linkLabel}: IProduct) => {
         </TouchableOpacity>
       </Block>
     </Block>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

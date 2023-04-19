@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+dist/
 npm-debug.*
 *.jks
 *.p8
@@ -8,6 +9,10 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+yarn-error.log
+
+# API URL change
+# api/axiosClient.js
 
 # macOS
 .DS_Store

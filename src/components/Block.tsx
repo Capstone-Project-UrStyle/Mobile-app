@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   Platform,
   SafeAreaView,
@@ -6,13 +6,13 @@ import {
   StyleSheet,
   View,
   ViewStyle,
-} from 'react-native';
-import {BlurView} from 'expo-blur';
-import {LinearGradient} from 'expo-linear-gradient';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+} from 'react-native'
+import { BlurView } from 'expo-blur'
+import { LinearGradient } from 'expo-linear-gradient'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-import useTheme from '../hooks/useTheme';
-import {IBlockProps} from '../constants/types';
+import useTheme from '../hooks/useTheme'
+import { IBlockProps } from '../constants/types'
 
 const Block = (props: IBlockProps) => {
   const {
@@ -72,8 +72,8 @@ const Block = (props: IBlockProps) => {
     end,
     start,
     ...rest
-  } = props;
-  const {colors, sizes} = useTheme();
+  } = props
+  const { colors, sizes } = useTheme()
 
   const colorIndex = primary
     ? 'primary'
@@ -95,13 +95,13 @@ const Block = (props: IBlockProps) => {
     ? 'success'
     : info
     ? 'info'
-    : null;
+    : null
 
   const blockColor = color
     ? color
     : colorIndex
     ? colors?.[colorIndex]
-    : undefined;
+    : undefined
 
   const blockStyles = StyleSheet.flatten([
     style,
@@ -129,54 +129,54 @@ const Block = (props: IBlockProps) => {
         shadowRadius: sizes.shadowRadius,
         elevation: sizes.elevation,
       }),
-      ...(margin !== undefined && {margin}),
-      ...(marginBottom && {marginBottom}),
-      ...(marginTop && {marginTop}),
-      ...(marginHorizontal && {marginHorizontal}),
-      ...(marginVertical && {marginVertical}),
-      ...(marginRight && {marginRight}),
-      ...(marginLeft && {marginLeft}),
-      ...(padding !== undefined && {padding}),
-      ...(paddingBottom && {paddingBottom}),
-      ...(paddingTop && {paddingTop}),
-      ...(paddingHorizontal && {paddingHorizontal}),
-      ...(paddingVertical && {paddingVertical}),
-      ...(paddingRight && {paddingRight}),
-      ...(paddingLeft && {paddingLeft}),
-      ...(radius && {borderRadius: radius}),
-      ...(height && {height}),
-      ...(width && {width}),
-      ...(overflow && {overflow}),
-      ...(flex !== undefined && {flex}),
-      ...(row && {flexDirection: 'row'}),
-      ...(align && {alignItems: align}),
-      ...(center && {justifyContent: 'center'}),
-      ...(justify && {justifyContent: justify}),
-      ...(wrap && {flexWrap: wrap}),
-      ...(blockColor && {backgroundColor: blockColor}),
+      ...(margin !== undefined && { margin }),
+      ...(marginBottom && { marginBottom }),
+      ...(marginTop && { marginTop }),
+      ...(marginHorizontal && { marginHorizontal }),
+      ...(marginVertical && { marginVertical }),
+      ...(marginRight && { marginRight }),
+      ...(marginLeft && { marginLeft }),
+      ...(padding !== undefined && { padding }),
+      ...(paddingBottom && { paddingBottom }),
+      ...(paddingTop && { paddingTop }),
+      ...(paddingHorizontal && { paddingHorizontal }),
+      ...(paddingVertical && { paddingVertical }),
+      ...(paddingRight && { paddingRight }),
+      ...(paddingLeft && { paddingLeft }),
+      ...(radius && { borderRadius: radius }),
+      ...(height && { height }),
+      ...(width && { width }),
+      ...(overflow && { overflow }),
+      ...(flex !== undefined && { flex }),
+      ...(row && { flexDirection: 'row' }),
+      ...(align && { alignItems: align }),
+      ...(center && { justifyContent: 'center' }),
+      ...(justify && { justifyContent: justify }),
+      ...(wrap && { flexWrap: wrap }),
+      ...(blockColor && { backgroundColor: blockColor }),
       ...(outlined && {
         borderWidth: 1,
         borderColor: blockColor,
         backgroundColor: 'transparent',
       }),
-      ...(position && {position}),
-      ...(right !== undefined && {right}),
-      ...(left !== undefined && {left}),
-      ...(top !== undefined && {top}),
-      ...(bottom !== undefined && {bottom}),
+      ...(position && { position }),
+      ...(right !== undefined && { right }),
+      ...(left !== undefined && { left }),
+      ...(top !== undefined && { top }),
+      ...(bottom !== undefined && { bottom }),
     },
-  ]) as ViewStyle;
+  ]) as ViewStyle
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const blockID =
-    Platform.OS === 'android' ? {accessibilityLabel: id} : {testID: id};
+    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
 
   if (safe) {
     return (
       <SafeAreaView {...blockID} {...rest} style={blockStyles}>
         {children}
       </SafeAreaView>
-    );
+    )
   }
 
   if (keyboard) {
@@ -184,7 +184,7 @@ const Block = (props: IBlockProps) => {
       <KeyboardAwareScrollView {...blockID} {...rest} style={blockStyles}>
         {children}
       </KeyboardAwareScrollView>
-    );
+    )
   }
 
   if (scroll) {
@@ -192,7 +192,7 @@ const Block = (props: IBlockProps) => {
       <ScrollView {...blockID} {...rest} style={blockStyles}>
         {children}
       </ScrollView>
-    );
+    )
   }
 
   if (gradient) {
@@ -203,10 +203,11 @@ const Block = (props: IBlockProps) => {
         style={blockStyles}
         end={end || [1, 0]}
         start={start || [0, 0]}
-        {...rest}>
+        {...rest}
+      >
         {children}
       </LinearGradient>
-    );
+    )
   }
 
   if (blur) {
@@ -215,17 +216,18 @@ const Block = (props: IBlockProps) => {
         {...blockID}
         tint={tint}
         intensity={intensity}
-        style={blockStyles}>
+        style={blockStyles}
+      >
         {children}
       </BlurView>
-    );
+    )
   }
 
   return (
     <View {...blockID} {...rest} style={blockStyles}>
       {children}
     </View>
-  );
-};
+  )
+}
 
-export default React.memo(Block);
+export default React.memo(Block)
