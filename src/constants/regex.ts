@@ -17,4 +17,4 @@ export const email: RegExp = /^[^\s@]+@[^\s@]+\.([^\s@]{2,})+$/;
  * [0-9a-zA-Z]{6,}: at least 6 from the mentioned characters
  */
 export const password: RegExp =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
+  /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{6,}$/;

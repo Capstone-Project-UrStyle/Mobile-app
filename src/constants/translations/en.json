@@ -93,6 +93,10 @@
     "following": "Following",
     "trending": "Trending"
   },
+  "login": {
+    "title": "Welcome",
+    "subtitle": "Login with"
+  },
   "register": {
     "title": "Welcome",
     "subtitle": "Register with"

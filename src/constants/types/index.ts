@@ -61,7 +61,7 @@ export interface ILocation {
 }
 export interface IUseData {
   isDark: boolean;
-  handleIsDark: (isDark?: boolean) => void;
+  handleSetIsDark: (isDark?: boolean) => void;
   theme: ITheme;
   setTheme: (theme?: ITheme) => void;
   user: IUser;
