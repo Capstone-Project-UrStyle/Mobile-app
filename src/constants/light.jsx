@@ -1,104 +1,96 @@
-import {
-  ITheme,
-  ThemeColors,
-  ThemeGradients,
-  ThemeSizes,
-  ThemeSpacing,
-} from './types';
+import { THEME as commonTheme } from "./theme"
 
-import {THEME as commonTheme} from './theme';
-
-export const COLORS: ThemeColors = {
+export const COLORS = {
   // default text color
-  text: '#252F40',
+  text: "#252F40",
 
   // base colors
   /** UI color for #primary */
-  primary: '#CB0C9F',
+  primary: "#CB0C9F",
   /** UI color for #secondary */
-  secondary: '#627594', // '#8392AB',
+  secondary: "#627594", // '#8392AB',
   /** UI color for #tertiary */
-  tertiary: '#E8AE4C',
+  tertiary: "#E8AE4C",
 
   // non-colors
-  black: '#252F40',
-  white: '#FFFFFF',
+  black: "#252F40",
+  white: "#FFFFFF",
 
-  dark: '#252F40',
-  light: '#E9ECEF',
+  dark: "#252F40",
+  light: "#E9ECEF",
 
   // gray variations
   /** UI color for #gray */
-  gray: '#A7A8AE',
+  gray: "#A7A8AE",
 
   // colors variations
   /** UI color for #danger */
-  danger: '#EA0606',
+  danger: "#EA0606",
   /** UI color for #warning */
-  warning: '#FFC107',
+  warning: "#FFC107",
   /** UI color for #success */
-  success: '#82D616',
+  success: "#82D616",
   /** UI color for #info */
-  info: '#17C1E8',
+  info: "#17C1E8",
 
   /** UI colors for navigation & card */
-  card: '#FFFFFF',
-  background: '#E9ECEF',
+  card: "#FFFFFF",
+  background: "#E9ECEF",
 
   /** UI color for shadowColor */
-  shadow: '#000000',
-  overlay: 'rgba(0,0,0,0.3)',
+  shadow: "#000000",
+  overlay: "rgba(0,0,0,0.3)",
 
   /** UI color for input borderColor on focus */
-  focus: '#E293D3',
-  input: '#252F40',
+  focus: "#E293D3",
+  input: "#252F40",
 
   /** UI color for switch checked/active color */
-  switchOn: '#3A416F',
-  switchOff: '#E9ECEF',
+  switchOn: "#3A416F",
+  switchOff: "#E9ECEF",
 
   /** UI color for checkbox icon checked/active color */
-  checkbox: ['#3A416F', '#141727'],
-  checkboxIcon: '#FFFFFF',
+  checkbox: ["#3A416F", "#141727"],
+  checkboxIcon: "#FFFFFF",
 
   /** social colors */
-  facebook: '#3B5998',
-  twitter: '#55ACEE',
-  dribbble: '#EA4C89',
+  facebook: "#3B5998",
+  twitter: "#55ACEE",
+  dribbble: "#EA4C89",
 
   /** icon tint color */
-  icon: '#8392AB',
+  icon: "#8392AB",
 
   /** blur tint color */
-  blurTint: 'light',
+  blurTint: "light",
 
   /** product link color */
-  link: '#CB0C9F',
-};
+  link: "#CB0C9F"
+}
 
-export const GRADIENTS: ThemeGradients = {
-  primary: ['#FF0080', '#7928CA'],
-  secondary: ['#A8B8D8', '#627594'],
-  info: ['#21D4FD', '#2152FF'],
-  success: ['#98EC2D', '#17AD37'],
-  warning: ['#FBCF33', '#F53939'],
-  danger: ['#FF667C', '#EA0606'],
+export const GRADIENTS = {
+  primary: ["#FF0080", "#7928CA"],
+  secondary: ["#A8B8D8", "#627594"],
+  info: ["#21D4FD", "#2152FF"],
+  success: ["#98EC2D", "#17AD37"],
+  warning: ["#FBCF33", "#F53939"],
+  danger: ["#FF667C", "#EA0606"],
 
-  light: ['#EBEFF4', '#CED4DA'],
-  dark: ['#3A416F', '#141727'],
+  light: ["#EBEFF4", "#CED4DA"],
+  dark: ["#3A416F", "#141727"],
 
-  white: [String(COLORS.white), '#EBEFF4'],
-  black: [String(COLORS.black), '#141727'],
+  white: [String(COLORS.white), "#EBEFF4"],
+  black: [String(COLORS.black), "#141727"],
 
-  divider: ['rgba(255,255,255,0.3)', 'rgba(102, 116, 142, 0.6)'],
+  divider: ["rgba(255,255,255,0.3)", "rgba(102, 116, 142, 0.6)"],
   menu: [
-    'rgba(255, 255, 255, 0.2)',
-    'rgba(112, 125, 149, 0.5)',
-    'rgba(255, 255, 255, 0.2)',
-  ],
-};
+    "rgba(255, 255, 255, 0.2)",
+    "rgba(112, 125, 149, 0.5)",
+    "rgba(255, 255, 255, 0.2)"
+  ]
+}
 
-export const SIZES: ThemeSizes = {
+export const SIZES = {
   // global sizes
   base: 8,
   text: 14,
@@ -158,10 +150,10 @@ export const SIZES: ThemeSizes = {
   linkSize: 12,
 
   /** font size multiplier: for maxFontSizeMultiplier prop */
-  multiplier: 2,
-};
+  multiplier: 2
+}
 
-export const SPACING: ThemeSpacing = {
+export const SPACING = {
   /** xs: 4px */
   xs: SIZES.base * 0.5,
   /** s: 8px */
@@ -177,12 +169,12 @@ export const SPACING: ThemeSpacing = {
   /** xl: 48px */
   xl: SIZES.base * 6,
   /** xxl: 56px */
-  xxl: SIZES.base * 7,
-};
+  xxl: SIZES.base * 7
+}
 
-export const THEME: ITheme = {
+export const THEME = {
   ...commonTheme,
   colors: COLORS,
   gradients: GRADIENTS,
-  sizes: {...SIZES, ...commonTheme.sizes, ...SPACING},
-};
+  sizes: { ...SIZES, ...commonTheme.sizes, ...SPACING }
+}

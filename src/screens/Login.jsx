@@ -39,9 +39,10 @@ const Login = () => {
         if (response.request.status === 200) {
           handleSetToken(response.data.token)
           Alert.alert(response.data.message)
+          navigation.navigate('Home')
         }
       } catch (error) {
-        console.log(error)
+        Alert.alert(error.response.data.message)
       }
     }
   }, [isValid, credentials])
@@ -66,26 +67,7 @@ const Login = () => {
             source={assets.background}
             height={sizes.height * 0.3}
           >
-            <Button
-              row
-              flex={0}
-              justify="flex-start"
-              onPress={() => navigation.goBack()}
-            >
-              <Image
-                radius={0}
-                width={10}
-                height={18}
-                color={colors.white}
-                source={assets.arrow}
-                transform={[{ rotate: "180deg" }]}
-              />
-              <Text p white marginLeft={sizes.s}>
-                {t("common.goBack")}
-              </Text>
-            </Button>
-
-            <Text h4 center white marginBottom={sizes.md}>
+            <Text h4 center white marginTop={sizes.l} marginBottom={sizes.md}>
               {t("login.title")}
             </Text>
           </Image>

@@ -1,18 +1,17 @@
-import React from 'react'
+import React from "react"
 
-import { light } from '../constants/'
-import { ITheme, IThemeProvider } from '../constants/types'
+import { light } from "../constants/"
 
 export const ThemeContext = React.createContext({
   theme: light,
-  setTheme: () => {},
+  setTheme: () => {}
 })
 
 export const ThemeProvider = ({
   children,
   theme = light,
-  setTheme = () => {},
-}: IThemeProvider) => {
+  setTheme = () => {}
+}) => {
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
@@ -20,7 +19,7 @@ export const ThemeProvider = ({
   )
 }
 
-export default function useTheme(): ITheme {
+export default function useTheme() {
   const { theme } = React.useContext(ThemeContext)
   return theme
 }

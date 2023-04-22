@@ -64,7 +64,7 @@ const ScreensStack = () => {
 const DrawerContent = props => {
   const { navigation } = props
   const { t } = useTranslation()
-  const { isDark, handleSetIsDark } = useData()
+  const { isDark, handleSetIsDark, handleSetToken } = useData()
   const [active, setActive] = useState("Home")
   const { assets, colors, gradients, sizes } = useTheme()
   const labelColor = colors.text
@@ -91,10 +91,12 @@ const DrawerContent = props => {
     { name: t("screens.rental"), to: "Pro", icon: assets.rental },
     { name: t("screens.profile"), to: "Profile", icon: assets.profile },
     { name: t("screens.settings"), to: "Pro", icon: assets.settings },
-    // { name: t("screens.login"), to: "Login", icon: assets.login },
-    { name: t("screens.register"), to: "Register", icon: assets.register },
     { name: t("screens.extra"), to: "Pro", icon: assets.extras }
   ]
+
+  const handleLogout = () => {
+    handleSetToken(null)
+  }
 
   return (
     <DrawerContentScrollView
@@ -105,7 +107,7 @@ const DrawerContent = props => {
       contentContainerStyle={{ paddingBottom: sizes.padding }}
     >
       <Block paddingHorizontal={sizes.padding}>
-        <Block flex={0} row align="center" marginBottom={sizes.l}>
+        <Block flex={0} row align="center" marginTop={sizes.md} marginBottom={sizes.l}>
           <Image
             radius={0}
             width={33}
@@ -115,11 +117,11 @@ const DrawerContent = props => {
             marginRight={sizes.sm}
           />
           <Block>
-            <Text size={12} semibold>
+            <Text size={15} semibold>
               {t("app.name")}
             </Text>
             <Text size={12} semibold>
-              {t("app.native")}
+              {t("app.slogan")}
             </Text>
           </Block>
         </Block>
@@ -161,15 +163,10 @@ const DrawerContent = props => {
 
         <Block
           flex={0}
-          height={1}
-          marginRight={sizes.md}
-          marginVertical={sizes.sm}
+          height={2}
+          marginVertical={sizes.s}
           gradient={gradients.menu}
         />
-
-        <Text semibold transform="uppercase" opacity={0.5}>
-          {t("menu.documentation")}
-        </Text>
 
         <Button
           row
@@ -177,7 +174,7 @@ const DrawerContent = props => {
           marginTop={sizes.sm}
           marginBottom={sizes.s}
           onPress={() =>
-            handleWebLink("https://github.com/creativetimofficial")
+            navigation.navigate('Pro')
           }
         >
           <Block
@@ -199,7 +196,37 @@ const DrawerContent = props => {
             />
           </Block>
           <Text p color={labelColor}>
-            {t("menu.started")}
+            {t("menu.upgradeToPro")}
+          </Text>
+        </Button>
+
+        <Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={handleLogout}
+        >
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}
+          >
+            <Image
+              radius={0}
+              width={16}
+              height={16}
+              color={colors.black}
+              source={assets.logout}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            {t("menu.logout")}
           </Text>
         </Button>
 

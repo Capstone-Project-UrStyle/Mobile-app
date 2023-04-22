@@ -1,21 +1,17 @@
-import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import {
-  StackHeaderTitleProps,
-  CardStyleInterpolators,
-} from '@react-navigation/stack'
-import { useNavigation } from '@react-navigation/core'
-import { DrawerActions } from '@react-navigation/native'
-import { StackHeaderOptions } from '@react-navigation/stack/lib/typescript/src/types'
+import React from "react"
+import { TouchableOpacity } from "react-native"
+import { CardStyleInterpolators } from "@react-navigation/stack"
+import { useNavigation } from "@react-navigation/core"
+import { DrawerActions } from "@react-navigation/native"
 
-import { useData } from './useData'
-import { useTranslation } from './useTranslation'
+import { useData } from "./useData"
+import { useTranslation } from "./useTranslation"
 
-import Image from '../components/Image'
-import Text from '../components/Text'
-import useTheme from '../hooks/useTheme'
-import Button from '../components/Button'
-import Block from '../components/Block'
+import Image from "../components/Image"
+import Text from "../components/Text"
+import useTheme from "../hooks/useTheme"
+import Button from "../components/Button"
+import Block from "../components/Block"
 
 export default () => {
   const { t } = useTranslation()
@@ -25,26 +21,27 @@ export default () => {
 
   const menu = {
     headerStyle: { elevation: 0 },
-    headerTitleAlign: 'left',
+    headerTitleAlign: "left",
     headerTitleContainerStyle: { marginLeft: -sizes.sm },
     headerLeftContainerStyle: { paddingLeft: sizes.s },
     headerRightContainerStyle: { paddingRight: sizes.s },
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    headerTitle: ({ children }: StackHeaderTitleProps) => (
-      <Text p>{children}</Text>
-    ),
+
+    headerTitle: ({ children }) => <Text p>{children}</Text>,
+
     headerLeft: () => (
       <Button onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
         <Image source={icons.menu} radius={0} color={colors.icon} />
       </Button>
     ),
+
     headerRight: () => (
       <Block row flex={0} align="center" marginRight={sizes.padding}>
         <TouchableOpacity
           style={{ marginRight: sizes.sm }}
           onPress={() =>
-            navigation.navigate('Screens', {
-              screen: 'Pro',
+            navigation.navigate("Screens", {
+              screen: "Pro"
             })
           }
         >
@@ -61,8 +58,8 @@ export default () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('Screens', {
-              screen: 'Pro',
+            navigation.navigate("Screens", {
+              screen: "Pro"
             })
           }
         >
@@ -85,8 +82,8 @@ export default () => {
           </Block>
         </TouchableOpacity>
       </Block>
-    ),
-  } as StackHeaderOptions
+    )
+  }
 
   const options = {
     stack: menu,
@@ -94,7 +91,7 @@ export default () => {
       ...menu,
       headerTitle: () => (
         <Text p white>
-          {t('navigation.components')}
+          {t("navigation.components")}
         </Text>
       ),
       headerRight: () => null,
@@ -104,14 +101,14 @@ export default () => {
         >
           <Image source={icons.menu} radius={0} color={colors.white} />
         </Button>
-      ),
+      )
     },
     pro: {
       ...menu,
       headerTransparent: true,
       headerTitle: () => (
         <Text p white semibold>
-          {t('pro.title')}
+          {t("pro.title")}
         </Text>
       ),
       headerRight: () => null,
@@ -121,7 +118,7 @@ export default () => {
         >
           <Image source={icons.menu} radius={0} color={colors.white} />
         </Button>
-      ),
+      )
     },
     back: {
       ...menu,
@@ -134,10 +131,10 @@ export default () => {
             height={18}
             color={colors.icon}
             source={icons.arrow}
-            transform={[{ rotate: '180deg' }]}
+            transform={[{ rotate: "180deg" }]}
           />
         </Button>
-      ),
+      )
     },
     profile: {
       ...menu,
@@ -146,8 +143,8 @@ export default () => {
           <TouchableOpacity
             style={{ marginRight: sizes.sm }}
             onPress={() =>
-              navigation.navigate('Screens', {
-                screen: 'Notifications',
+              navigation.navigate("Screens", {
+                screen: "Notifications"
               })
             }
           >
@@ -165,7 +162,7 @@ export default () => {
           <TouchableOpacity
             onPress={() =>
               navigation.dispatch(
-                DrawerActions.jumpTo('Screens', { screen: 'Profile' }),
+                DrawerActions.jumpTo("Screens", { screen: "Profile" })
               )
             }
           >
@@ -177,8 +174,8 @@ export default () => {
             />
           </TouchableOpacity>
         </Block>
-      ),
-    },
+      )
+    }
   }
 
   return options

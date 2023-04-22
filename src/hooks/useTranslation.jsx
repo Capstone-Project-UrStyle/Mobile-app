@@ -1,19 +1,14 @@
-import i18n from 'i18n-js'
-import * as Localization from 'expo-localization'
-import Storage from '@react-native-async-storage/async-storage'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import i18n from "i18n-js"
+import * as Localization from "expo-localization"
+import Storage from "@react-native-async-storage/async-storage"
+import React, { useCallback, useContext, useEffect, useState } from "react"
 
-import translations from '../constants/translations/'
-import { ITranslate } from '../constants/types'
+import translations from "../constants/translations/"
 
 export const TranslationContext = React.createContext({})
 
-export const TranslationProvider = ({
-  children,
-}: {
-  children: React.ReactNode
-}) => {
-  const [locale, setLocale] = useState('en')
+export const TranslationProvider = ({ children }) => {
+  const [locale, setLocale] = useState("en")
 
   // Set the locale once at the beginning of your app.
   i18n.locale = locale
@@ -23,16 +18,16 @@ export const TranslationProvider = ({
   i18n.fallbacks = true
 
   const t = useCallback(
-    (scope: i18n.Scope, options?: i18n.TranslateOptions) => {
+    (scope, options) => {
       return i18n.t(scope, { ...options, locale })
     },
-    [locale],
+    [locale]
   )
 
   // get locale from storage
   const getLocale = useCallback(async () => {
     // get preferance gtom storage
-    const localeJSON = await Storage.getItem('locale')
+    const localeJSON = await Storage.getItem("locale")
 
     // set Locale / compare if has updated
     setLocale(localeJSON !== null ? localeJSON : Localization.locale)
@@ -44,14 +39,14 @@ export const TranslationProvider = ({
 
   useEffect(() => {
     // save preferance to storage
-    Storage.setItem('locale', locale)
+    Storage.setItem("locale", locale)
   }, [locale])
 
   const contextValue = {
     t,
     locale,
     setLocale,
-    translate: t,
+    translate: t
   }
 
   return (
@@ -65,4 +60,4 @@ export const TranslationProvider = ({
  * useTranslation hook based on i18n-js
  * Source: https://github.com/fnando/i18n-js
  */
-export const useTranslation = () => useContext(TranslationContext) as ITranslate
+export const useTranslation = () => useContext(TranslationContext)

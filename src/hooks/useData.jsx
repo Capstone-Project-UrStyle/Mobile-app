@@ -125,6 +125,8 @@ export const DataProvider = ({ children }) => {
             })
         }
       } else {
+        AsyncStorage.setItem('token', '')
+        AsyncStorage.setItem('authUser', '')
         setToken(null)
         handleSetUser(null)
       }
