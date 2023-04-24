@@ -1,22 +1,20 @@
-import React from 'react'
+import React from "react"
 import {
   Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native'
-import { BlurView } from 'expo-blur'
-import { LinearGradient } from 'expo-linear-gradient'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+  View
+} from "react-native"
+import { BlurView } from "expo-blur"
+import { LinearGradient } from "expo-linear-gradient"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
-import useTheme from '../hooks/useTheme'
-import { IBlockProps } from '../constants/types'
+import useTheme from "../hooks/useTheme"
 
-const Block = (props: IBlockProps) => {
+const Block = props => {
   const {
-    id = 'Block',
+    id = "Block",
     children,
     style,
     shadow,
@@ -76,25 +74,25 @@ const Block = (props: IBlockProps) => {
   const { colors, sizes } = useTheme()
 
   const colorIndex = primary
-    ? 'primary'
+    ? "primary"
     : secondary
-    ? 'secondary'
+    ? "secondary"
     : tertiary
-    ? 'tertiary'
+    ? "tertiary"
     : black
-    ? 'black'
+    ? "black"
     : white
-    ? 'white'
+    ? "white"
     : gray
-    ? 'gray'
+    ? "gray"
     : danger
-    ? 'danger'
+    ? "danger"
     : warning
-    ? 'warning'
+    ? "warning"
     : success
-    ? 'success'
+    ? "success"
     : info
-    ? 'info'
+    ? "info"
     : null
 
   const blockColor = color
@@ -110,11 +108,11 @@ const Block = (props: IBlockProps) => {
         shadowColor: colors.shadow,
         shadowOffset: {
           width: sizes.shadowOffsetWidth,
-          height: sizes.shadowOffsetHeight,
+          height: sizes.shadowOffsetHeight
         },
         shadowOpacity: sizes.shadowOpacity,
         shadowRadius: sizes.shadowRadius,
-        elevation: sizes.elevation,
+        elevation: sizes.elevation
       }),
       ...(card && {
         backgroundColor: colors.card,
@@ -123,11 +121,11 @@ const Block = (props: IBlockProps) => {
         shadowColor: colors.shadow,
         shadowOffset: {
           width: sizes.shadowOffsetWidth,
-          height: sizes.shadowOffsetHeight,
+          height: sizes.shadowOffsetHeight
         },
         shadowOpacity: sizes.shadowOpacity,
         shadowRadius: sizes.shadowRadius,
-        elevation: sizes.elevation,
+        elevation: sizes.elevation
       }),
       ...(margin !== undefined && { margin }),
       ...(marginBottom && { marginBottom }),
@@ -148,28 +146,28 @@ const Block = (props: IBlockProps) => {
       ...(width && { width }),
       ...(overflow && { overflow }),
       ...(flex !== undefined && { flex }),
-      ...(row && { flexDirection: 'row' }),
+      ...(row && { flexDirection: "row" }),
       ...(align && { alignItems: align }),
-      ...(center && { justifyContent: 'center' }),
+      ...(center && { justifyContent: "center" }),
       ...(justify && { justifyContent: justify }),
       ...(wrap && { flexWrap: wrap }),
       ...(blockColor && { backgroundColor: blockColor }),
       ...(outlined && {
         borderWidth: 1,
         borderColor: blockColor,
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent"
       }),
       ...(position && { position }),
       ...(right !== undefined && { right }),
       ...(left !== undefined && { left }),
       ...(top !== undefined && { top }),
-      ...(bottom !== undefined && { bottom }),
-    },
-  ]) as ViewStyle
+      ...(bottom !== undefined && { bottom })
+    }
+  ])
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const blockID =
-    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
 
   if (safe) {
     return (

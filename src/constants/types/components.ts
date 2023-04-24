@@ -416,11 +416,11 @@ export interface IButtonProps extends TouchableOpacityProps, ISpacing {
    * @see https://docs.expo.io/versions/latest/sdk/haptics/
    */
   haptic?: boolean;
-  /**
-   * Adds vibration feedback on touch using Vibration.vibrate pattern
-   * @see https://reactnative.dev/docs/vibration
-   */
-  vibrate?: number | number[] | null;
+  // /**
+  //  * Adds vibration feedback on touch using Vibration.vibrate pattern
+  //  * @see https://reactnative.dev/docs/vibration
+  //  */
+  // vibrate?: number | number[] | null;
   /**
    * Repeat vibration pattern
    * @see https://reactnative.dev/docs/vibration

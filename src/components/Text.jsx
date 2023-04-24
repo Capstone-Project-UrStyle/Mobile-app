@@ -1,14 +1,13 @@
-import React from 'react'
-import { Platform, StyleSheet, Text, TextStyle } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import MaskedView from '@react-native-community/masked-view'
+import React from "react"
+import { Platform, StyleSheet, Text } from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
+import MaskedView from "@react-native-community/masked-view"
 
-import useTheme from '../hooks/useTheme'
-import { ITextProps } from '../constants/types'
+import useTheme from "../hooks/useTheme"
 
-const Typography = (props: ITextProps) => {
+const Typography = props => {
   const {
-    id = 'Text',
+    id = "Text",
     children,
     style,
     center,
@@ -64,25 +63,25 @@ const Typography = (props: ITextProps) => {
   const { colors, sizes, lines, weights, fonts } = useTheme()
 
   const colorIndex = primary
-    ? 'primary'
+    ? "primary"
     : secondary
-    ? 'secondary'
+    ? "secondary"
     : tertiary
-    ? 'tertiary'
+    ? "tertiary"
     : black
-    ? 'black'
+    ? "black"
     : white
-    ? 'white'
+    ? "white"
     : gray
-    ? 'gray'
+    ? "gray"
     : danger
-    ? 'danger'
+    ? "danger"
     : warning
-    ? 'warning'
+    ? "warning"
     : success
-    ? 'success'
+    ? "success"
     : info
-    ? 'info'
+    ? "info"
     : null
   const textColor = color
     ? color
@@ -103,37 +102,37 @@ const Typography = (props: ITextProps) => {
         fontSize: sizes.h1,
         lineHeight: lines.h1,
         fontWeight: weights.h1,
-        fontFamily: fonts.h1,
+        fontFamily: fonts.h1
       }),
       ...(h2 && {
         fontSize: sizes.h2,
         lineHeight: lines.h2,
         fontWeight: weights.h2,
-        fontFamily: fonts.h2,
+        fontFamily: fonts.h2
       }),
       ...(h3 && {
         fontSize: sizes.h3,
         lineHeight: lines.h3,
         fontWeight: weights.h3,
-        fontFamily: fonts.h3,
+        fontFamily: fonts.h3
       }),
       ...(h4 && {
         fontSize: sizes.h4,
         lineHeight: lines.h4,
         fontWeight: weights.h4,
-        fontFamily: fonts.h4,
+        fontFamily: fonts.h4
       }),
       ...(h5 && {
         fontSize: sizes.h5,
         lineHeight: lines.h5,
         fontWeight: weights.h5,
-        fontFamily: fonts.h5,
+        fontFamily: fonts.h5
       }),
       ...(p && {
         fontSize: sizes.p,
         lineHeight: lines.p,
         fontWeight: weights.p,
-        fontFamily: fonts.p,
+        fontFamily: fonts.p
       }),
       ...(marginBottom && { marginBottom }),
       ...(marginTop && { marginTop }),
@@ -147,7 +146,7 @@ const Typography = (props: ITextProps) => {
       ...(paddingVertical && { paddingVertical }),
       ...(paddingRight && { paddingRight }),
       ...(paddingLeft && { paddingLeft }),
-      ...(center && { textAlign: 'center' }),
+      ...(center && { textAlign: "center" }),
       ...(align && { textAlign: align }),
       ...(bold && { fontFamily: fonts.bold }),
       ...(semibold && { fontFamily: fonts.semibold }),
@@ -162,9 +161,9 @@ const Typography = (props: ITextProps) => {
       ...(right !== undefined && { right }),
       ...(left !== undefined && { left }),
       ...(top !== undefined && { top }),
-      ...(bottom !== undefined && { bottom }),
-    },
-  ]) as TextStyle
+      ...(bottom !== undefined && { bottom })
+    }
+  ])
 
   /*
    * Calculate gradient height container based on text lineHeight or fontSize
@@ -176,12 +175,12 @@ const Typography = (props: ITextProps) => {
       textStyles?.marginVertical ||
         textStyles?.marginTop ||
         textStyles?.marginBottom ||
-        0,
+        0
     )
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const textID =
-    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
 
   if (gradient) {
     return (
@@ -196,7 +195,7 @@ const Typography = (props: ITextProps) => {
           colors={gradient}
           end={end || [0.2, 0]}
           start={start || [0, 0]}
-          style={{ flex: 1, height: gradientHeight, flexWrap: 'wrap' }}
+          style={{ flex: 1, height: gradientHeight, flexWrap: "wrap" }}
         />
       </MaskedView>
     )

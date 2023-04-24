@@ -1,26 +1,19 @@
-import React from 'react'
-import { StyleSheet, Modal as RNModal, ViewStyle, Platform } from 'react-native'
+import React from "react"
+import { StyleSheet, Modal as RNModal, Platform } from "react-native"
 
-import { useTheme } from '../hooks/'
-import { IModalProps } from '../constants/types'
+import { useTheme } from "../hooks/"
 
-import Block from './Block'
-import Button from './Button'
-import Image from './Image'
+import Block from "./Block"
+import Button from "./Button"
+import Image from "./Image"
 
-const Modal = ({
-  id = 'Modal',
-  children,
-  style,
-  onRequestClose,
-  ...props
-}: IModalProps) => {
+const Modal = ({ id = "Modal", children, style, onRequestClose, ...props }) => {
   const { assets, colors, sizes } = useTheme()
-  const modalStyles = StyleSheet.flatten([style, {}]) as ViewStyle
+  const modalStyles = StyleSheet.flatten([style, {}])
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const modalID =
-    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
 
   return (
     <RNModal

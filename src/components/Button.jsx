@@ -1,20 +1,13 @@
-import React, { useCallback } from 'react'
-import {
-  ViewStyle,
-  Vibration,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-} from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import { Ionicons } from '@expo/vector-icons'
-import * as Haptics from 'expo-haptics'
+import React, { useCallback } from "react"
+import { StyleSheet, TouchableOpacity, Platform } from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
+import { Ionicons } from "@expo/vector-icons"
+import * as Haptics from "expo-haptics"
 
-import useTheme from '../hooks/useTheme'
-import { IButtonProps } from '../constants/types'
+import useTheme from "../hooks/useTheme"
 
 const Button = ({
-  id = 'Button',
+  id = "Button",
   children,
   style,
   color,
@@ -69,61 +62,61 @@ const Button = ({
   vibrateRepeat,
   onPress,
   ...props
-}: IButtonProps) => {
+}) => {
   const { colors, sizes } = useTheme()
   const colorIndex = primary
-    ? 'primary'
+    ? "primary"
     : secondary
-    ? 'secondary'
+    ? "secondary"
     : tertiary
-    ? 'tertiary'
+    ? "tertiary"
     : black
-    ? 'black'
+    ? "black"
     : white
-    ? 'white'
+    ? "white"
     : light
-    ? 'light'
+    ? "light"
     : dark
-    ? 'dark'
+    ? "dark"
     : gray
-    ? 'gray'
+    ? "gray"
     : danger
-    ? 'danger'
+    ? "danger"
     : warning
-    ? 'warning'
+    ? "warning"
     : success
-    ? 'success'
+    ? "success"
     : info
-    ? 'info'
+    ? "info"
     : null
 
   const buttonColor = color
     ? color
     : colorIndex
     ? colors?.[colorIndex]
-    : 'transparent'
+    : "transparent"
 
   const buttonStyles = StyleSheet.flatten([
     style,
     {
       minHeight: sizes.xl,
       minWidth: sizes.xl,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       backgroundColor: buttonColor,
       borderRadius: rounded ? sizes.s : sizes.buttonRadius,
       ...(shadow &&
-        buttonColor !== 'transparent' && {
+        buttonColor !== "transparent" && {
           shadowColor: colors.shadow,
           shadowOffset: {
             width: sizes.shadowOffsetWidth,
-            height: sizes.shadowOffsetHeight,
+            height: sizes.shadowOffsetHeight
           },
           shadowOpacity: sizes.shadowOpacity,
           shadowRadius: sizes.shadowRadius,
-          elevation: sizes.elevation,
+          elevation: sizes.elevation
         }),
-      ...(row && { flexDirection: 'row' }),
+      ...(row && { flexDirection: "row" }),
       ...(radius && { borderRadius: radius }),
       ...(flex !== undefined && { flex }),
       ...(margin !== undefined && { margin }),
@@ -144,33 +137,33 @@ const Button = ({
       ...(justify && { justifyContent: justify }),
       ...(height && { height }),
       ...(width && { width }),
-      ...(typeof outlined === 'boolean' && {
+      ...(typeof outlined === "boolean" && {
         borderWidth: sizes.buttonBorder,
         borderColor: buttonColor,
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent"
       }),
-      ...(typeof outlined === 'string' && {
+      ...(typeof outlined === "string" && {
         borderWidth: sizes.buttonBorder,
-        borderColor: outlined,
+        borderColor: outlined
       }),
       ...(social && {
         backgroundColor: colors?.[social],
         width: sizes.socialSize,
         height: sizes.socialSize,
-        borderRadius: sizes.socialRadius,
+        borderRadius: sizes.socialRadius
       }),
       ...(disabled && { opacity: 0.5 }),
       ...(position && { position }),
       ...(right !== undefined && { right }),
       ...(left !== undefined && { left }),
       ...(top !== undefined && { top }),
-      ...(bottom !== undefined && { bottom }),
-    },
-  ]) as ViewStyle
+      ...(bottom !== undefined && { bottom })
+    }
+  ])
 
   /* handle onPress event */
   const handlePress = useCallback(
-    (event) => {
+    event => {
       onPress?.(event)
 
       /* vibrate onPress */
@@ -179,11 +172,11 @@ const Button = ({
       }
 
       /* haptic feedback onPress */
-      if (haptic) {
-        Haptics.selectionAsync()
-      }
+      // if (haptic) {
+      //   Haptics.selectionAsync()
+      // }
     },
-    [haptic, vibrate, vibrateRepeat, onPress],
+    [haptic, vibrate, vibrateRepeat, onPress]
   )
 
   if (round) {
@@ -193,7 +186,7 @@ const Button = ({
       Number(buttonStyles.maxWidth || 0),
       Number(buttonStyles.height || 0),
       Number(buttonStyles.minHeight || 0),
-      Number(buttonStyles.maxHeight || 0),
+      Number(buttonStyles.maxHeight || 0)
     )
     buttonStyles.maxWidth = maxSize
     buttonStyles.maxHeight = maxSize
@@ -204,14 +197,14 @@ const Button = ({
     buttonStyles,
     {
       flex: 1,
-      width: '100%',
-      ...(round && { maxWidth: buttonStyles.maxWidth }),
-    },
-  ]) as ViewStyle
+      width: "100%",
+      ...(round && { maxWidth: buttonStyles.maxWidth })
+    }
+  ])
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const buttonID =
-    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
 
   if (gradient) {
     return (
@@ -236,11 +229,11 @@ const Button = ({
 
   if (social) {
     const socialIcon =
-      social === 'facebook'
-        ? 'logo-facebook'
-        : social === 'twitter'
-        ? 'logo-twitter'
-        : 'logo-dribbble'
+      social === "facebook"
+        ? "logo-facebook"
+        : social === "twitter"
+        ? "logo-twitter"
+        : "logo-dribbble"
 
     return (
       <TouchableOpacity

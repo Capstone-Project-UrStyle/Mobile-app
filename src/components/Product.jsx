@@ -1,17 +1,16 @@
-import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import React from "react"
+import { TouchableOpacity } from "react-native"
 
-import Block from './Block'
-import Image from './Image'
-import Text from './Text'
-import { IProduct } from '../constants/types'
-import { useTheme, useTranslation } from '../hooks/'
+import Block from "./Block"
+import Image from "./Image"
+import Text from "./Text"
+import { useTheme, useTranslation } from "../hooks/"
 
-const Product = ({ image, title, type, linkLabel }: IProduct) => {
+const Product = ({ image, title, type, linkLabel }) => {
   const { t } = useTranslation()
   const { assets, colors, sizes } = useTheme()
 
-  const isHorizontal = type !== 'vertical'
+  const isHorizontal = type !== "vertical"
   const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2
 
   return (
@@ -27,7 +26,7 @@ const Product = ({ image, title, type, linkLabel }: IProduct) => {
         source={{ uri: image }}
         style={{
           height: isHorizontal ? 114 : 110,
-          width: !isHorizontal ? '100%' : sizes.width / 2.435,
+          width: !isHorizontal ? "100%" : sizes.width / 2.435
         }}
       />
       <Block
@@ -48,7 +47,7 @@ const Product = ({ image, title, type, linkLabel }: IProduct) => {
               size={sizes.linkSize}
               marginRight={sizes.s}
             >
-              {linkLabel || t('common.readArticle')}
+              {linkLabel || t("common.readArticle")}
             </Text>
             <Image source={assets.arrow} color={colors.link} />
           </Block>

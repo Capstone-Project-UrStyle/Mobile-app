@@ -1,21 +1,13 @@
-import React, { useCallback, useState } from 'react'
-import {
-  Image,
-  TextInput,
-  TextStyle,
-  ViewStyle,
-  StyleSheet,
-  Platform,
-} from 'react-native'
+import React, { useCallback, useState } from "react"
+import { Image, TextInput, StyleSheet, Platform } from "react-native"
 
-import Block from './Block'
-import Text from './Text'
+import Block from "./Block"
+import Text from "./Text"
 
-import useTheme from '../hooks/useTheme'
-import { IInputProps } from '../constants/types'
+import useTheme from "../hooks/useTheme"
 
 const Input = ({
-  id = 'Input',
+  id = "Input",
   style,
   color,
   primary,
@@ -41,7 +33,7 @@ const Input = ({
   onFocus,
   onBlur,
   ...props
-}: IInputProps) => {
+}) => {
   const { assets, colors, sizes } = useTheme()
   const [isFocused, setFocused] = useState(false)
 
@@ -51,29 +43,29 @@ const Input = ({
       focus && onFocus?.(event)
       !focus && onBlur?.(event)
     },
-    [setFocused, onFocus, onBlur],
+    [setFocused, onFocus, onBlur]
   )
 
   const colorIndex = primary
-    ? 'primary'
+    ? "primary"
     : secondary
-    ? 'secondary'
+    ? "secondary"
     : tertiary
-    ? 'tertiary'
+    ? "tertiary"
     : black
-    ? 'black'
+    ? "black"
     : white
-    ? 'white'
+    ? "white"
     : gray
-    ? 'gray'
+    ? "gray"
     : danger
-    ? 'danger'
+    ? "danger"
     : warning
-    ? 'warning'
+    ? "warning"
     : success
-    ? 'success'
+    ? "success"
     : info
-    ? 'info'
+    ? "info"
     : null
   const inputColor = color
     ? color
@@ -90,33 +82,33 @@ const Input = ({
       ...(marginHorizontal && { marginHorizontal: marginHorizontal }),
       ...(marginVertical && { marginVertical: marginVertical }),
       ...(marginRight && { marginRight: marginRight }),
-      ...(marginLeft && { marginLeft: marginLeft }),
-    },
-  ]) as ViewStyle
+      ...(marginLeft && { marginLeft: marginLeft })
+    }
+  ])
 
   const inputContainerStyles = StyleSheet.flatten([
     {
       minHeight: sizes.inputHeight,
       borderRadius: sizes.inputRadius,
       borderWidth: isFocused ? 2 : sizes.inputBorder,
-      borderColor: isFocused ? colors.focus : inputColor,
-    },
-  ]) as ViewStyle
+      borderColor: isFocused ? colors.focus : inputColor
+    }
+  ])
 
   const inputStyles = StyleSheet.flatten([
     {
       flex: 1,
       zIndex: 2,
-      height: '100%',
+      height: "100%",
       fontSize: sizes.p,
       color: colors.input,
-      paddingHorizontal: sizes.inputPadding,
-    },
-  ]) as TextStyle
+      paddingHorizontal: sizes.inputPadding
+    }
+  ])
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const inputID =
-    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
 
   return (
     <Block flex={0} style={inputBoxStyles}>
@@ -144,15 +136,15 @@ const Input = ({
           style={inputStyles}
           editable={!disabled}
           placeholderTextColor={inputColor}
-          onFocus={(event) => handleFocus(event, true)}
-          onBlur={(event) => handleFocus(event, false)}
+          onFocus={event => handleFocus(event, true)}
+          onBlur={event => handleFocus(event, false)}
         />
         {danger && assets.warning && (
           <Image
             source={assets.warning}
             style={{
               marginRight: sizes.s,
-              tintColor: colors.danger,
+              tintColor: colors.danger
             }}
           />
         )}
@@ -163,7 +155,7 @@ const Input = ({
               width: 12,
               height: 9,
               marginRight: sizes.s,
-              tintColor: colors.success,
+              tintColor: colors.success
             }}
           />
         )}

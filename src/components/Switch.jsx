@@ -1,20 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  Animated,
-  Pressable,
-  Platform,
-  ViewStyle,
-  StyleSheet,
-} from 'react-native'
-import * as Haptics from 'expo-haptics'
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Animated, Pressable, Platform, StyleSheet } from "react-native"
+import * as Haptics from "expo-haptics"
 
-import { ISwitchProps } from '../constants/types'
-import useTheme from '../hooks/useTheme'
+import useTheme from "../hooks/useTheme"
 
 const Switch = ({
-  id = 'Switch',
+  id = "Switch",
   checked = false,
-  thumbColor = 'white',
+  thumbColor = "white",
   activeFillColor,
   inactiveFillColor,
   duration = 250,
@@ -24,7 +17,7 @@ const Switch = ({
   onPress,
   haptic = true,
   ...props
-}: ISwitchProps) => {
+}) => {
   const [isChecked, setChecked] = useState(checked)
   const { colors, sizes } = useTheme()
   const activeColor = activeFillColor || colors.switchOn
@@ -46,7 +39,7 @@ const Switch = ({
     Animated.timing(animation, {
       duration,
       useNativeDriver: false,
-      toValue: isChecked ? 28 : 2,
+      toValue: isChecked ? 28 : 2
     }).start()
   }, [isChecked, animation, duration])
 
@@ -59,18 +52,18 @@ const Switch = ({
 
   const bgColor = animation.interpolate({
     inputRange: [2, 28],
-    outputRange: [String(inactiveColor), String(activeColor)],
+    outputRange: [String(inactiveColor), String(activeColor)]
   })
 
   const switchStyles = StyleSheet.flatten([
     {
-      justifyContent: 'center',
-      alignContent: 'center',
+      justifyContent: "center",
+      alignContent: "center",
       backgroundColor: bgColor,
-      height: sizes.switchHeight,
+      height: sizes.switchHeight
     },
-    switchStyle,
-  ]) as ViewStyle
+    switchStyle
+  ])
 
   const thumbStyles = StyleSheet.flatten([
     thumbStyle,
@@ -81,29 +74,29 @@ const Switch = ({
       shadowColor: colors.shadow,
       shadowOffset: {
         width: sizes.shadowOffsetWidth,
-        height: sizes.shadowOffsetHeight,
+        height: sizes.shadowOffsetHeight
       },
       shadowOpacity: sizes.shadowOpacity,
       shadowRadius: sizes.shadowRadius,
       elevation: sizes.elevation,
       borderRadius: sizes.switchThumb / 2,
-      transform: [{ translateX: animation }],
-    },
-  ]) as ViewStyle
+      transform: [{ translateX: animation }]
+    }
+  ])
 
   const containerStyles = StyleSheet.flatten([
     style,
     {
-      overflow: 'hidden',
+      overflow: "hidden",
       width: sizes.switchWidth,
       height: sizes.switchHeight,
-      borderRadius: sizes.switchHeight,
-    },
-  ]) as ViewStyle
+      borderRadius: sizes.switchHeight
+    }
+  ])
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const switchID =
-    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
 
   return (
     <Pressable
