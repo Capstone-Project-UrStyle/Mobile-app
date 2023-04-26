@@ -55,18 +55,18 @@ const Article = ({
           )}
 
           {/* user details */}
-          {user?.name && (
+          {user.name && (
             <Block row marginLeft={sizes.xs} marginBottom={sizes.xs}>
               <Image
                 radius={sizes.s}
                 width={sizes.xl}
                 height={sizes.xl}
-                source={{ uri: user?.avatar }}
+                source={{ uri: user.avatar }}
                 style={{ backgroundColor: colors.white }}
               />
               <Block justify="center" marginLeft={sizes.s}>
                 <Text p semibold>
-                  {user?.name}
+                  {user.name}
                 </Text>
                 <Text p gray>
                   {t("common.posted", {
@@ -121,15 +121,15 @@ const Article = ({
                 radius={sizes.s}
                 width={sizes.xl}
                 height={sizes.xl}
-                source={{ uri: user?.avatar }}
+                source={{ uri: user.avatar }}
                 style={{ backgroundColor: colors.white }}
               />
               <Block justify="center" marginLeft={sizes.s}>
                 <Text p white semibold>
-                  {user?.name}
+                  {user.name}
                 </Text>
                 <Text p white>
-                  {user?.department}
+                  {user.department}
                 </Text>
               </Block>
             </Block>

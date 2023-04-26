@@ -19,7 +19,7 @@ export const DataProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [theme, setTheme] = useState(light)
-  const [user, setUser] = useState(USERS[0])
+  const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
 
   const [users, setUsers] = useState(USERS)
@@ -76,6 +76,12 @@ export const DataProvider = ({ children }) => {
   // Handle set user
   const handleSetUser = useCallback(
     payload => {
+      // User logged out => set user === null
+      if (!payload) {
+        AsyncStorage.removeItem('user')
+        setUser(null)
+      }
+
       // set user / compare if has updated
       if (JSON.stringify(payload) !== JSON.stringify(user)) {
         AsyncStorage.setItem('user', JSON.stringify(payload))
@@ -109,7 +115,7 @@ export const DataProvider = ({ children }) => {
           ] = `Bearer ${payload}`
           
           // Save preferance to storage
-          AsyncStorage.setItem('token', token)
+          AsyncStorage.setItem('token', payload)
 
           setToken(payload)
           
@@ -125,8 +131,8 @@ export const DataProvider = ({ children }) => {
             })
         }
       } else {
-        AsyncStorage.setItem('token', '')
-        AsyncStorage.setItem('authUser', '')
+        AsyncStorage.removeItem('token')
+        AsyncStorage.removeItem('user')
         setToken(null)
         handleSetUser(null)
       }

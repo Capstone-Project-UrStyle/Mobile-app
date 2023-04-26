@@ -27,7 +27,7 @@ export interface IArticleOptions {
   sleeping?: {total?: number; type?: 'sofa' | 'bed'};
   guests?: number;
   price?: number;
-  user?: IUser;
+  user: IUser;
   image?: string;
 }
 export interface IArticle {
@@ -38,7 +38,7 @@ export interface IArticle {
   image?: string;
   location?: ILocation;
   rating?: number;
-  user?: IUser;
+  user: IUser;
   offers?: IProduct[];
   options?: IArticleOptions[];
   timestamp?: number;

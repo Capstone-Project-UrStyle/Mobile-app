@@ -64,15 +64,15 @@ const ScreensStack = () => {
 const DrawerContent = props => {
   const { navigation } = props
   const { t } = useTranslation()
-  const { isDark, handleSetIsDark, handleSetToken } = useData()
+  const { isDark, handleSetIsDark, handleSetToken, user } = useData()
   const [active, setActive] = useState("Home")
   const { assets, colors, gradients, sizes } = useTheme()
   const labelColor = colors.text
 
   const handleNavigation = useCallback(
-    to => {
+    (to, params) => {
       setActive(to)
-      navigation.navigate(to)
+      navigation.navigate(to, params)
     },
     [navigation, setActive]
   )
@@ -89,7 +89,7 @@ const DrawerContent = props => {
     },
     { name: t("screens.articles"), to: "Articles", icon: assets.document },
     { name: t("screens.rental"), to: "Pro", icon: assets.rental },
-    { name: t("screens.profile"), to: "Profile", icon: assets.profile },
+    { name: t("screens.profile"), to: "Profile", icon: assets.profile, params: { userId: user?.id } },
     { name: t("screens.settings"), to: "Pro", icon: assets.settings },
     { name: t("screens.extra"), to: "Pro", icon: assets.extras }
   ]
@@ -125,7 +125,7 @@ const DrawerContent = props => {
           </Block>
         </Block>
 
-        {screens?.map((screen, index) => {
+        {screens?.map((screen, index, params) => {
           const isActive = active === screen.to
           return (
             <Button
@@ -133,7 +133,7 @@ const DrawerContent = props => {
               justify="flex-start"
               marginBottom={sizes.s}
               key={`menu-screen-${screen.name}-${index}`}
-              onPress={() => handleNavigation(screen.to)}
+              onPress={() => handleNavigation(screen.to, screen.params)}
             >
               <Block
                 flex={0}
