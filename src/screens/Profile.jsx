@@ -1,11 +1,16 @@
 import React, { useCallback } from "react"
-import { Platform, Linking } from "react-native"
+import { Platform, Linking, TouchableOpacity } from "react-native"
 import { Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { useNavigation } from "@react-navigation/core"
+
+import * as ImagePicker from 'expo-image-picker'
 
 import { BASE_API_URL } from "../api/axiosClient"
 import { Block, Button, Image, Text } from "../components/"
 import { useData, useTheme, useTranslation } from "../hooks/"
+import { createFormDataFromUri } from '../utils/formDataCreator'
+
+import uploadImageApi from '../api/uploadImageApi'
 
 const isAndroid = Platform.OS === "android"
 
@@ -36,6 +41,26 @@ const Profile = ({ route }) => {
     },
     [user]
   )
+
+  const handleChooseUserAvatar = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    })
+
+    if (!result.canceled) {
+      const postData = createFormDataFromUri(
+        'user-avatar',
+        result.uri,
+      )
+      await uploadImageApi.uploadUserAvatar(
+        user.id,
+        postData,
+      )
+    }
+  }
 
   return (
     <Block safe marginTop={sizes.md}>
@@ -89,12 +114,14 @@ const Profile = ({ route }) => {
             </Block>
 
             <Block flex={0} row justify="center" align="center">
-              <Image
-                width={80}
-                height={80}
-                marginHorizontal={sizes.s}
-                source={{ uri: BASE_API_URL + user.UserInfo.avatar }}
-              />
+              <TouchableOpacity onPress={handleChooseUserAvatar}>
+                <Image
+                  width={80}
+                  height={80}
+                  marginHorizontal={sizes.s}
+                  source={{ uri: BASE_API_URL + user.UserInfo.avatar }}
+                />
+              </TouchableOpacity>
               <Block flex={0} align="flex-start">
                 <Block row align="center" marginHorizontal={sizes.s}>
                   <Text h5 center white marginRight={sizes.s}>
