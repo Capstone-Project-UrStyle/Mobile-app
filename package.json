@@ -29,7 +29,7 @@
     "expo-image-picker": "~14.1.1",
     "expo-linear-gradient": "~12.1.2",
     "expo-localization": "~14.1.1",
-    "expo-modules-core": "~1.2.6",
+    "expo-modules-core": "~1.2.7",
     "expo-status-bar": "~1.4.4",
     "i18n-js": "3.8.0",
     "react": "18.2.0",

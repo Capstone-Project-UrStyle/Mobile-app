@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useState } from 'react'
-import { FlatList, TouchableOpacity } from 'react-native'
+import React, { useLayoutEffect, useState } from "react"
+import { FlatList, TouchableOpacity } from "react-native"
 
-import { useNavigation } from '@react-navigation/core'
-import { useHeaderHeight } from '@react-navigation/stack'
+import { useNavigation } from "@react-navigation/core"
+import { useHeaderHeight } from "@react-navigation/stack"
 
-import { useTheme } from '../hooks/'
+import { useTheme } from "../hooks"
 import {
   Block,
   Button,
@@ -12,13 +12,13 @@ import {
   Image,
   Switch,
   Modal,
-  Text,
-} from '../components/'
+  Text
+} from "../components"
 
 // buttons example
 const Buttons = () => {
   const [showModal, setModal] = useState(false)
-  const [quantity, setQuantity] = useState('01')
+  const [quantity, setQuantity] = useState("01")
   const { assets, colors, gradients, sizes } = useTheme()
 
   return (
@@ -90,7 +90,7 @@ const Buttons = () => {
               <Image
                 source={assets.arrow}
                 color={colors.white}
-                transform={[{ rotate: '90deg' }]}
+                transform={[{ rotate: "90deg" }]}
               />
             </Block>
           </Button>
@@ -108,8 +108,8 @@ const Buttons = () => {
       </Block>
       <Modal visible={showModal} onRequestClose={() => setModal(false)}>
         <FlatList
-          keyExtractor={(index) => `${index}`}
-          data={['01', '02', '03', '04', '05']}
+          keyExtractor={index => `${index}`}
+          data={["01", "02", "03", "04", "05"]}
           renderItem={({ item }) => (
             <Button
               marginBottom={sizes.sm}
@@ -199,11 +199,8 @@ const Switches = () => {
       </Text>
       <Block>
         <Block row flex={0} align="center" justify="space-between">
-          <Text>Switch is {switch1 ? 'ON' : 'OFF'}</Text>
-          <Switch
-            checked={switch1}
-            onPress={(checked) => setSwitch1(checked)}
-          />
+          <Text>Switch is {switch1 ? "ON" : "OFF"}</Text>
+          <Switch checked={switch1} onPress={checked => setSwitch1(checked)} />
         </Block>
         <Block
           row
@@ -212,11 +209,8 @@ const Switches = () => {
           justify="space-between"
           marginTop={sizes.s}
         >
-          <Text>Switch is {switch2 ? 'ON' : 'OFF'}</Text>
-          <Switch
-            checked={switch2}
-            onPress={(checked) => setSwitch2(checked)}
-          />
+          <Text>Switch is {switch2 ? "ON" : "OFF"}</Text>
+          <Switch checked={switch2} onPress={checked => setSwitch2(checked)} />
         </Block>
       </Block>
     </Block>
@@ -277,7 +271,7 @@ const Cards = () => {
           <Image
             resizeMode="cover"
             source={assets?.card2}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           />
           <Block padding={sizes.s} justify="space-between">
             <Text p marginBottom={sizes.s}>
@@ -297,7 +291,7 @@ const Cards = () => {
           <Image
             resizeMode="cover"
             source={assets?.card3}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           />
           <Block padding={sizes.s} justify="space-between">
             <Text p marginBottom={sizes.s}>
@@ -319,7 +313,7 @@ const Cards = () => {
         <Image
           resizeMode="cover"
           source={assets?.card4}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         />
         <Text
           h5
@@ -377,7 +371,7 @@ const Cards = () => {
                 style={{
                   width: sizes.xl,
                   height: sizes.xl,
-                  borderRadius: sizes.s,
+                  borderRadius: sizes.s
                 }}
               />
               <Block marginLeft={sizes.s}>
@@ -415,7 +409,7 @@ const Gallery = () => {
         <Image
           resizeMode="cover"
           source={assets.carousel1}
-          style={{ width: '100%' }}
+          style={{ width: "100%" }}
         />
         <Text p secondary marginTop={sizes.sm}>
           Private Room • 1 Guests • 1 Sofa
@@ -447,7 +441,7 @@ const Gallery = () => {
             marginBottom={IMAGE_MARGIN}
             style={{
               height: IMAGE_SIZE,
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE
             }}
           />
           <Image
@@ -456,7 +450,7 @@ const Gallery = () => {
             marginBottom={IMAGE_MARGIN}
             style={{
               height: IMAGE_SIZE,
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE
             }}
           />
           <Image
@@ -465,7 +459,7 @@ const Gallery = () => {
             marginBottom={IMAGE_MARGIN}
             style={{
               height: IMAGE_SIZE,
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE
             }}
           />
           <Image
@@ -474,7 +468,7 @@ const Gallery = () => {
             marginBottom={IMAGE_MARGIN}
             style={{
               height: IMAGE_SIZE,
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE
             }}
           />
           <Image
@@ -483,7 +477,7 @@ const Gallery = () => {
             marginBottom={IMAGE_MARGIN}
             style={{
               height: IMAGE_SIZE,
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE
             }}
           />
           <Image
@@ -492,7 +486,7 @@ const Gallery = () => {
             marginBottom={IMAGE_MARGIN}
             style={{
               height: IMAGE_SIZE,
-              width: IMAGE_SIZE,
+              width: IMAGE_SIZE
             }}
           />
         </Block>
@@ -516,7 +510,7 @@ const Gallery = () => {
             source={assets?.photo1}
             style={{
               width: IMAGE_VERTICAL_SIZE + IMAGE_MARGIN / 2,
-              height: IMAGE_VERTICAL_SIZE * 2 + IMAGE_VERTICAL_MARGIN,
+              height: IMAGE_VERTICAL_SIZE * 2 + IMAGE_VERTICAL_MARGIN
             }}
           />
           <Block marginLeft={sizes.m}>
@@ -526,7 +520,7 @@ const Gallery = () => {
               marginBottom={IMAGE_VERTICAL_MARGIN}
               style={{
                 height: IMAGE_VERTICAL_SIZE,
-                width: IMAGE_VERTICAL_SIZE,
+                width: IMAGE_VERTICAL_SIZE
               }}
             />
             <Image
@@ -534,7 +528,7 @@ const Gallery = () => {
               source={assets?.photo3}
               style={{
                 height: IMAGE_VERTICAL_SIZE,
-                width: IMAGE_VERTICAL_SIZE,
+                width: IMAGE_VERTICAL_SIZE
               }}
             />
           </Block>
@@ -559,7 +553,7 @@ const Components = () => {
           height={headerHeight}
           source={assets.header}
         />
-      ),
+      )
     })
   }, [assets.header, navigation, sizes.width, headerHeight])
 
