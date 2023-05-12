@@ -1,36 +1,42 @@
-import React, { useCallback } from "react"
-import { Platform, Linking, TouchableOpacity } from "react-native"
-import { Ionicons, MaterialIcons } from "@expo/vector-icons"
-import { useNavigation } from "@react-navigation/core"
+import React, { useCallback } from 'react'
+import { Platform, Linking, TouchableOpacity } from 'react-native'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/core'
 
 import * as ImagePicker from 'expo-image-picker'
 
-import { BASE_API_URL } from "../api/axiosClient"
-import { Block, Button, Image, Text } from "../components/"
-import { useData, useTheme, useTranslation } from "../hooks/"
+import { BASE_API_URL } from '../api/axiosClient'
+import { Block, Button, Image, Text } from '../components/'
+import { useData, useTheme, useTranslation } from '../hooks/'
 import { createFormDataFromUri } from '../utils/formDataCreator'
 
 import uploadImageApi from '../api/uploadImageApi'
 
-const isAndroid = Platform.OS === "android"
+const isAndroid = Platform.OS === 'android'
 
 const Profile = ({ route }) => {
   const { user } = useData()
   const { t } = useTranslation()
   const navigation = useNavigation()
   const { assets, colors, sizes } = useTheme()
-  
+
   const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3
   const IMAGE_VERTICAL_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 2
   const IMAGE_MARGIN = (sizes.width - IMAGE_SIZE * 3 - sizes.padding * 2) / 2
-  const IMAGE_VERTICAL_MARGIN = (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2
-  
+  const IMAGE_VERTICAL_MARGIN =
+    (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2
+
   const userId = route.params.userId
   const isFollowed = false
-  const genderIcon = user.UserInfo.gender === 0 ? "male" : user.UserInfo.gender === 1 ? "female" : "male-female"
+  const genderIcon =
+    user.UserInfo.gender === 0
+      ? 'male'
+      : user.UserInfo.gender === 1
+      ? 'female'
+      : 'male-female'
 
   const handleSocialLink = useCallback(
-    url => {
+    (url) => {
       try {
         if (url) {
           Linking.openURL(url)
@@ -39,7 +45,7 @@ const Profile = ({ route }) => {
         alert(`Cannot open URL: ${url}`)
       }
     },
-    [user]
+    [user],
   )
 
   const handleChooseUserAvatar = async () => {
@@ -51,14 +57,8 @@ const Profile = ({ route }) => {
     })
 
     if (!result.canceled) {
-      const postData = createFormDataFromUri(
-        'user-avatar',
-        result.uri,
-      )
-      await uploadImageApi.uploadUserAvatar(
-        user.id,
-        postData,
-      )
+      const postData = createFormDataFromUri('user-avatar', result.uri)
+      await uploadImageApi.uploadUserAvatar(user.id, postData)
     }
   }
 
@@ -92,10 +92,10 @@ const Profile = ({ route }) => {
                   height={18}
                   color={colors.white}
                   source={assets.arrow}
-                  transform={[{ rotate: "180deg" }]}
+                  transform={[{ rotate: '180deg' }]}
                 />
                 <Text p white marginLeft={sizes.s}>
-                  {t("profile.title")}
+                  {t('profile.title')}
                 </Text>
               </Button>
               {user.id === userId && (
@@ -104,11 +104,7 @@ const Profile = ({ route }) => {
                   flex={0}
                   // onPress={() => navigation.goBack()}
                 >
-                  <MaterialIcons
-                    size={20}
-                    name="edit"
-                    color={colors.white}
-                  />
+                  <MaterialIcons size={20} name="edit" color={colors.white} />
                 </Button>
               )}
             </Block>
@@ -178,7 +174,7 @@ const Profile = ({ route }) => {
                     color="rgba(255,255,255,0.2)"
                   >
                     <Text white bold transform="uppercase">
-                      {isFollowed ? t("common.unfollow") : t("common.follow")}
+                      {isFollowed ? t('common.unfollow') : t('common.follow')}
                     </Text>
                   </Block>
                 </Button>
@@ -191,11 +187,7 @@ const Profile = ({ route }) => {
                 outlined={String(colors.white)}
                 onPress={() => handleSocialLink(user.UserInfo.facebook)}
               >
-                <Ionicons
-                  size={20}
-                  name="logo-facebook"
-                  color={colors.white}
-                />
+                <Ionicons size={20} name="logo-facebook" color={colors.white} />
               </Button>
               <Button
                 shadow={false}
@@ -238,11 +230,11 @@ const Profile = ({ route }) => {
             >
               <Block align="center">
                 <Text h5>{user.FollowerCount || 0}</Text>
-                <Text>{t("profile.followers")}</Text>
+                <Text>{t('profile.followers')}</Text>
               </Block>
               <Block align="center">
                 <Text h5>{user.FollowingCount || 0}</Text>
-                <Text>{t("profile.following")}</Text>
+                <Text>{t('profile.following')}</Text>
               </Block>
             </Block>
           </Block>
@@ -250,7 +242,7 @@ const Profile = ({ route }) => {
           {/* profile: about me */}
           <Block paddingHorizontal={sizes.sm}>
             <Text h5 semibold marginBottom={sizes.s} marginTop={sizes.sm}>
-              {t("profile.aboutMe")}
+              {t('profile.aboutMe')}
             </Text>
             <Text p lineHeight={26}>
               {user.about}
@@ -261,11 +253,11 @@ const Profile = ({ route }) => {
           <Block paddingHorizontal={sizes.sm} marginTop={sizes.s}>
             <Block row align="center" justify="space-between">
               <Text h5 semibold>
-                {t("common.album")}
+                {t('common.album')}
               </Text>
               <Button>
                 <Text p primary semibold>
-                  {t("common.viewall")}
+                  {t('common.viewall')}
                 </Text>
               </Button>
             </Block>
@@ -275,7 +267,7 @@ const Profile = ({ route }) => {
                 source={assets?.photo1}
                 style={{
                   width: IMAGE_VERTICAL_SIZE + IMAGE_MARGIN / 2,
-                  height: IMAGE_VERTICAL_SIZE * 2 + IMAGE_VERTICAL_MARGIN
+                  height: IMAGE_VERTICAL_SIZE * 2 + IMAGE_VERTICAL_MARGIN,
                 }}
               />
               <Block marginLeft={sizes.m}>
@@ -285,7 +277,7 @@ const Profile = ({ route }) => {
                   marginBottom={IMAGE_VERTICAL_MARGIN}
                   style={{
                     height: IMAGE_VERTICAL_SIZE,
-                    width: IMAGE_VERTICAL_SIZE
+                    width: IMAGE_VERTICAL_SIZE,
                   }}
                 />
                 <Image
@@ -293,7 +285,7 @@ const Profile = ({ route }) => {
                   source={assets?.photo3}
                   style={{
                     height: IMAGE_VERTICAL_SIZE,
-                    width: IMAGE_VERTICAL_SIZE
+                    width: IMAGE_VERTICAL_SIZE,
                   }}
                 />
               </Block>

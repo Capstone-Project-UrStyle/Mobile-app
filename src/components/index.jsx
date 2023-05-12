@@ -9,6 +9,7 @@ import Image from './Image'
 import Article from './Article'
 import Product from './Product'
 import WeatherCard from './WeatherCard'
+import ClosetCard from './ClosetCard'
 
 export {
   Block,
@@ -22,4 +23,5 @@ export {
   Product,
   Modal,
   WeatherCard,
+  ClosetCard,
 }

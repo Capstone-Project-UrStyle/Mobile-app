@@ -1,14 +1,14 @@
-import React, { useCallback, useContext, useEffect, useState } from "react"
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import {
   USERS,
   FOLLOWING,
   TRENDING,
   CATEGORIES,
-  ARTICLES
-} from "../constants/mocks"
-import { light } from "../constants"
+  ARTICLES,
+} from '../constants/mocks'
+import { light } from '../constants'
 
 import axiosClient from '../api/axiosClient'
 import authApi from '../api/auth'
@@ -31,19 +31,19 @@ export const DataProvider = ({ children }) => {
 
   // Handle set isLoading mode
   const handleSetIsLoading = useCallback(
-    payload => {
+    (payload) => {
       // Set isLoading / compare if has updated
       setIsLoading(payload)
       // Save preferance to storage
-      AsyncStorage.setItem("isLoading", JSON.stringify(payload))
+      AsyncStorage.setItem('isLoading', JSON.stringify(payload))
     },
-    [setIsLoading]
+    [setIsLoading],
   )
 
   // Get isDark mode from storage
   const getIsDark = useCallback(async () => {
     // Get preferance gtom storage
-    const isDarkJSON = await AsyncStorage.getItem("isDark")
+    const isDarkJSON = await AsyncStorage.getItem('isDark')
 
     if (isDarkJSON !== null) {
       // Set isDark / compare if has updated
@@ -53,29 +53,29 @@ export const DataProvider = ({ children }) => {
 
   // handle isDark mode
   const handleSetIsDark = useCallback(
-    payload => {
+    (payload) => {
       // set isDark / compare if has updated
       setIsDark(payload)
       // save preferance to storage
-      AsyncStorage.setItem("isDark", JSON.stringify(payload))
+      AsyncStorage.setItem('isDark', JSON.stringify(payload))
     },
-    [setIsDark]
+    [setIsDark],
   )
 
   // handle users / profiles
   const handleUsers = useCallback(
-    payload => {
+    (payload) => {
       // set users / compare if has updated
       if (JSON.stringify(payload) !== JSON.stringify(users)) {
         setUsers({ ...users, ...payload })
       }
     },
-    [users, setUsers]
+    [users, setUsers],
   )
 
   // Handle set user
   const handleSetUser = useCallback(
-    payload => {
+    (payload) => {
       // User logged out => set user === null
       if (!payload) {
         AsyncStorage.removeItem('user')
@@ -88,13 +88,13 @@ export const DataProvider = ({ children }) => {
         setUser(payload)
       }
     },
-    [user, setUser]
+    [user, setUser],
   )
 
   // Get token
   const getToken = useCallback(async () => {
     // Get preferance gtom storage
-    const tokenString = await AsyncStorage.getItem("token")
+    const tokenString = await AsyncStorage.getItem('token')
 
     if (tokenString !== null) {
       handleSetToken(tokenString)
@@ -105,7 +105,7 @@ export const DataProvider = ({ children }) => {
 
   // Handle set token
   const handleSetToken = useCallback(
-    payload => {
+    (payload) => {
       if (payload !== null) {
         // set user / compare if has updated
         if (JSON.stringify(payload) !== JSON.stringify(token)) {
@@ -113,12 +113,12 @@ export const DataProvider = ({ children }) => {
           axiosClient.defaults.headers.common[
             'Authorization'
           ] = `Bearer ${payload}`
-          
+
           // Save preferance to storage
           AsyncStorage.setItem('token', payload)
 
           setToken(payload)
-          
+
           // Get current user's data
           authApi
             .getAuthenticatedUser()
@@ -137,18 +137,18 @@ export const DataProvider = ({ children }) => {
         handleSetUser(null)
       }
     },
-    [user, setToken]
+    [user, setToken],
   )
 
   // handle Article
   const handleArticle = useCallback(
-    payload => {
+    (payload) => {
       // set article / compare if has updated
       if (JSON.stringify(payload) !== JSON.stringify(article)) {
         setArticle(payload)
       }
     },
-    [article, setArticle]
+    [article, setArticle],
   )
 
   // get initial data for: token & isDark & language
@@ -185,7 +185,7 @@ export const DataProvider = ({ children }) => {
     articles,
     setArticles,
     article,
-    handleArticle
+    handleArticle,
   }
 
   return (

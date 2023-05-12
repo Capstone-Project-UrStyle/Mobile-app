@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { FlatList } from "react-native"
+import React, { useEffect, useState } from 'react'
+import { FlatList } from 'react-native'
 
-import { useData, useTheme } from "../hooks"
-import { Block, Button, Article, Text } from "../components"
+import { useData, useTheme } from '../hooks'
+import { Block, Button, Article, Text } from '../components'
 
 const Articles = () => {
   const data = useData()
@@ -21,11 +21,11 @@ const Articles = () => {
   // update articles on category change
   useEffect(() => {
     const category = data?.categories?.find(
-      category => category?.id === selected?.id
+      (category) => category?.id === selected?.id,
     )
 
     const newArticles = data?.articles?.filter(
-      article => article?.category?.id === category?.id
+      (article) => article?.category?.id === category?.id,
     )
 
     setArticles(newArticles)
@@ -42,7 +42,7 @@ const Articles = () => {
           showsHorizontalScrollIndicator={false}
           contentOffset={{ x: -sizes.padding, y: 0 }}
         >
-          {categories?.map(category => {
+          {categories?.map((category) => {
             const isSelected = category?.id === selected?.id
             return (
               <Button
@@ -50,7 +50,7 @@ const Articles = () => {
                 marginHorizontal={sizes.s}
                 key={`category-${category?.id}}`}
                 onPress={() => setSelected(category)}
-                gradient={gradients?.[isSelected ? "primary" : "light"]}
+                gradient={gradients?.[isSelected ? 'primary' : 'light']}
               >
                 <Text
                   p
@@ -71,7 +71,7 @@ const Articles = () => {
       <FlatList
         data={articles}
         showsVerticalScrollIndicator={false}
-        keyExtractor={item => `${item?.id}`}
+        keyExtractor={(item) => `${item?.id}`}
         style={{ paddingHorizontal: sizes.padding }}
         contentContainerStyle={{ paddingBottom: sizes.l }}
         renderItem={({ item }) => <Article {...item} />}

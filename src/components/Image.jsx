@@ -1,15 +1,15 @@
-import React from "react"
+import React from 'react'
 import {
   StyleSheet,
   Image as RNImage,
   ImageBackground,
-  Platform
-} from "react-native"
+  Platform,
+} from 'react-native'
 
-import useTheme from "../hooks/useTheme"
+import useTheme from '../hooks/useTheme'
 
 const Image = ({
-  id = "Image",
+  id = 'Image',
   style,
   children,
   avatar,
@@ -59,31 +59,31 @@ const Image = ({
       ...(paddingVertical && { paddingVertical }),
       ...(paddingRight && { paddingRight }),
       ...(paddingLeft && { paddingLeft }),
-      ...(rounded && { borderRadius: sizes.radius, overflow: "hidden" }),
-      ...(radius !== undefined && { borderRadius: radius, overflow: "hidden" }),
+      ...(rounded && { borderRadius: sizes.radius, overflow: 'hidden' }),
+      ...(radius !== undefined && { borderRadius: radius, overflow: 'hidden' }),
       ...(color && { tintColor: color }),
       ...(transform && { transform }),
       ...(shadow && {
         shadowColor: colors.shadow,
         shadowOffset: {
           width: sizes.shadowOffsetWidth,
-          height: sizes.shadowOffsetHeight
+          height: sizes.shadowOffsetHeight,
         },
         shadowOpacity: sizes.shadowOpacity,
-        shadowRadius: sizes.shadowRadius
+        shadowRadius: sizes.shadowRadius,
       }),
       ...(avatar && {
         height: sizes.avatarSize,
         width: sizes.avatarSize,
         borderRadius: sizes.avatarRadius,
-        overflow: "hidden"
-      })
-    }
+        overflow: 'hidden',
+      }),
+    },
   ])
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const imageID =
-    Platform.OS === "android" ? { accessibilityLabel: id } : { testID: id }
+    Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id }
 
   if (background) {
     return (

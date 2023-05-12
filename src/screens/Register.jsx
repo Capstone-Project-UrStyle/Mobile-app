@@ -1,40 +1,39 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { Linking, Platform } from "react-native"
-import { useNavigation } from "@react-navigation/core"
+import React, { useCallback, useEffect, useState } from 'react'
+import { Linking, Platform } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 
-import { useData, useTheme, useTranslation } from "../hooks/"
-import * as regex from "../constants/regex"
-import { Block, Button, Input, Image, Text, Checkbox } from "../components/"
+import { useData, useTheme, useTranslation } from '../hooks/'
+import * as regex from '../constants/regex'
+import { Block, Button, Input, Image, Text, Checkbox } from '../components/'
 
-import authApi from "../api/auth"
+import authApi from '../api/auth'
 
-const isAndroid = Platform.OS === "android"
+const isAndroid = Platform.OS === 'android'
 
 const Register = () => {
   const { isDark } = useData()
   const { t } = useTranslation()
   const navigation = useNavigation()
   const { assets, colors, gradients, sizes } = useTheme()
-  
-  
+
   const [isValid, setIsValid] = useState({
     name: false,
     email: false,
     password: false,
-    agreed: false
+    agreed: false,
   })
   const [registration, setRegistration] = useState({
-    name: "",
-    email: "",
-    password: "",
-    agreed: false
+    name: '',
+    email: '',
+    password: '',
+    agreed: false,
   })
 
   const handleChange = useCallback(
-    value => {
-      setRegistration(state => ({ ...state, ...value }))
+    (value) => {
+      setRegistration((state) => ({ ...state, ...value }))
     },
-    [setRegistration]
+    [setRegistration],
   )
 
   const handleSignUp = useCallback(async () => {
@@ -52,12 +51,12 @@ const Register = () => {
   }, [isValid, registration])
 
   useEffect(() => {
-    setIsValid(state => ({
+    setIsValid((state) => ({
       ...state,
       name: regex.name.test(registration.name),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
-      agreed: registration.agreed
+      agreed: registration.agreed,
     }))
   }, [registration, setIsValid])
 
@@ -74,14 +73,14 @@ const Register = () => {
             height={sizes.height * 0.3}
           >
             <Text h4 center white marginTop={sizes.l} marginBottom={sizes.md}>
-              {t("register.title")}
+              {t('register.title')}
             </Text>
           </Image>
         </Block>
         {/* register form */}
         <Block
           keyboard
-          behavior={!isAndroid ? "padding" : "height"}
+          behavior={!isAndroid ? 'padding' : 'height'}
           marginTop={-(sizes.height * 0.2 - sizes.l)}
         >
           <Block
@@ -102,7 +101,7 @@ const Register = () => {
               paddingVertical={sizes.sm}
             >
               <Text p semibold center>
-                {t("register.subtitle")}
+                {t('register.subtitle')}
               </Text>
               {/* social buttons */}
               <Block row center justify="space-evenly" marginVertical={sizes.m}>
@@ -148,7 +147,7 @@ const Register = () => {
                   gradient={gradients.divider}
                 />
                 <Text center marginHorizontal={sizes.s}>
-                  {t("common.or")}
+                  {t('common.or')}
                 </Text>
                 <Block
                   flex={0}
@@ -164,29 +163,29 @@ const Register = () => {
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t("common.name")}
-                  placeholder={t("common.namePlaceholder")}
+                  label={t('common.name')}
+                  placeholder={t('common.namePlaceholder')}
                   success={Boolean(registration.name && isValid.name)}
                   danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={value => handleChange({ name: value })}
+                  onChangeText={(value) => handleChange({ name: value })}
                 />
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t("common.email")}
+                  label={t('common.email')}
                   keyboardType="email-address"
-                  placeholder={t("common.emailPlaceholder")}
+                  placeholder={t('common.emailPlaceholder')}
                   success={Boolean(registration.email && isValid.email)}
                   danger={Boolean(registration.email && !isValid.email)}
-                  onChangeText={value => handleChange({ email: value })}
+                  onChangeText={(value) => handleChange({ email: value })}
                 />
                 <Input
                   secureTextEntry
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t("common.password")}
-                  placeholder={t("common.passwordPlaceholder")}
-                  onChangeText={value => handleChange({ password: value })}
+                  label={t('common.password')}
+                  placeholder={t('common.passwordPlaceholder')}
+                  onChangeText={(value) => handleChange({ password: value })}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
                 />
@@ -196,17 +195,17 @@ const Register = () => {
                 <Checkbox
                   marginRight={sizes.sm}
                   checked={registration?.agreed}
-                  onPress={value => handleChange({ agreed: value })}
+                  onPress={(value) => handleChange({ agreed: value })}
                 />
                 <Text paddingRight={sizes.s}>
-                  {t("common.agree")}
+                  {t('common.agree')}
                   <Text
                     semibold
                     onPress={() => {
-                      Linking.openURL("https://www.creative-tim.com/terms")
+                      Linking.openURL('https://www.creative-tim.com/terms')
                     }}
                   >
-                    {t("common.terms")}
+                    {t('common.terms')}
                   </Text>
                 </Text>
               </Block>
@@ -218,7 +217,7 @@ const Register = () => {
                 disabled={Object.values(isValid).includes(false)}
               >
                 <Text bold white transform="uppercase">
-                  {t("common.signup")}
+                  {t('common.signup')}
                 </Text>
               </Button>
               <Button
@@ -227,10 +226,10 @@ const Register = () => {
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                onPress={() => navigation.navigate("Login")}
+                onPress={() => navigation.navigate('Login')}
               >
                 <Text bold primary transform="uppercase">
-                  {t("common.signin")}
+                  {t('common.signin')}
                 </Text>
               </Button>
             </Block>

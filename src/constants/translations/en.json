@@ -93,7 +93,8 @@
     "title": "UrStyle",
     "closets": "Closets",
     "outfits": "Outfits",
-    "bookmarked": "Bookmarked"
+    "bookmarked": "Bookmarked",
+    "noItemFound": "No item found"
   },
   "login": {
     "title": "Welcome to UrStyle",

@@ -1,11 +1,11 @@
-import React from "react"
-import dayjs from "dayjs"
-import { TouchableWithoutFeedback } from "react-native"
+import React from 'react'
+import dayjs from 'dayjs'
+import { TouchableWithoutFeedback } from 'react-native'
 
-import Text from "./Text"
-import Block from "./Block"
-import Image from "./Image"
-import { useTheme, useTranslation } from "../hooks/"
+import Text from './Text'
+import Block from './Block'
+import Image from './Image'
+import { useTheme, useTranslation } from '../hooks/'
 
 const Article = ({
   title,
@@ -16,7 +16,7 @@ const Article = ({
   location,
   timestamp,
   user,
-  onPress
+  onPress,
 }) => {
   const { t } = useTranslation()
   const { colors, gradients, icons, sizes } = useTheme()
@@ -69,8 +69,8 @@ const Article = ({
                   {user.name}
                 </Text>
                 <Text p gray>
-                  {t("common.posted", {
-                    date: dayjs(timestamp).format("DD MMMM") || "-"
+                  {t('common.posted', {
+                    date: dayjs(timestamp).format('DD MMMM') || '-',
                   })}
                 </Text>
               </Block>

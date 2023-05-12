@@ -1,35 +1,35 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { Platform, Alert } from "react-native"
-import { useNavigation } from "@react-navigation/core"
+import React, { useCallback, useEffect, useState } from 'react'
+import { Platform, Alert } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
 
-import { useData, useTheme, useTranslation } from "../hooks/"
-import * as regex from "../constants/regex"
-import { Block, Button, Input, Image, Text } from "../components/"
+import { useData, useTheme, useTranslation } from '../hooks/'
+import * as regex from '../constants/regex'
+import { Block, Button, Input, Image, Text } from '../components/'
 
-import authApi from "../api/auth"
+import authApi from '../api/auth'
 
-const isAndroid = Platform.OS === "android"
+const isAndroid = Platform.OS === 'android'
 
 const Login = () => {
   const navigation = useNavigation()
   const { assets, colors, gradients, sizes } = useTheme()
   const { isDark, handleSetToken } = useData()
   const { t } = useTranslation()
-  
+
   const [isValid, setIsValid] = useState({
     email: false,
-    password: false
+    password: false,
   })
   const [credentials, setCredentials] = useState({
-    email: "",
-    password: ""
+    email: '',
+    password: '',
   })
 
   const handleChange = useCallback(
-    value => {
-      setCredentials(state => ({ ...state, ...value }))
+    (value) => {
+      setCredentials((state) => ({ ...state, ...value }))
     },
-    [setCredentials]
+    [setCredentials],
   )
 
   const handleLogin = useCallback(async () => {
@@ -48,10 +48,10 @@ const Login = () => {
   }, [isValid, credentials])
 
   useEffect(() => {
-    setIsValid(state => ({
+    setIsValid((state) => ({
       ...state,
       email: regex.email.test(credentials.email),
-      password: regex.password.test(credentials.password)
+      password: regex.password.test(credentials.password),
     }))
   }, [credentials, setIsValid])
 
@@ -68,14 +68,14 @@ const Login = () => {
             height={sizes.height * 0.3}
           >
             <Text h4 center white marginTop={sizes.l} marginBottom={sizes.md}>
-              {t("login.title")}
+              {t('login.title')}
             </Text>
           </Image>
         </Block>
         {/* register form */}
         <Block
           keyboard
-          behavior={!isAndroid ? "padding" : "height"}
+          behavior={!isAndroid ? 'padding' : 'height'}
           marginTop={-(sizes.height * 0.2 - sizes.l)}
         >
           <Block
@@ -96,7 +96,7 @@ const Login = () => {
               paddingVertical={sizes.sm}
             >
               <Text p semibold center>
-                {t("login.subtitle")}
+                {t('login.subtitle')}
               </Text>
               {/* social buttons */}
               <Block row center justify="space-evenly" marginVertical={sizes.m}>
@@ -142,7 +142,7 @@ const Login = () => {
                   gradient={gradients.divider}
                 />
                 <Text center marginHorizontal={sizes.s}>
-                  {t("common.or")}
+                  {t('common.or')}
                 </Text>
                 <Block
                   flex={0}
@@ -158,20 +158,20 @@ const Login = () => {
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t("common.email")}
+                  label={t('common.email')}
                   keyboardType="email-address"
-                  placeholder={t("common.emailPlaceholder")}
+                  placeholder={t('common.emailPlaceholder')}
                   success={Boolean(credentials.email && isValid.email)}
                   danger={Boolean(credentials.email && !isValid.email)}
-                  onChangeText={value => handleChange({ email: value })}
+                  onChangeText={(value) => handleChange({ email: value })}
                 />
                 <Input
                   secureTextEntry
                   autoCapitalize="none"
                   marginBottom={sizes.m}
-                  label={t("common.password")}
-                  placeholder={t("common.passwordPlaceholder")}
-                  onChangeText={value => handleChange({ password: value })}
+                  label={t('common.password')}
+                  placeholder={t('common.passwordPlaceholder')}
+                  onChangeText={(value) => handleChange({ password: value })}
                   success={Boolean(credentials.password && isValid.password)}
                   danger={Boolean(credentials.password && !isValid.password)}
                 />
@@ -184,7 +184,7 @@ const Login = () => {
                 disabled={Object.values(isValid).includes(false)}
               >
                 <Text bold white transform="uppercase">
-                  {t("common.signin")}
+                  {t('common.signin')}
                 </Text>
               </Button>
               <Button
@@ -193,10 +193,10 @@ const Login = () => {
                 shadow={!isAndroid}
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
-                onPress={() => navigation.navigate("Register")}
+                onPress={() => navigation.navigate('Register')}
               >
                 <Text bold primary transform="uppercase">
-                  {t("common.signup")}
+                  {t('common.signup')}
                 </Text>
               </Button>
             </Block>

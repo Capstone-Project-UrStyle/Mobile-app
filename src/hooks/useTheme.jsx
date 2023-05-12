@@ -1,16 +1,16 @@
-import React from "react"
+import React from 'react'
 
-import { light } from "../constants/"
+import { light } from '../constants/'
 
 export const ThemeContext = React.createContext({
   theme: light,
-  setTheme: () => {}
+  setTheme: () => {},
 })
 
 export const ThemeProvider = ({
   children,
   theme = light,
-  setTheme = () => {}
+  setTheme = () => {},
 }) => {
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

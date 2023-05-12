@@ -1,30 +1,109 @@
-import React, { useCallback, useState } from "react"
-import { Ionicons } from "@expo/vector-icons"
+import React, { useCallback, useState, useEffect } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 
-import { BASE_API_URL } from "../api/axiosClient"
-import { useData, useTheme, useTranslation } from "../hooks"
-import { Block, Button, Image, Input, Product, Text, WeatherCard } from "../components"
+import { BASE_API_URL } from '../api/axiosClient'
+import { useData, useTheme, useTranslation } from '../hooks'
+import {
+  Block,
+  Button,
+  Image,
+  Product,
+  Text,
+  WeatherCard,
+  ClosetCard,
+} from '../components'
+
+import closetApi from '../api/closetApi'
 
 const Home = () => {
-  const { user } = useData()
   const { t } = useTranslation()
-  const [tab, setTab] = useState(0)
-  const { following, trending } = useData()
-  const [products, setProducts] = useState(following)
   const { assets, colors, fonts, gradients, sizes } = useTheme()
+  const { user, following, trending, handleSetIsLoading } = useData()
+
+  const [tab, setTab] = useState(0)
+  const [cardList, setCardList] = useState([])
+  const [refresh, forceRefresh] = useState(false)
+
+  useEffect(() => {
+    async function fetchUserClosets() {
+      handleSetIsLoading(true)
+      try {
+        console.log(closetApi)
+        const response = await closetApi.getListByUserId(user.id)
+        setCardList(response.data)
+        handleSetIsLoading(false)
+      } catch (error) {
+        handleSetIsLoading(false)
+        alert(error.response.data.message)
+      }
+    }
+
+    if (user) {
+      switch (tab) {
+        case 0:
+          // Fetch user closets
+          fetchUserClosets()
+        case 1:
+        // Fetch user outfits
+        case 2:
+        // Fetch user bookmarked outfits
+        default:
+      }
+    }
+  }, [user, tab, refresh])
 
   const handleTabs = useCallback(
-    tab => {
+    (tab) => {
       setTab(tab)
-      setProducts(tab === 0 ? following : trending)
+      setCardList(tab === 0 ? following : trending)
     },
-    [following, trending, setTab, setProducts]
+    [following, trending, setTab, setCardList],
   )
+
+  useEffect(() => {
+    console.log(cardList)
+  }, [cardList])
+
+  const renderCardList = () => {
+    if (cardList && cardList.length > 0) {
+      switch (tab) {
+        case 0:
+          return (
+            <>
+              {cardList.map((card) => (
+                <ClosetCard
+                  key={`card-${card?.id}`}
+                  closet={card}
+                  type={'vertical'}
+                />
+              ))}
+              <ClosetCard create type={'vertical'} />
+            </>
+          )
+        case 1:
+        case 2:
+        default:
+          return
+      }
+    } else {
+      return (
+        <Text p center font={fonts?.['medium']} width="100%">
+          {t('home.noItemFound')}
+        </Text>
+      )
+    }
+  }
 
   return (
     <Block>
       {/* user info and location */}
-      <Block color={colors.card} flex={0} row align="center" paddingHorizontal={sizes.padding}>
+      <Block
+        color={colors.card}
+        flex={0}
+        row
+        align="center"
+        paddingHorizontal={sizes.padding}
+      >
         <Image
           width={50}
           height={50}
@@ -61,7 +140,7 @@ const Home = () => {
         <WeatherCard />
       </Block>
 
-      {/* toggle products list */}
+      {/* toggle items list */}
       <Block
         row
         flex={0}
@@ -69,42 +148,50 @@ const Home = () => {
         justify="space-between"
         color={colors.card}
       >
-        <Block borderBottomWidth={1} borderColor={tab === 0 ? colors.black : colors.light}>
+        <Block
+          borderBottomWidth={1}
+          borderColor={tab === 0 ? colors.black : colors.light}
+        >
           <Button onPress={() => handleTabs(0)}>
-            <Text p font={fonts?.[tab === 0 ? "medium" : "normal"]}>
-              {t("home.closets")}
-            </Text>
-          </Button>
-        </Block>
-        
-        <Block borderBottomWidth={1} borderColor={tab === 1 ? colors.black : colors.light}>
-          <Button onPress={() => handleTabs(1)}>
-            <Text p font={fonts?.[tab === 1 ? "medium" : "normal"]}>
-              {t("home.outfits")}
+            <Text p font={fonts?.[tab === 0 ? 'medium' : 'normal']}>
+              {t('home.closets')}
             </Text>
           </Button>
         </Block>
 
-        <Block borderBottomWidth={1} borderColor={tab === 2 ? colors.black : colors.light}>
+        <Block
+          borderBottomWidth={1}
+          borderColor={tab === 1 ? colors.black : colors.light}
+        >
+          <Button onPress={() => handleTabs(1)}>
+            <Text p font={fonts?.[tab === 1 ? 'medium' : 'normal']}>
+              {t('home.outfits')}
+            </Text>
+          </Button>
+        </Block>
+
+        <Block
+          borderBottomWidth={1}
+          borderColor={tab === 2 ? colors.black : colors.light}
+        >
           <Button onPress={() => handleTabs(2)}>
-            <Text p font={fonts?.[tab === 2 ? "medium" : "normal"]}>
-              {t("home.bookmarked")}
+            <Text p font={fonts?.[tab === 2 ? 'medium' : 'normal']}>
+              {t('home.bookmarked')}
             </Text>
           </Button>
         </Block>
       </Block>
 
-      {/* products list */}
+      {/* Cards list */}
       <Block
         scroll
         paddingHorizontal={sizes.padding}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: sizes.l }}
+        forceRefresh={forceRefresh}
       >
         <Block row wrap="wrap" justify="space-between" marginTop={sizes.sm}>
-          {products?.map(product => (
-            <Product {...product} key={`card-${product?.id}`} />
-          ))}
+          {renderCardList()}
         </Block>
       </Block>
     </Block>
