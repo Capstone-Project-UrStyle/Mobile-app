@@ -1,13 +1,15 @@
 export { default as Login } from './Login'
 export { default as Register } from './Register'
 
+export { default as Home } from './Home'
+export { default as CreateCloset } from './CreateCloset'
+
 export { default as About } from './Pro'
 export { default as Agreement } from './Pro'
 export { default as Articles } from './Articles'
 export { default as Chat } from './Pro'
 export { default as Components } from './Components'
 export { default as Extras } from './Pro'
-export { default as Home } from './Home'
 export { default as Notifications } from './Pro'
 export { default as NotificationsSettings } from './Pro'
 export { default as Privacy } from './Pro'

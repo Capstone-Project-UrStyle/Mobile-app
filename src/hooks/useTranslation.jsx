@@ -8,52 +8,52 @@ import translations from '../constants/translations/'
 export const TranslationContext = React.createContext({})
 
 export const TranslationProvider = ({ children }) => {
-  const [locale, setLocale] = useState('en')
+    const [locale, setLocale] = useState('en')
 
-  // Set the locale once at the beginning of your app.
-  i18n.locale = locale
-  // Set the key-value pairs for the different languages you want to support.
-  i18n.translations = translations
-  // When a value is missing from a language it'll fallback to another language with the key present.
-  i18n.fallbacks = true
+    // Set the locale once at the beginning of your app.
+    i18n.locale = locale
+    // Set the key-value pairs for the different languages you want to support.
+    i18n.translations = translations
+    // When a value is missing from a language it'll fallback to another language with the key present.
+    i18n.fallbacks = true
 
-  const t = useCallback(
-    (scope, options) => {
-      return i18n.t(scope, { ...options, locale })
-    },
-    [locale],
-  )
+    const t = useCallback(
+        (scope, options) => {
+            return i18n.t(scope, { ...options, locale })
+        },
+        [locale],
+    )
 
-  // get locale from storage
-  const getLocale = useCallback(async () => {
-    // get preferance gtom storage
-    const localeJSON = await Storage.getItem('locale')
+    // get locale from storage
+    const getLocale = useCallback(async () => {
+        // get preferance gtom storage
+        const localeJSON = await Storage.getItem('locale')
 
-    // set Locale / compare if has updated
-    setLocale(localeJSON !== null ? localeJSON : Localization.locale)
-  }, [setLocale])
+        // set Locale / compare if has updated
+        setLocale(localeJSON !== null ? localeJSON : Localization.locale)
+    }, [setLocale])
 
-  useEffect(() => {
-    getLocale()
-  }, [getLocale])
+    useEffect(() => {
+        getLocale()
+    }, [getLocale])
 
-  useEffect(() => {
-    // save preferance to storage
-    Storage.setItem('locale', locale)
-  }, [locale])
+    useEffect(() => {
+        // save preferance to storage
+        Storage.setItem('locale', locale)
+    }, [locale])
 
-  const contextValue = {
-    t,
-    locale,
-    setLocale,
-    translate: t,
-  }
+    const contextValue = {
+        t,
+        locale,
+        setLocale,
+        translate: t,
+    }
 
-  return (
-    <TranslationContext.Provider value={contextValue}>
-      {children}
-    </TranslationContext.Provider>
-  )
+    return (
+        <TranslationContext.Provider value={contextValue}>
+            {children}
+        </TranslationContext.Provider>
+    )
 }
 
 /*

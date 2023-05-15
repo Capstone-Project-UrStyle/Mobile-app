@@ -10,18 +10,20 @@ import Article from './Article'
 import Product from './Product'
 import WeatherCard from './WeatherCard'
 import ClosetCard from './ClosetCard'
+import OccasionTag from './OccasionTag'
 
 export {
-  Block,
-  Button,
-  Input,
-  Text,
-  Switch,
-  Checkbox,
-  Image,
-  Article,
-  Product,
-  Modal,
-  WeatherCard,
-  ClosetCard,
+    Block,
+    Button,
+    Input,
+    Text,
+    Switch,
+    Checkbox,
+    Image,
+    Article,
+    Product,
+    Modal,
+    WeatherCard,
+    ClosetCard,
+    OccasionTag,
 }
