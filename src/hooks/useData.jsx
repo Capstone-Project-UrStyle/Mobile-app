@@ -12,6 +12,7 @@ import { light } from '../constants'
 
 import axiosClient from '../api/axiosClient'
 import authApi from '../api/auth'
+import masterDataApi from '../api/masterDataApi'
 
 export const DataContext = React.createContext({})
 
@@ -21,6 +22,7 @@ export const DataProvider = ({ children }) => {
     const [theme, setTheme] = useState(light)
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
+    const [masterData, setMasterData] = useState(null)
 
     const [users, setUsers] = useState(USERS)
     const [following, setFollowing] = useState(FOLLOWING)
@@ -129,15 +131,39 @@ export const DataProvider = ({ children }) => {
                         .catch((error) => {
                             console.log('Get authentication info error:', error)
                         })
+
+                    // Get master data
+                    masterDataApi
+                        .getMasterData()
+                        .then((response) => {
+                            handleSetMasterData(response.data)
+                        })
+                        .catch((error) => {
+                            console.log('Get master data error:', error)
+                        })
                 }
             } else {
                 AsyncStorage.removeItem('token')
                 AsyncStorage.removeItem('user')
+                AsyncStorage.removeItem('masterData')
                 setToken(null)
                 handleSetUser(null)
+                handleSetMasterData(null)
             }
         },
         [user, setToken],
+    )
+
+    // Handle set master data
+    const handleSetMasterData = useCallback(
+        (payload) => {
+            // set user / compare if has updated
+            if (JSON.stringify(payload) !== JSON.stringify(masterData)) {
+                AsyncStorage.setItem('masterData', JSON.stringify(payload))
+                setMasterData(payload)
+            }
+        },
+        [masterData, setMasterData],
     )
 
     // handle Article
@@ -173,6 +199,8 @@ export const DataProvider = ({ children }) => {
         handleSetUser,
         token,
         handleSetToken,
+        masterData,
+        handleSetMasterData,
 
         users,
         handleUsers,

@@ -2,7 +2,7 @@ import axiosClient from './axiosClient'
 
 const closetApi = {
     getListByUserId: (userId) => {
-        const url = `api/closets/${userId}`
+        const url = `api/closets/get-by-user/${userId}`
         return axiosClient.get(url)
     },
     getOneById: (id) => {

@@ -7,7 +7,6 @@ import {
     Block,
     Button,
     Image,
-    Product,
     Text,
     WeatherCard,
     ClosetCard,
@@ -17,7 +16,7 @@ import closetApi from '../api/closetApi'
 
 const Home = () => {
     const { t } = useTranslation()
-    const { assets, colors, fonts, gradients, sizes } = useTheme()
+    const { colors, fonts, sizes } = useTheme()
     const { user, handleSetIsLoading } = useData()
 
     const [tab, setTab] = useState(0)
@@ -69,12 +68,14 @@ const Home = () => {
                                     key={`card-${card?.id}`}
                                     closet={card}
                                     type={'vertical'}
+                                    forceRefresh={forceRefresh}
                                 />
                             ))}
                             <ClosetCard
                                 key={'create'}
                                 create
                                 type={'vertical'}
+                                forceRefresh={forceRefresh}
                             />
                         </>
                     )
@@ -85,7 +86,7 @@ const Home = () => {
             }
         } else {
             return (
-                <Text p center font={fonts?.['medium']} width="100%">
+                <Text p center font={fonts?.['semibold']} width="100%">
                     {t('home.noItemFound')}
                 </Text>
             )
@@ -151,7 +152,10 @@ const Home = () => {
                     borderColor={tab === 0 ? colors.black : colors.light}
                 >
                     <Button onPress={() => handleTabs(0)}>
-                        <Text p font={fonts?.[tab === 0 ? 'medium' : 'normal']}>
+                        <Text
+                            p
+                            font={fonts?.[tab === 0 ? 'semibold' : 'normal']}
+                        >
                             {t('home.closets')}
                         </Text>
                     </Button>
@@ -162,7 +166,10 @@ const Home = () => {
                     borderColor={tab === 1 ? colors.black : colors.light}
                 >
                     <Button onPress={() => handleTabs(1)}>
-                        <Text p font={fonts?.[tab === 1 ? 'medium' : 'normal']}>
+                        <Text
+                            p
+                            font={fonts?.[tab === 1 ? 'semibold' : 'normal']}
+                        >
                             {t('home.outfits')}
                         </Text>
                     </Button>
@@ -173,7 +180,10 @@ const Home = () => {
                     borderColor={tab === 2 ? colors.black : colors.light}
                 >
                     <Button onPress={() => handleTabs(2)}>
-                        <Text p font={fonts?.[tab === 2 ? 'medium' : 'normal']}>
+                        <Text
+                            p
+                            font={fonts?.[tab === 2 ? 'semibold' : 'normal']}
+                        >
                             {t('home.bookmarked')}
                         </Text>
                     </Button>

@@ -1,4 +1,5 @@
 import { THEME as commonTheme } from './theme'
+import { Dimensions } from 'react-native'
 
 export const COLORS = {
     // default text color
@@ -172,9 +173,15 @@ export const SPACING = {
     xxl: SIZES.base * 7,
 }
 
+export const screenSize = {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+}
+
 export const THEME = {
     ...commonTheme,
     colors: COLORS,
     gradients: GRADIENTS,
     sizes: { ...SIZES, ...commonTheme.sizes, ...SPACING },
+    screenSize: screenSize,
 }

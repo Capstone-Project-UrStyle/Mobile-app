@@ -6,15 +6,14 @@ import { useTranslation, useTheme, useData } from '../hooks'
 import { Block, Button, Text, Input, Switch, OccasionTag } from '../components'
 
 import closetApi from '../api/closetApi'
-import occasionApi from '../api/occasionApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const CreateCloset = () => {
+const CreateCloset = ({ route }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
     const navigation = useNavigation()
-    const { user, handleSetIsLoading } = useData()
+    const { masterData } = useData()
 
     const exampleNames = [
         'island_vacation',
@@ -34,27 +33,16 @@ const CreateCloset = () => {
         occasion_ids: [],
     })
 
+    // Fetch occasions in master data
     useEffect(() => {
-        async function fetchOccasions() {
-            handleSetIsLoading(true)
-            try {
-                const response = await occasionApi.getAll()
-                setOccasions(response.data)
-                handleSetIsLoading(false)
-            } catch (error) {
-                handleSetIsLoading(false)
-                alert(error.response.data.message)
-            }
-        }
-
-        fetchOccasions()
-    }, [])
+        setOccasions(masterData?.Occasions)
+    }, [masterData.Occasions])
 
     useEffect(() => {
         setIsValid((state) => ({
             ...state,
             name: credentials.name !== '' && credentials.name.length <= 50,
-            occasion_ids: Array.isArray(credentials.occasion_ids)
+            occasion_ids: Array.isArray(credentials.occasion_ids),
         }))
     }, [credentials, setIsValid])
 
@@ -72,6 +60,7 @@ const CreateCloset = () => {
                 if (response.request.status === 200) {
                     Alert.alert(response.data.message)
                     navigation.goBack()
+                    route.params.forceRefresh((prev) => !prev)
                 }
             } catch (error) {
                 Alert.alert(error.response.data.message)
@@ -131,7 +120,7 @@ const CreateCloset = () => {
                 >
                     <Text h5>{t('createCloset.public')}</Text>
                     <Switch
-                        checked={credentials.isPublic}
+                        checked={credentials.is_public}
                         onPress={(checked) =>
                             handleChange({ is_public: checked })
                         }

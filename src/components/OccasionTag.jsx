@@ -1,7 +1,9 @@
 import React from 'react'
 
 import { useTheme } from '../hooks/'
-import { Text, Button } from '../components'
+
+import Text from '../components/Text'
+import Button from '../components/Button'
 
 const OccasionTag = ({ onPress, occasion, isSelected }) => {
     const { gradients, sizes } = useTheme()
@@ -18,7 +20,7 @@ const OccasionTag = ({ onPress, occasion, isSelected }) => {
                 p
                 white={isSelected}
                 black={!isSelected}
-                marginHorizontal={sizes.sm}
+                marginHorizontal={sizes.s}
             >
                 {occasion.name}
             </Text>

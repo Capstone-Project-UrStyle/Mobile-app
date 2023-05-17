@@ -8,6 +8,7 @@ import {
     Profile,
     Home,
     CreateCloset,
+    ClosetDetail,
     Articles,
     Components,
     Pro,
@@ -44,6 +45,19 @@ export default () => {
                     title: t('navigation.createCloset'),
                     ...screenOptions.back,
                 }}
+            />
+
+            <Stack.Screen
+                name="ClosetDetail"
+                component={ClosetDetail}
+                options={({ route }) => ({
+                    title: route.params.closetName,
+                    ...screenOptions.closetDetail(
+                        route.params.closetId,
+                        route.params.closetName,
+                        route.params.forceRefresh,
+                    ),
+                })}
             />
 
             <Stack.Screen

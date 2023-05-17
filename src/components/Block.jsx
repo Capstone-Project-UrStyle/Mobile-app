@@ -195,10 +195,12 @@ const Block = (props) => {
                 {...rest}
                 style={blockStyles}
                 refreshControl={
-                    <RefreshControl
-                        refreshing={isLoading}
-                        onRefresh={() => forceRefresh((prev) => !prev)}
-                    />
+                    forceRefresh && (
+                        <RefreshControl
+                            refreshing={isLoading}
+                            onRefresh={() => forceRefresh((prev) => !prev)}
+                        />
+                    )
                 }
             >
                 {children}

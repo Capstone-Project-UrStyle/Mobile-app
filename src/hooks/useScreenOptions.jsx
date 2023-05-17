@@ -1,8 +1,9 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Alert } from 'react-native'
 import { CardStyleInterpolators } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/core'
 import { DrawerActions } from '@react-navigation/native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import { useData } from './useData'
 import { useTranslation } from './useTranslation'
@@ -12,6 +13,8 @@ import Text from '../components/Text'
 import useTheme from '../hooks/useTheme'
 import Button from '../components/Button'
 import Block from '../components/Block'
+
+import closetApi from '../api/closetApi'
 
 export default () => {
     const { t } = useTranslation()
@@ -162,6 +165,96 @@ export default () => {
                     />
                 </Button>
             ),
+        },
+        closetDetail: (closetId, closetName, forceRefresh) => {
+            const handleDeleteCloset = async () => {
+                try {
+                    Alert.alert(
+                        'Confirm delete closet',
+                        `Are you sure you want to delete this closet?`,
+                        [
+                            {
+                                text: 'Cancel',
+                                style: 'cancel',
+                            },
+                            {
+                                text: 'Delete',
+                                style: 'destructive',
+                                onPress: async () => {
+                                    const response = await closetApi.deleteById(
+                                        closetId,
+                                    )
+                                    if (response.request.status === 200) {
+                                        Alert.alert(response.data.message)
+                                        navigation.goBack()
+                                        forceRefresh((prev) => !prev)
+                                    }
+                                },
+                            },
+                        ],
+                        { cancelable: true },
+                    )
+                } catch (error) {
+                    Alert.alert(error.response.data.message)
+                }
+            }
+
+            return {
+                ...menu,
+                headerRight: () => (
+                    <Block row flex={0} align="center" marginRight={sizes.s}>
+                        <Button
+                            onPress={() =>
+                                navigation.navigate('AddItemToCloset', {
+                                    closetId: closetId,
+                                })
+                            }
+                        >
+                            <MaterialIcons
+                                size={20}
+                                name="add"
+                                color={colors.icon}
+                            />
+                        </Button>
+                        {closetName !== 'All items' && (
+                            <Block row flex={0} align="center">
+                                <Button
+                                    onPress={() =>
+                                        navigation.navigate('EditCloset', {
+                                            closetId: closetId,
+                                        })
+                                    }
+                                >
+                                    <MaterialIcons
+                                        size={20}
+                                        name="edit"
+                                        color={colors.icon}
+                                    />
+                                </Button>
+                                <Button onPress={handleDeleteCloset}>
+                                    <MaterialIcons
+                                        size={20}
+                                        name="delete"
+                                        color={colors.icon}
+                                    />
+                                </Button>
+                            </Block>
+                        )}
+                    </Block>
+                ),
+                headerLeft: () => (
+                    <Button onPress={() => navigation.goBack()}>
+                        <Image
+                            radius={0}
+                            width={10}
+                            height={18}
+                            color={colors.icon}
+                            source={icons.arrow}
+                            transform={[{ rotate: '180deg' }]}
+                        />
+                    </Button>
+                ),
+            }
         },
         profile: {
             ...menu,

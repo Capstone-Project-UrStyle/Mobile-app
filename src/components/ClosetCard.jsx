@@ -9,7 +9,7 @@ import Text from './Text'
 import { BASE_API_URL } from '../api/axiosClient'
 import { useTheme } from '../hooks/'
 
-const ClosetCard = ({ create, closet, type }) => {
+const ClosetCard = ({ create, closet, type, forceRefresh }) => {
     const { assets, colors, sizes } = useTheme()
     const navigation = useNavigation()
 
@@ -63,9 +63,13 @@ const ClosetCard = ({ create, closet, type }) => {
 
     const handlePress = () => {
         if (create) {
-            navigation.navigate('CreateCloset')
+            navigation.navigate('CreateCloset', { forceRefresh: forceRefresh })
         } else {
-            navigation.navigate('ClosetDetail', { closetId: closet.id })
+            navigation.navigate('ClosetDetail', {
+                closetId: closet.id,
+                closetName: closet.name,
+                forceRefresh: forceRefresh,
+            })
         }
     }
 

@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import Text from './Text'
 import Block from './Block'
 import Image from './Image'
-import { useTheme, useTranslation } from '../hooks/'
+import { useTheme } from '../hooks/'
 
 const WeatherCard = (props) => {
     const { colors, sizes } = useTheme()
