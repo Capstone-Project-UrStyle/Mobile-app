@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Alert, TouchableWithoutFeedback } from 'react-native'
-import { useNavigation } from '@react-navigation/core'
 
 import { useTranslation, useTheme, useData } from '../hooks'
 import { Block, Button, Text, Image } from '../components'
@@ -8,10 +7,9 @@ import { Block, Button, Text, Image } from '../components'
 import { BASE_API_URL } from '../api/axiosClient'
 import closetApi from '../api/closetApi'
 
-const ClosetDetail = ({ route }) => {
+const ClosetDetail = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts, screenSize } = useTheme()
-    const navigation = useNavigation()
     const { masterData, handleSetIsLoading } = useData()
 
     const [closetDetail, setClosetDetail] = useState(null)
@@ -125,6 +123,7 @@ const ClosetDetail = ({ route }) => {
             return itemList.map((item) => {
                 return (
                     <TouchableWithoutFeedback
+                        key={`item-${item.id}`}
                         onPress={() =>
                             navigation.navigate('ItemDetail', {
                                 itemId: item.id,
@@ -139,7 +138,6 @@ const ClosetDetail = ({ route }) => {
                             borderColor={colors.light}
                         >
                             <Image
-                                key={`item-${item.id}`}
                                 resizeMode="contain"
                                 style={{
                                     width: screenSize.width / 3.5,
@@ -349,7 +347,6 @@ const ClosetDetail = ({ route }) => {
             {/* Render Item cards */}
             <Block
                 scroll
-                // paddingHorizontal={sizes.padding}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: sizes.l }}
                 forceRefresh={forceRefresh}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/core'
 
@@ -9,6 +9,7 @@ import {
     Home,
     CreateCloset,
     ClosetDetail,
+    EditCloset,
     Articles,
     Components,
     Pro,
@@ -58,6 +59,15 @@ export default () => {
                         route.params.forceRefresh,
                     ),
                 })}
+            />
+
+            <Stack.Screen
+                name="EditCloset"
+                component={EditCloset}
+                options={{
+                    title: t('navigation.editCloset'),
+                    ...screenOptions.back,
+                }}
             />
 
             <Stack.Screen

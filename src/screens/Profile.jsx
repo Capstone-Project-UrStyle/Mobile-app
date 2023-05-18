@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import { Platform, Linking, TouchableOpacity } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/core'
 
 import * as ImagePicker from 'expo-image-picker'
 
@@ -14,10 +13,9 @@ import uploadImageApi from '../api/uploadImageApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const Profile = ({ route }) => {
+const Profile = ({ route, navigation }) => {
     const { user } = useData()
     const { t } = useTranslation()
-    const navigation = useNavigation()
     const { assets, colors, sizes } = useTheme()
 
     const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3

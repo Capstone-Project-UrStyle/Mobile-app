@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Linking, Platform } from 'react-native'
-import { useNavigation } from '@react-navigation/core'
 
 import { useData, useTheme, useTranslation } from '../hooks/'
 import * as regex from '../constants/regex'
@@ -10,10 +9,9 @@ import authApi from '../api/auth'
 
 const isAndroid = Platform.OS === 'android'
 
-const Register = () => {
+const Register = ({ navigation }) => {
     const { isDark } = useData()
     const { t } = useTranslation()
-    const navigation = useNavigation()
     const { assets, colors, gradients, sizes } = useTheme()
 
     const [isValid, setIsValid] = useState({

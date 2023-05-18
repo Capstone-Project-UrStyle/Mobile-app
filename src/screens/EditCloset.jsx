@@ -8,10 +8,12 @@ import closetApi from '../api/closetApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const CreateCloset = ({ route, navigation }) => {
+const EditCloset = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
-    const { masterData } = useData()
+    const { masterData, handleSetIsLoading } = useData()
+
+    const { closetId } = route.params
 
     const exampleNames = [
         'island_vacation',
@@ -30,6 +32,33 @@ const CreateCloset = ({ route, navigation }) => {
         is_public: false,
         occasion_ids: [],
     })
+
+    // Fetch closet detail
+    useEffect(() => {
+        async function fetchClosetDetail() {
+            handleSetIsLoading(true)
+            try {
+                const response = await closetApi.getOneById(closetId)
+                if (response.request.status === 200) {
+                    const closetDetail = response.data
+                    const closetOccasionIds = closetDetail.Occasions.map(
+                        (occasion) => occasion.id,
+                    )
+                    handleChange({
+                        name: closetDetail.name,
+                        is_public: closetDetail.is_public,
+                        occasion_ids: closetOccasionIds,
+                    })
+                    handleSetIsLoading(false)
+                }
+            } catch (error) {
+                handleSetIsLoading(false)
+                Alert.alert(error.response.data.message)
+            }
+        }
+
+        fetchClosetDetail()
+    }, [])
 
     // Fetch occasions in master data
     useEffect(() => {
@@ -54,11 +83,13 @@ const CreateCloset = ({ route, navigation }) => {
     const handleSubmit = useCallback(async () => {
         if (!Object.values(isValid).includes(false)) {
             try {
-                const response = await closetApi.createNew(credentials)
+                const response = await closetApi.updateById(
+                    closetId,
+                    credentials,
+                )
                 if (response.request.status === 200) {
                     Alert.alert(response.data.message)
                     navigation.goBack()
-                    route.params.forceRefresh((prev) => !prev)
                 }
             } catch (error) {
                 Alert.alert(error.response.data.message)
@@ -84,21 +115,22 @@ const CreateCloset = ({ route, navigation }) => {
         <Block flex={1} color={colors.card} justify="space-between">
             <Block flex={1} padding={sizes.sm}>
                 <Text h5 marginBottom={sizes.s}>
-                    {t('createCloset.name')}
+                    {t('editCloset.name')}
                 </Text>
                 <Input
                     autoCapitalize="none"
                     marginBottom={sizes.m}
                     keyboardType="email-address"
-                    placeholder={t('createCloset.namePlaceholder')}
+                    placeholder={t('editCloset.namePlaceholder')}
                     success={Boolean(credentials.name && isValid.name)}
                     danger={Boolean(credentials.emnameail && !isValid.name)}
                     onChangeText={(value) => handleChange({ name: value })}
+                    value={credentials.name}
                 />
 
                 <Block card flex={0} color={colors.light} minHeight={75}>
                     <Text p padding={sizes.s}>
-                        {t('createCloset.hint')}
+                        {t('editCloset.hint')}
                     </Text>
                     {exampleNames.map((name) => {
                         return (
@@ -116,7 +148,7 @@ const CreateCloset = ({ route, navigation }) => {
                     align="center"
                     justify="space-between"
                 >
-                    <Text h5>{t('createCloset.public')}</Text>
+                    <Text h5>{t('editCloset.public')}</Text>
                     <Switch
                         checked={credentials.is_public}
                         onPress={(checked) =>
@@ -128,7 +160,7 @@ const CreateCloset = ({ route, navigation }) => {
                 {/* Occasion selectors */}
                 <Block flex={1}>
                     <Text h5 paddingBottom={sizes.s}>
-                        {t('createCloset.occasions')}
+                        {t('editCloset.occasions')}
                     </Text>
                     <Block
                         borderWidth={0.5}
@@ -186,11 +218,11 @@ const CreateCloset = ({ route, navigation }) => {
                     }}
                     onPress={handleSubmit}
                 >
-                    <Text h5>{t('createCloset.done')}</Text>
+                    <Text h5>{t('editCloset.done')}</Text>
                 </Button>
             </Block>
         </Block>
     )
 }
 
-export default CreateCloset
+export default EditCloset

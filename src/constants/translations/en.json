@@ -68,6 +68,7 @@
   "navigation": {
     "home": "UrStyle",
     "createCloset": "Create a closet",
+    "editCloset": "Edit closet",
     "components": "Components",
     "articles": "UrStyle",
     "rentals": "UrStyle",
@@ -98,6 +99,14 @@
     "noItemFound": "No item found"
   },
   "createCloset": {
+    "name": "Closet Name",
+    "namePlaceholder": "ex. Daily Summer Closet",
+    "hint": "Make a closet however you want",
+    "public": "Public to other users",
+    "done": "Done",
+    "occasions": "Occasions"
+  },
+  "editCloset": {
     "name": "Closet Name",
     "namePlaceholder": "ex. Daily Summer Closet",
     "hint": "Make a closet however you want",
