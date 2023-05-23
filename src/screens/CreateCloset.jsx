@@ -44,7 +44,7 @@ const CreateCloset = ({ route, navigation }) => {
         }))
     }, [credentials, setIsValid])
 
-    const handleChange = useCallback(
+    const handleChangeCredentials = useCallback(
         (value) => {
             setCredentials((state) => ({ ...state, ...value }))
         },
@@ -68,13 +68,13 @@ const CreateCloset = ({ route, navigation }) => {
 
     const handlePressOccasionTag = (occasionId) => {
         if (credentials.occasion_ids.includes(occasionId)) {
-            handleChange({
+            handleChangeCredentials({
                 occasion_ids: credentials.occasion_ids.filter(
                     (id) => id !== occasionId,
                 ),
             })
         } else {
-            handleChange({
+            handleChangeCredentials({
                 occasion_ids: [...credentials.occasion_ids, occasionId],
             })
         }
@@ -93,7 +93,7 @@ const CreateCloset = ({ route, navigation }) => {
                     placeholder={t('createCloset.namePlaceholder')}
                     success={Boolean(credentials.name && isValid.name)}
                     danger={Boolean(credentials.emnameail && !isValid.name)}
-                    onChangeText={(value) => handleChange({ name: value })}
+                    onChangeText={(value) => handleChangeCredentials({ name: value })}
                 />
 
                 <Block card flex={0} color={colors.light} minHeight={75}>
@@ -120,7 +120,7 @@ const CreateCloset = ({ route, navigation }) => {
                     <Switch
                         checked={credentials.is_public}
                         onPress={(checked) =>
-                            handleChange({ is_public: checked })
+                            handleChangeCredentials({ is_public: checked })
                         }
                     />
                 </Block>

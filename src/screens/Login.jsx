@@ -31,7 +31,7 @@ const Login = ({ navigation }) => {
         }))
     }, [credentials, setIsValid])
 
-    const handleChange = useCallback(
+    const handleChangeCredentials = useCallback(
         (value) => {
             setCredentials((state) => ({ ...state, ...value }))
         },
@@ -177,7 +177,7 @@ const Login = ({ navigation }) => {
                                         credentials.email && !isValid.email,
                                     )}
                                     onChangeText={(value) =>
-                                        handleChange({ email: value })
+                                        handleChangeCredentials({ email: value })
                                     }
                                 />
                                 <Input
@@ -189,7 +189,7 @@ const Login = ({ navigation }) => {
                                         'common.passwordPlaceholder',
                                     )}
                                     onChangeText={(value) =>
-                                        handleChange({ password: value })
+                                        handleChangeCredentials({ password: value })
                                     }
                                     success={Boolean(
                                         credentials.password &&

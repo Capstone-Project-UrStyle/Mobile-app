@@ -127,6 +127,7 @@ const ClosetDetail = ({ route, navigation }) => {
                         onPress={() =>
                             navigation.navigate('ItemDetail', {
                                 itemId: item.id,
+                                forceRefresh: forceRefresh,
                             })
                         }
                     >
@@ -147,10 +148,11 @@ const ClosetDetail = ({ route, navigation }) => {
                             />
                             <Text
                                 p
+                                size={14}
                                 font={fonts?.['light']}
                                 paddingVertical={sizes.xs}
                             >
-                                {item.brand}
+                                {item.brand || t('closetDetail.noBrand')}
                             </Text>
                         </Block>
                     </TouchableWithoutFeedback>
@@ -159,7 +161,7 @@ const ClosetDetail = ({ route, navigation }) => {
         } else {
             return (
                 <Text p center font={fonts?.['semibold']} width="100%">
-                    {t('home.noItemFound')}
+                    {t('closetDetail.noItemFound')}
                 </Text>
             )
         }

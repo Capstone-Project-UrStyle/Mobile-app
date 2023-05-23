@@ -10,6 +10,7 @@ import {
     CreateCloset,
     ClosetDetail,
     EditCloset,
+    ItemDetail,
     Articles,
     Components,
     Pro,
@@ -68,6 +69,18 @@ export default () => {
                     title: t('navigation.editCloset'),
                     ...screenOptions.back,
                 }}
+            />
+
+            <Stack.Screen
+                name="ItemDetail"
+                component={ItemDetail}
+                options={({ route }) => ({
+                    title: t('navigation.itemDetail'),
+                    ...screenOptions.itemDetail(
+                        route.params.itemId,
+                        route.params.forceRefresh,
+                    ),
+                })}
             />
 
             <Stack.Screen

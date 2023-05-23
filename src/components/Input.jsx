@@ -32,6 +32,7 @@ const Input = ({
     marginLeft,
     onFocus,
     onBlur,
+    noBorder,
     ...props
 }) => {
     const { assets, colors, sizes } = useTheme()
@@ -90,7 +91,7 @@ const Input = ({
         {
             minHeight: sizes.inputHeight,
             borderRadius: sizes.inputRadius,
-            borderWidth: isFocused ? 2 : sizes.inputBorder,
+            borderWidth: !noBorder ? (isFocused ? 2 : sizes.inputBorder) : 0,
             borderColor: isFocused ? colors.focus : inputColor,
         },
     ])

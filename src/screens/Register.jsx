@@ -27,7 +27,7 @@ const Register = ({ navigation }) => {
         agreed: false,
     })
 
-    const handleChange = useCallback(
+    const handleChangeCredentials = useCallback(
         (value) => {
             setRegistration((state) => ({ ...state, ...value }))
         },
@@ -181,7 +181,7 @@ const Register = ({ navigation }) => {
                                         registration.name && !isValid.name,
                                     )}
                                     onChangeText={(value) =>
-                                        handleChange({ name: value })
+                                        handleChangeCredentials({ name: value })
                                     }
                                 />
                                 <Input
@@ -197,7 +197,7 @@ const Register = ({ navigation }) => {
                                         registration.email && !isValid.email,
                                     )}
                                     onChangeText={(value) =>
-                                        handleChange({ email: value })
+                                        handleChangeCredentials({ email: value })
                                     }
                                 />
                                 <Input
@@ -209,7 +209,7 @@ const Register = ({ navigation }) => {
                                         'common.passwordPlaceholder',
                                     )}
                                     onChangeText={(value) =>
-                                        handleChange({ password: value })
+                                        handleChangeCredentials({ password: value })
                                     }
                                     success={Boolean(
                                         registration.password &&
@@ -232,7 +232,7 @@ const Register = ({ navigation }) => {
                                     marginRight={sizes.sm}
                                     checked={registration?.agreed}
                                     onPress={(value) =>
-                                        handleChange({ agreed: value })
+                                        handleChangeCredentials({ agreed: value })
                                     }
                                 />
                                 <Text paddingRight={sizes.s}>

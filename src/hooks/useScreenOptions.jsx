@@ -15,6 +15,7 @@ import Button from '../components/Button'
 import Block from '../components/Block'
 
 import closetApi from '../api/closetApi'
+import itemApi from '../api/itemApi'
 
 export default () => {
     const { t } = useTranslation()
@@ -30,7 +31,7 @@ export default () => {
         headerRightContainerStyle: { paddingRight: sizes.s },
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
 
-        headerTitle: ({ children }) => <Text p>{children}</Text>,
+        headerTitle: ({ children }) => <Text p size={18} semibold>{children}</Text>,
 
         headerLeft: () => (
             <Button
@@ -108,7 +109,7 @@ export default () => {
         components: {
             ...menu,
             headerTitle: () => (
-                <Text p white>
+                <Text p size={18} white semibold>
                     {t('navigation.components')}
                 </Text>
             ),
@@ -131,7 +132,7 @@ export default () => {
             ...menu,
             headerTransparent: true,
             headerTitle: () => (
-                <Text p white semibold>
+                <Text p size={18} white semibold>
                     {t('pro.title')}
                 </Text>
             ),
@@ -170,15 +171,15 @@ export default () => {
             const handleDeleteCloset = async () => {
                 try {
                     Alert.alert(
-                        'Confirm delete closet',
-                        `Are you sure you want to delete this closet?`,
+                        t('closetDetail.confirmDeleteCloset'),
+                        t('closetDetail.deleteWarning'),
                         [
                             {
-                                text: 'Cancel',
+                                text: t('closetDetail.cancelButton'),
                                 style: 'cancel',
                             },
                             {
-                                text: 'Delete',
+                                text: t('closetDetail.deleteButton'),
                                 style: 'destructive',
                                 onPress: async () => {
                                     const response = await closetApi.deleteById(
@@ -240,6 +241,66 @@ export default () => {
                                 </Button>
                             </Block>
                         )}
+                    </Block>
+                ),
+                headerLeft: () => (
+                    <Button onPress={() => navigation.goBack()}>
+                        <Image
+                            radius={0}
+                            width={10}
+                            height={18}
+                            color={colors.icon}
+                            source={icons.arrow}
+                            transform={[{ rotate: '180deg' }]}
+                        />
+                    </Button>
+                ),
+            }
+        },
+        itemDetail: (itemId, forceRefresh) => {
+            const handleDeleteItem = async () => {
+                try {
+                    Alert.alert(
+                        t('itemDetail.confirmDeleteItem'),
+                        t('itemDetail.deleteWarning'),
+                        [
+                            {
+                                text: t('itemDetail.cancelButton'),
+                                style: 'cancel',
+                            },
+                            {
+                                text: t('itemDetail.deleteButton'),
+                                style: 'destructive',
+                                onPress: async () => {
+                                    const response = await itemApi.deleteById(
+                                        itemId,
+                                    )
+                                    if (response.request.status === 200) {
+                                        Alert.alert(response.data.message)
+                                        navigation.goBack()
+                                        forceRefresh((prev) => !prev)
+                                    }
+                                },
+                            },
+                        ],
+                        { cancelable: true },
+                    )
+                } catch (error) {
+                    Alert.alert(error.response.data.message)
+                }
+            }
+
+            return {
+                ...menu,
+                headerRight: () => (
+                    <Block row flex={0} align="center" marginRight={sizes.s}>
+                        <Button onPress={handleDeleteItem}>
+                            <MaterialIcons
+                                size={20}
+                                name="delete"
+                                color={colors.icon}
+                            />
+                        </Button>
                     </Block>
                 ),
                 headerLeft: () => (

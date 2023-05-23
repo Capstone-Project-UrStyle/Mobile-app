@@ -69,6 +69,7 @@
     "home": "UrStyle",
     "createCloset": "Create a closet",
     "editCloset": "Edit closet",
+    "itemDetail": "Item detail",
     "components": "Components",
     "articles": "UrStyle",
     "rentals": "UrStyle",
@@ -106,6 +107,14 @@
     "done": "Done",
     "occasions": "Occasions"
   },
+  "closetDetail": {
+    "confirmDeleteCloset": "Confirm delete closet",
+    "deleteWarning": "Are you sure you want to delete this closet?",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete",
+    "noBrand": "No brand",
+    "noItemFound":"No item found"
+  },
   "editCloset": {
     "name": "Closet Name",
     "namePlaceholder": "ex. Daily Summer Closet",
@@ -113,6 +122,25 @@
     "public": "Public to other users",
     "done": "Done",
     "occasions": "Occasions"
+  },
+  "itemDetail": {
+    "confirmDeleteItem": "Confirm delete item",
+    "deleteWarning": "This will delete item from all closets! Are you sure you want to delete this item?",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete",
+    "informationTab": "Infomation",
+    "outfitTab": "Outfit",
+    "closetInfo": "Closet info",
+    "closets": "Closets",
+    "occasionInfo": "Occasion info",
+    "occasions": "Occasions",
+    "itemInfo": "Item info",
+    "itemCategory": "Category",
+    "itemColor": "Color",
+    "itemMaterial": "Material",
+    "itemPattern": "Pattern",
+    "itemBrand": "Brand",
+    "done": "Done"
   },
   "login": {
     "title": "Welcome to UrStyle",

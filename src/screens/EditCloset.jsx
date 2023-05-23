@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
 
 import { useTranslation, useTheme, useData } from '../hooks'
-import { Block, Button, Text, Input, Switch, OccasionTag } from '../components'
+import { Block, Button, Text, Input, Switch, OccasionSelector } from '../components'
 
 import closetApi from '../api/closetApi'
 
@@ -11,7 +11,7 @@ const isAndroid = Platform.OS === 'android'
 const EditCloset = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
-    const { masterData, handleSetIsLoading } = useData()
+    const { handleSetIsLoading } = useData()
 
     const { closetId } = route.params
 
@@ -22,7 +22,6 @@ const EditCloset = ({ route, navigation }) => {
         'September_Europe_Trip',
     ]
 
-    const [occasions, setOccasions] = useState([])
     const [isValid, setIsValid] = useState({
         name: false,
         occasion_ids: false,
@@ -44,7 +43,7 @@ const EditCloset = ({ route, navigation }) => {
                     const closetOccasionIds = closetDetail.Occasions.map(
                         (occasion) => occasion.id,
                     )
-                    handleChange({
+                    handleChangeCredentials({
                         name: closetDetail.name,
                         is_public: closetDetail.is_public,
                         occasion_ids: closetOccasionIds,
@@ -60,11 +59,6 @@ const EditCloset = ({ route, navigation }) => {
         fetchClosetDetail()
     }, [])
 
-    // Fetch occasions in master data
-    useEffect(() => {
-        setOccasions(masterData?.Occasions)
-    }, [masterData.Occasions])
-
     useEffect(() => {
         setIsValid((state) => ({
             ...state,
@@ -73,7 +67,7 @@ const EditCloset = ({ route, navigation }) => {
         }))
     }, [credentials, setIsValid])
 
-    const handleChange = useCallback(
+    const handleChangeCredentials = useCallback(
         (value) => {
             setCredentials((state) => ({ ...state, ...value }))
         },
@@ -99,13 +93,13 @@ const EditCloset = ({ route, navigation }) => {
 
     const handlePressOccasionTag = (occasionId) => {
         if (credentials.occasion_ids.includes(occasionId)) {
-            handleChange({
+            handleChangeCredentials({
                 occasion_ids: credentials.occasion_ids.filter(
                     (id) => id !== occasionId,
                 ),
             })
         } else {
-            handleChange({
+            handleChangeCredentials({
                 occasion_ids: [...credentials.occasion_ids, occasionId],
             })
         }
@@ -113,7 +107,12 @@ const EditCloset = ({ route, navigation }) => {
 
     return (
         <Block flex={1} color={colors.card} justify="space-between">
-            <Block flex={1} padding={sizes.sm}>
+            <Block
+                scroll
+                showsVerticalScrollIndicator={false}
+                flex={1}
+                padding={sizes.sm}
+            >
                 <Text h5 marginBottom={sizes.s}>
                     {t('editCloset.name')}
                 </Text>
@@ -124,7 +123,7 @@ const EditCloset = ({ route, navigation }) => {
                     placeholder={t('editCloset.namePlaceholder')}
                     success={Boolean(credentials.name && isValid.name)}
                     danger={Boolean(credentials.emnameail && !isValid.name)}
-                    onChangeText={(value) => handleChange({ name: value })}
+                    onChangeText={(value) => handleChangeCredentials({ name: value })}
                     value={credentials.name}
                 />
 
@@ -152,7 +151,7 @@ const EditCloset = ({ route, navigation }) => {
                     <Switch
                         checked={credentials.is_public}
                         onPress={(checked) =>
-                            handleChange({ is_public: checked })
+                            handleChangeCredentials({ is_public: checked })
                         }
                     />
                 </Block>
@@ -166,43 +165,23 @@ const EditCloset = ({ route, navigation }) => {
                         borderWidth={0.5}
                         radius={sizes.sm}
                         padding={sizes.s}
+                        marginBottom={sizes.m}
                     >
                         <Block
                             scroll
                             showsVerticalScrollIndicator={false}
                             flex={0}
                         >
-                            <Block
-                                row
-                                flex={1}
-                                wrap="wrap"
-                                justify="flex-start"
-                            >
-                                {occasions?.map((occasion) => {
-                                    const isSelected =
-                                        credentials.occasion_ids.includes(
-                                            occasion.id,
-                                        )
-                                    return (
-                                        <OccasionTag
-                                            key={`occasion-${occasion.id}`}
-                                            occasion={occasion}
-                                            isSelected={isSelected}
-                                            onPress={() =>
-                                                handlePressOccasionTag(
-                                                    occasion.id,
-                                                )
-                                            }
-                                        />
-                                    )
-                                })}
-                            </Block>
+                            <OccasionSelector
+                                selectedOccasionIds={credentials.occasion_ids}
+                                handlePressOccasionTag={handlePressOccasionTag} 
+                            />
                         </Block>
                     </Block>
                 </Block>
             </Block>
 
-            <Block flex={0} padding={sizes.sm}>
+            <Block flex={0} paddingHorizontal={sizes.sm} paddingVertical={sizes.s}>
                 <Button
                     outlined
                     gray

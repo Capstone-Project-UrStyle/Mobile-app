@@ -68,7 +68,7 @@ const ClosetCard = ({ create, closet, type, forceRefresh }) => {
             navigation.navigate('ClosetDetail', {
                 closetId: closet.id,
                 closetName: closet.name,
-                forceRefresh: forceRefresh,
+                forceRefresh: forceRefresh
             })
         }
     }
