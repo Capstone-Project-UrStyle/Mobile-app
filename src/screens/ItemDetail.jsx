@@ -9,7 +9,6 @@ import {
     Text,
     Image,
     Input,
-    Checkbox,
     ClosetCard,
     FormRow,
     OccasionSelector,
@@ -234,11 +233,11 @@ const ItemDetail = ({ route, navigation }) => {
                             key={`closet-${closet?.id}`}
                             closet={closet}
                             type={'vertical'}
-                        />
-                        <Checkbox
-                            fixed={closet.name === 'All items'}
-                            checked={credentials.closet_ids.includes(closet.id)}
-                            onPress={() => handlePressClosetCheckbox(closet.id)}
+                            selectMode={{
+                                onSelect: () => handlePressClosetCheckbox(closet.id),
+                                isSelected: credentials.closet_ids.includes(closet.id),
+                                isFixed: closet.name === 'All items'
+                            }}
                         />
                     </Block>
                 ))}
@@ -358,7 +357,7 @@ const ItemDetail = ({ route, navigation }) => {
                                     <FormRow
                                         type="Closets"
                                         label={t('itemDetail.closets')}
-                                        values={credentials.closet_ids}
+                                        values={userClosets.filter(closet => credentials.closet_ids.includes(closet.id))}
                                         renderValueSelector={
                                             renderSelectClosets
                                         }

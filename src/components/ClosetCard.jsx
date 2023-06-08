@@ -5,11 +5,12 @@ import { useNavigation } from '@react-navigation/core'
 import Block from './Block'
 import Image from './Image'
 import Text from './Text'
+import Checkbox from './Checkbox'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import { useTheme } from '../hooks/'
 
-const ClosetCard = ({ create, closet, type, forceRefresh }) => {
+const ClosetCard = ({ create, closet, type, selectMode, forceRefresh }) => {
     const { assets, colors, sizes } = useTheme()
     const navigation = useNavigation()
 
@@ -76,7 +77,13 @@ const ClosetCard = ({ create, closet, type, forceRefresh }) => {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={handlePress}>
+        <TouchableWithoutFeedback onPress={() => {
+            if (selectMode) {
+                if (!selectMode.isFixed) return selectMode.onSelect()
+                return null
+            }
+            return handlePress()
+        }}>
             <Block
                 card
                 flex={0}
@@ -110,6 +117,23 @@ const ClosetCard = ({ create, closet, type, forceRefresh }) => {
                         <Text p size={sizes.sm}>
                             Items: {closet.Items.length}
                         </Text>
+                    </Block>
+                )}
+
+                {selectMode && (
+                    <Block
+                        position="absolute"
+                        backgroundColor={selectMode.isSelected ? "rgba(0, 0, 0, 0.5)" : null}
+                        borderRadius={sizes.cardRadius}
+                        width={isHorizontal ? CARD_WIDTH * 2 + sizes.sm : CARD_WIDTH}
+                        height="110%"
+                        padding={sizes.s}
+                    >
+                        <Checkbox
+                            fixed={selectMode.isFixed}
+                            checked={selectMode.isSelected}
+                            onPress={selectMode.onSelect}
+                        />
                     </Block>
                 )}
             </Block>

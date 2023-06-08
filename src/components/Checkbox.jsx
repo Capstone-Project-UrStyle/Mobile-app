@@ -5,9 +5,9 @@ import { Platform, Pressable } from 'react-native'
 import { useTheme } from '../hooks/'
 import Block from '../components/Block'
 import Image from '../components/Image'
-import Text from '../components/Text'
 
 const Checkbox = ({
+    checked,
     onPress,
     haptic = true,
     id = 'Checkbox',
@@ -15,19 +15,17 @@ const Checkbox = ({
     ...props
 }) => {
     const { colors, icons, sizes } = useTheme()
-    const [checked, setChecked] = useState(props.checked || false)
 
     const handlePress = useCallback(() => {
         if (!fixed) {
             onPress?.(!checked)
-            setChecked(!checked)
         }
 
         /* haptic feedback onPress */
         // if (haptic) {
         //     Haptics.selectionAsync()
         // }
-    }, [checked, haptic, setChecked, onPress])
+    }, [checked, haptic, onPress])
 
     // generate component testID or accessibilityLabel based on Platform.OS
     const checkboxID =
@@ -36,14 +34,6 @@ const Checkbox = ({
     return (
         <Pressable {...checkboxID} hitSlop={sizes.s} onPress={handlePress}>
             <Block row flex={0} align="center" paddingBottom={sizes.sm}>
-                <Text
-                    p
-                    h5
-                    marginRight={sizes.s}
-                    color={checked ? colors.success : colors.danger}
-                >
-                    {checked ? 'Selected' : 'Not selected'}
-                </Text>
                 <Block
                     flex={0}
                     align="center"

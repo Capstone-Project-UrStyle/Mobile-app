@@ -51,8 +51,8 @@ export const COLORS = {
     switchOff: '#E9ECEF',
 
     /** UI color for checkbox icon checked/active color */
-    checkbox: ['#3A416F', '#141727'],
-    checkboxIcon: '#FFFFFF',
+    checkbox: ['#82D616', '#74bf11'],
+    checkboxIcon: '#252F40',
 
     /** social colors */
     facebook: '#3B5998',
@@ -141,8 +141,8 @@ export const SIZES = {
     switchThumb: 20,
 
     // checkbox sizes
-    checkboxWidth: 18,
-    checkboxHeight: 18,
+    checkboxWidth: 25,
+    checkboxHeight: 25,
     checkboxRadius: 5,
     checkboxIconWidth: 10,
     checkboxIconHeight: 8,

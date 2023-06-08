@@ -18,6 +18,7 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     const [patterns, setPatterns] = useState([])
     const [openValueSelector, setOpenValueSelector] = useState(false)
 
+    const maxDisplayValueLength = 30
     const typeValuesMap = {
         Occasions: occasions,
         Categories: categories,
@@ -39,7 +40,12 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
 
     const formatValue = () => {
         if (type === 'Closets' && values) {
-            return values.length
+            const valueNames = values.slice(0, 3).map((value) => value.name)
+            let displayValue = valueNames.join(', ')
+            if (displayValue.length > maxDisplayValueLength) {
+                displayValue = displayValue.slice(0, maxDisplayValueLength) + '...'
+            }
+            return displayValue
         }
 
         if (type === 'Categories' && categoryId) {
@@ -59,10 +65,10 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
             const typeValues = typeValuesMap[type].filter((typeValue) =>
                 values.includes(typeValue.id),
             )
-            const valueNames = typeValues.slice(0, 3).map((value) => value.name)
+            const valueNames = typeValues.map((value) => value.name)
             let displayValue = valueNames.join(', ')
-            if (values.length > 3) {
-                displayValue += ',...'
+            if (displayValue.length > maxDisplayValueLength) {
+                displayValue = displayValue.slice(0, maxDisplayValueLength) + '...'
             }
             return displayValue
         }
