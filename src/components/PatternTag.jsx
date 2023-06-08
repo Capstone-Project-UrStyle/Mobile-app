@@ -20,7 +20,7 @@ const PatternTag = ({ onPress, pattern, isSelected }) => {
             gradient={gradients?.[isSelected ? 'primary' : 'light']}
             margin={sizes.xs}
         >
-            <Block row align='center'>
+            <Block row align="center">
                 <Image
                     radius={sizes.s}
                     width={25}
@@ -28,7 +28,7 @@ const PatternTag = ({ onPress, pattern, isSelected }) => {
                     style={{ margin: sizes.xs }}
                     borderWidth={0.5}
                     borderColor={colors.black}
-                    source={ BASE_API_URL + pattern.image }
+                    source={BASE_API_URL + pattern.image}
                 />
                 <Text
                     p

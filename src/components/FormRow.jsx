@@ -19,11 +19,11 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     const [openValueSelector, setOpenValueSelector] = useState(false)
 
     const typeValuesMap = {
-        'Occasions': occasions,
-        'Categories': categories,
-        'Colors': masterDataColors,
-        'Materials': materials,
-        'Patterns': patterns,
+        Occasions: occasions,
+        Categories: categories,
+        Colors: masterDataColors,
+        Materials: materials,
+        Patterns: patterns,
     }
 
     // Fetch occasions in master data
@@ -43,14 +43,23 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
         }
 
         if (type === 'Categories' && categoryId) {
-            const childCategory = categories.find(category => category.id === categoryId)
-            const parentCategory = categories.find(category => category.id === childCategory.parent_id)
-            return parentCategory && parentCategory.name + ' > ' + childCategory.name
+            const childCategory = categories.find(
+                (category) => category.id === categoryId,
+            )
+            const parentCategory = categories.find(
+                (category) => category.id === childCategory.parent_id,
+            )
+            return (
+                parentCategory &&
+                parentCategory.name + ' > ' + childCategory.name
+            )
         }
 
         if (type && values) {
-            const typeValues = typeValuesMap[type].filter(typeValue => values.includes(typeValue.id))
-            const valueNames = typeValues.slice(0, 3).map(value => value.name)
+            const typeValues = typeValuesMap[type].filter((typeValue) =>
+                values.includes(typeValue.id),
+            )
+            const valueNames = typeValues.slice(0, 3).map((value) => value.name)
             let displayValue = valueNames.join(', ')
             if (values.length > 3) {
                 displayValue += ',...'
@@ -60,15 +69,32 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     }
 
     return (
-        <Block paddingVertical={sizes.s} borderBottomWidth={0.8} borderColor={colors.light}>
-            <TouchableWithoutFeedback onPress={() => setOpenValueSelector(prev => !prev)}>
+        <Block
+            paddingVertical={sizes.s}
+            borderBottomWidth={0.8}
+            borderColor={colors.light}
+        >
+            <TouchableWithoutFeedback
+                onPress={() => setOpenValueSelector((prev) => !prev)}
+            >
                 <Block>
-                    <Block flex={1} row align='center' justify='space-between' paddingVertical={sizes.s}>
+                    <Block
+                        flex={1}
+                        row
+                        align="center"
+                        justify="space-between"
+                        paddingVertical={sizes.s}
+                    >
                         <Text p semibold marginRight={sizes.sm}>
                             {label}
                         </Text>
-                        <Block flex={0} row align='center'>
-                            <Text p semibold color={colors.info} marginRight={sizes.s}>
+                        <Block flex={0} row align="center">
+                            <Text
+                                p
+                                semibold
+                                color={colors.info}
+                                marginRight={sizes.s}
+                            >
                                 {formatValue()}
                             </Text>
                             <AntDesign
@@ -79,14 +105,14 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
                         </Block>
                     </Block>
 
-                    {openValueSelector &&
+                    {openValueSelector && (
                         <Block paddingVertical={sizes.s}>
                             {renderValueSelector && renderValueSelector()}
                         </Block>
-                    }
+                    )}
                 </Block>
             </TouchableWithoutFeedback>
-        </Block>   
+        </Block>
     )
 }
 

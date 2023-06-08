@@ -10,6 +10,7 @@ import {
     CreateCloset,
     ClosetDetail,
     EditCloset,
+    CreateItem,
     ItemDetail,
     Articles,
     Components,
@@ -67,6 +68,15 @@ export default () => {
                 component={EditCloset}
                 options={{
                     title: t('navigation.editCloset'),
+                    ...screenOptions.back,
+                }}
+            />
+
+            <Stack.Screen
+                name="CreateItem"
+                component={CreateItem}
+                options={{
+                    title: t('navigation.createItem'),
                     ...screenOptions.back,
                 }}
             />

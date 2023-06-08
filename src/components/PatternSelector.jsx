@@ -16,12 +16,7 @@ const PatternSelector = ({ selectedPatternIds, handlePressPatternTag }) => {
     }, [masterData.Patterns])
 
     return (
-        <Block
-            row
-            flex={1}
-            wrap="wrap"
-            justify="flex-start"
-        >
+        <Block row flex={1} wrap="wrap" justify="flex-start">
             {patterns.map((pattern) => {
                 const isSelected = selectedPatternIds.includes(pattern.id)
                 return (
@@ -29,11 +24,7 @@ const PatternSelector = ({ selectedPatternIds, handlePressPatternTag }) => {
                         key={`pattern-${pattern.id}`}
                         pattern={pattern}
                         isSelected={isSelected}
-                        onPress={() =>
-                            handlePressPatternTag(
-                                pattern.id,
-                            )
-                        }
+                        onPress={() => handlePressPatternTag(pattern.id)}
                     />
                 )
             })}

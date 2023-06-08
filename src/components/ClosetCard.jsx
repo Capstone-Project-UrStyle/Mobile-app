@@ -33,7 +33,9 @@ const ClosetCard = ({ create, closet, type, forceRefresh }) => {
         }
 
         if (closet) {
-            const closetItems = closet.Items
+            const closetItems = closet.Items.sort(
+                (item1, item2) => item1.id - item2.id,
+            )
             let itemList = []
             for (let index = 0; index < 4; index++) {
                 itemList.push(
@@ -43,7 +45,7 @@ const ClosetCard = ({ create, closet, type, forceRefresh }) => {
                                 ? `item-${closetItems[index].id}`
                                 : index
                         }
-                        resizeMode="contain"
+                        resizeMode="cover"
                         style={{
                             height: 60,
                             width: 60,
@@ -68,7 +70,7 @@ const ClosetCard = ({ create, closet, type, forceRefresh }) => {
             navigation.navigate('ClosetDetail', {
                 closetId: closet.id,
                 closetName: closet.name,
-                forceRefresh: forceRefresh
+                forceRefresh: forceRefresh,
             })
         }
     }

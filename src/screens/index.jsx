@@ -7,6 +7,7 @@ export { default as CreateCloset } from './CreateCloset'
 export { default as ClosetDetail } from './ClosetDetail'
 export { default as EditCloset } from './EditCloset'
 
+export { default as CreateItem } from './CreateItem'
 export { default as ItemDetail } from './ItemDetail'
 
 export { default as About } from './Pro'

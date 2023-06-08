@@ -16,12 +16,7 @@ const ColorSelector = ({ selectedColorIds, handlePressColorTag }) => {
     }, [masterData.Colors])
 
     return (
-        <Block
-            row
-            flex={1}
-            wrap="wrap"
-            justify="flex-start"
-        >
+        <Block row flex={1} wrap="wrap" justify="flex-start">
             {colors.map((color) => {
                 const isSelected = selectedColorIds.includes(color.id)
                 return (
@@ -29,11 +24,7 @@ const ColorSelector = ({ selectedColorIds, handlePressColorTag }) => {
                         key={`color-${color.id}`}
                         color={color}
                         isSelected={isSelected}
-                        onPress={() =>
-                            handlePressColorTag(
-                                color.id,
-                            )
-                        }
+                        onPress={() => handlePressColorTag(color.id)}
                     />
                 )
             })}

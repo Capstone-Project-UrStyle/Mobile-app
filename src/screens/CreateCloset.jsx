@@ -93,7 +93,9 @@ const CreateCloset = ({ route, navigation }) => {
                     placeholder={t('createCloset.namePlaceholder')}
                     success={Boolean(credentials.name && isValid.name)}
                     danger={Boolean(credentials.emnameail && !isValid.name)}
-                    onChangeText={(value) => handleChangeCredentials({ name: value })}
+                    onChangeText={(value) =>
+                        handleChangeCredentials({ name: value })
+                    }
                 />
 
                 <Block card flex={0} color={colors.light} minHeight={75}>

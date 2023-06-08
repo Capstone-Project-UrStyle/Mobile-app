@@ -9,7 +9,8 @@ const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
     const { masterData } = useData()
 
     const [categories, setCategories] = useState([])
-    const [selectedParentCategoryId, setSelectedParentCategoryId] = useState(null)
+    const [selectedParentCategoryId, setSelectedParentCategoryId] =
+        useState(null)
 
     // Fetch categories in master data
     useEffect(() => {
@@ -18,7 +19,9 @@ const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
 
     useEffect(() => {
         if (selectedCategoryId && categories.length > 0) {
-            const selectedCategory = categories.find(item => item.id === selectedCategoryId)
+            const selectedCategory = categories.find(
+                (item) => item.id === selectedCategoryId,
+            )
             setSelectedParentCategoryId(selectedCategory.parent_id)
         }
     }, [selectedCategoryId, categories])
@@ -33,7 +36,9 @@ const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
 
     const renderParentCategoryTags = () => {
         if (selectedParentCategoryId) {
-            const parentCategory = categories.find(category => category.id === selectedParentCategoryId)
+            const parentCategory = categories.find(
+                (category) => category.id === selectedParentCategoryId,
+            )
             return (
                 <CategoryTag
                     key={`parent-category-${parentCategory.id}`}
@@ -56,7 +61,7 @@ const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
                             onPress={() =>
                                 handlePressParentCategoryTag(category.id)
                             }
-                        />
+                        />,
                     )
                 }
             })
@@ -67,38 +72,30 @@ const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
     return (
         <Block>
             {/* Render parent categories */}
-            <Block
-                row
-                flex={1}
-                wrap="wrap"
-                justify="flex-start"
-            >
+            <Block row flex={1} wrap="wrap" justify="flex-start">
                 {renderParentCategoryTags()}
                 {}
             </Block>
 
             {/* Render child categories */}
-            <Block
-                row
-                flex={1}
-                wrap="wrap"
-                justify="flex-start"
-            >
-                {selectedParentCategoryId && categories.map((category) => {
-                    const isSelected = category.id === selectedCategoryId
-                    return !category.is_parent && category.parent_id === selectedParentCategoryId && (
-                        <CategoryTag
-                            key={`child-category-${category.id}`}
-                            category={category}
-                            isSelected={isSelected}
-                            onPress={() =>
-                                handlePressCategoryTag(
-                                    category.id,
-                                )
-                            }
-                        />
-                    )
-                })}
+            <Block row flex={1} wrap="wrap" justify="flex-start">
+                {selectedParentCategoryId &&
+                    categories.map((category) => {
+                        const isSelected = category.id === selectedCategoryId
+                        return (
+                            !category.is_parent &&
+                            category.parent_id === selectedParentCategoryId && (
+                                <CategoryTag
+                                    key={`child-category-${category.id}`}
+                                    category={category}
+                                    isSelected={isSelected}
+                                    onPress={() =>
+                                        handlePressCategoryTag(category.id)
+                                    }
+                                />
+                            )
+                        )
+                    })}
             </Block>
         </Block>
     )

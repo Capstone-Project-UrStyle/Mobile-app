@@ -69,6 +69,7 @@
     "home": "UrStyle",
     "createCloset": "Create a closet",
     "editCloset": "Edit closet",
+    "createItem": "Add new clothes item",
     "itemDetail": "Item detail",
     "components": "Components",
     "articles": "UrStyle",
@@ -122,6 +123,23 @@
     "public": "Public to other users",
     "done": "Done",
     "occasions": "Occasions"
+  },
+  "createItem": {
+    "confirmDeleteItem": "Confirm delete item",
+    "deleteWarning": "This will delete item from all closets! Are you sure you want to delete this item?",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete",
+    "closetInfo": "Closet info",
+    "closets": "Choose closets",
+    "occasionInfo": "Occasion info",
+    "occasions": "Occasions",
+    "itemInfo": "Item info",
+    "itemCategory": "Category",
+    "itemColor": "Color",
+    "itemMaterial": "Material",
+    "itemPattern": "Pattern",
+    "itemBrand": "Brand",
+    "done": "Done"
   },
   "itemDetail": {
     "confirmDeleteItem": "Confirm delete item",

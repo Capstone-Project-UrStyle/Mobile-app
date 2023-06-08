@@ -2,7 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
 
 import { useTranslation, useTheme, useData } from '../hooks'
-import { Block, Button, Text, Input, Switch, OccasionSelector } from '../components'
+import {
+    Block,
+    Button,
+    Text,
+    Input,
+    Switch,
+    OccasionSelector,
+} from '../components'
 
 import closetApi from '../api/closetApi'
 
@@ -123,7 +130,9 @@ const EditCloset = ({ route, navigation }) => {
                     placeholder={t('editCloset.namePlaceholder')}
                     success={Boolean(credentials.name && isValid.name)}
                     danger={Boolean(credentials.emnameail && !isValid.name)}
-                    onChangeText={(value) => handleChangeCredentials({ name: value })}
+                    onChangeText={(value) =>
+                        handleChangeCredentials({ name: value })
+                    }
                     value={credentials.name}
                 />
 
@@ -174,14 +183,18 @@ const EditCloset = ({ route, navigation }) => {
                         >
                             <OccasionSelector
                                 selectedOccasionIds={credentials.occasion_ids}
-                                handlePressOccasionTag={handlePressOccasionTag} 
+                                handlePressOccasionTag={handlePressOccasionTag}
                             />
                         </Block>
                     </Block>
                 </Block>
             </Block>
 
-            <Block flex={0} paddingHorizontal={sizes.sm} paddingVertical={sizes.s}>
+            <Block
+                flex={0}
+                paddingHorizontal={sizes.sm}
+                paddingVertical={sizes.s}
+            >
                 <Button
                     outlined
                     gray

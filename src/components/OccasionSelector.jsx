@@ -16,12 +16,7 @@ const OccasionSelector = ({ selectedOccasionIds, handlePressOccasionTag }) => {
     }, [masterData.Occasions])
 
     return (
-        <Block
-            row
-            flex={1}
-            wrap="wrap"
-            justify="flex-start"
-        >
+        <Block row flex={1} wrap="wrap" justify="flex-start">
             {occasions.map((occasion) => {
                 const isSelected = selectedOccasionIds.includes(occasion.id)
                 return (
@@ -29,11 +24,7 @@ const OccasionSelector = ({ selectedOccasionIds, handlePressOccasionTag }) => {
                         key={`occasion-${occasion.id}`}
                         occasion={occasion}
                         isSelected={isSelected}
-                        onPress={() =>
-                            handlePressOccasionTag(
-                                occasion.id,
-                            )
-                        }
+                        onPress={() => handlePressOccasionTag(occasion.id)}
                     />
                 )
             })}

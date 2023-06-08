@@ -31,7 +31,11 @@ export default () => {
         headerRightContainerStyle: { paddingRight: sizes.s },
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
 
-        headerTitle: ({ children }) => <Text p size={18} semibold>{children}</Text>,
+        headerTitle: ({ children }) => (
+            <Text p size={18} semibold>
+                {children}
+            </Text>
+        ),
 
         headerLeft: () => (
             <Button
@@ -206,7 +210,7 @@ export default () => {
                     <Block row flex={0} align="center" marginRight={sizes.s}>
                         <Button
                             onPress={() =>
-                                navigation.navigate('AddItemToCloset', {
+                                navigation.navigate('CreateItem', {
                                     closetId: closetId,
                                 })
                             }

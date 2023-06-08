@@ -177,7 +177,9 @@ const Login = ({ navigation }) => {
                                         credentials.email && !isValid.email,
                                     )}
                                     onChangeText={(value) =>
-                                        handleChangeCredentials({ email: value })
+                                        handleChangeCredentials({
+                                            email: value,
+                                        })
                                     }
                                 />
                                 <Input
@@ -189,7 +191,9 @@ const Login = ({ navigation }) => {
                                         'common.passwordPlaceholder',
                                     )}
                                     onChangeText={(value) =>
-                                        handleChangeCredentials({ password: value })
+                                        handleChangeCredentials({
+                                            password: value,
+                                        })
                                     }
                                     success={Boolean(
                                         credentials.password &&

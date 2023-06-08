@@ -297,7 +297,7 @@ const Cards = () => {
             <Block>
                 <Block card row>
                     <Image
-                        resizeMode="contain"
+                        resizeMode="cover"
                         source={assets?.card1}
                         style={{ height: 114 }}
                     />

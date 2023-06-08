@@ -197,7 +197,9 @@ const Register = ({ navigation }) => {
                                         registration.email && !isValid.email,
                                     )}
                                     onChangeText={(value) =>
-                                        handleChangeCredentials({ email: value })
+                                        handleChangeCredentials({
+                                            email: value,
+                                        })
                                     }
                                 />
                                 <Input
@@ -209,7 +211,9 @@ const Register = ({ navigation }) => {
                                         'common.passwordPlaceholder',
                                     )}
                                     onChangeText={(value) =>
-                                        handleChangeCredentials({ password: value })
+                                        handleChangeCredentials({
+                                            password: value,
+                                        })
                                     }
                                     success={Boolean(
                                         registration.password &&
@@ -232,7 +236,9 @@ const Register = ({ navigation }) => {
                                     marginRight={sizes.sm}
                                     checked={registration?.agreed}
                                     onPress={(value) =>
-                                        handleChangeCredentials({ agreed: value })
+                                        handleChangeCredentials({
+                                            agreed: value,
+                                        })
                                     }
                                 />
                                 <Text paddingRight={sizes.s}>

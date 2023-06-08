@@ -16,12 +16,7 @@ const OccasionSelector = ({ selectedMaterialIds, handlePressMaterialTag }) => {
     }, [masterData.Materials])
 
     return (
-        <Block
-            row
-            flex={1}
-            wrap="wrap"
-            justify="flex-start"
-        >
+        <Block row flex={1} wrap="wrap" justify="flex-start">
             {materials.map((material) => {
                 const isSelected = selectedMaterialIds.includes(material.id)
                 return (
@@ -29,11 +24,7 @@ const OccasionSelector = ({ selectedMaterialIds, handlePressMaterialTag }) => {
                         key={`material-${material.id}`}
                         material={material}
                         isSelected={isSelected}
-                        onPress={() =>
-                            handlePressMaterialTag(
-                                material.id,
-                            )
-                        }
+                        onPress={() => handlePressMaterialTag(material.id)}
                     />
                 )
             })}

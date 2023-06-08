@@ -133,13 +133,13 @@ const ClosetDetail = ({ route, navigation }) => {
                     >
                         <Block
                             flex={0}
-                            padding={sizes.s}
+                            padding={sizes.s + 0.5}
                             borderRightWidth={0.8}
                             borderBottomWidth={0.8}
                             borderColor={colors.light}
                         >
                             <Image
-                                resizeMode="contain"
+                                resizeMode="cover"
                                 style={{
                                     width: screenSize.width / 3.5,
                                     height: screenSize.width / 3.5,
@@ -353,12 +353,7 @@ const ClosetDetail = ({ route, navigation }) => {
                 contentContainerStyle={{ paddingBottom: sizes.l }}
                 forceRefresh={forceRefresh}
             >
-                <Block
-                    row
-                    wrap="wrap"
-                    align="flex-start"
-                    justify="space-between"
-                >
+                <Block row wrap="wrap" align="flex-start" justify="flex-start">
                     {renderItemList()}
                 </Block>
             </Block>

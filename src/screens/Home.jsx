@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Ionicons } from '@expo/vector-icons'
+import { TouchableOpacity } from 'react-native'
+import { Ionicons, AntDesign } from '@expo/vector-icons'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import { useData, useTheme, useTranslation } from '../hooks'
@@ -14,13 +15,14 @@ import {
 
 import closetApi from '../api/closetApi'
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const { t } = useTranslation()
-    const { colors, fonts, sizes } = useTheme()
+    const { colors, fonts, sizes, gradients, screenSize } = useTheme()
     const { user, handleSetIsLoading } = useData()
 
     const [tab, setTab] = useState(0)
     const [cardList, setCardList] = useState([])
+    const [openAddMenu, setOpenAddMenu] = useState(false)
     const [refresh, forceRefresh] = useState(false)
 
     useEffect(() => {
@@ -206,6 +208,101 @@ const Home = () => {
                 >
                     {renderCardList()}
                 </Block>
+            </Block>
+
+            {/* Add Menu */}
+            {openAddMenu && (
+                <Block
+                    position="absolute"
+                    width="100%"
+                    height="100%"
+                    alignItems="center"
+                    justifyContent="center"
+                    backgroundColor="rgba(0, 0, 0, 0.7)"
+                >
+                    <Block
+                        position="absolute"
+                        backgroundColor={colors.card}
+                        borderRadius={10}
+                        padding={sizes.sm}
+                        bottom={80}
+                    >
+                        <TouchableOpacity
+                            onPress={() => {
+                                setOpenAddMenu(false)
+                                navigation.navigate('CreateItem', {
+                                    forceRefresh: forceRefresh,
+                                })
+                            }}
+                        >
+                            <Block flex={0} row align="center">
+                                <Ionicons
+                                    name="shirt"
+                                    size={30}
+                                    color={colors.primary}
+                                    paddingRight={sizes.sm}
+                                    paddingVertical={sizes.s}
+                                />
+                                <Text p h5 font={fonts.semibold}>
+                                    Add new clothes item
+                                </Text>
+                            </Block>
+                        </TouchableOpacity>
+                        <Block
+                            flex={0}
+                            height={1}
+                            marginVertical={sizes.xs}
+                            gradient={gradients.menu}
+                        />
+                        <TouchableOpacity
+                            onPress={() => {
+                                setOpenAddMenu(false)
+                                navigation.navigate('CreateOutfit')
+                            }}
+                        >
+                            <Block flex={0} row align="center">
+                                <Ionicons
+                                    name="man"
+                                    size={30}
+                                    color={colors.dark}
+                                    paddingRight={sizes.sm}
+                                    paddingVertical={sizes.s}
+                                />
+                                <Text p h5 font={fonts.semibold}>
+                                    Create new outfit
+                                </Text>
+                            </Block>
+                        </TouchableOpacity>
+                    </Block>
+                </Block>
+            )}
+
+            <Block
+                alignItems="center"
+                justifyContent="center"
+                position="absolute"
+                bottom={10}
+                right={screenSize.width / 2 - 27.5}
+                backgroundColor={colors.card}
+                borderRadius={100}
+            >
+                <TouchableOpacity
+                    onPress={() => setOpenAddMenu((prev) => !prev)}
+                >
+                    {openAddMenu ? (
+                        <AntDesign
+                            name="closecircle"
+                            size={55}
+                            color="#01a699"
+                        />
+                    ) : (
+                        <AntDesign
+                            name="pluscircle"
+                            size={55}
+                            color="#01a699"
+                        />
+                    )}
+                </TouchableOpacity>
             </Block>
         </Block>
     )

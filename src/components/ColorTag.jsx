@@ -18,7 +18,7 @@ const ColorTag = ({ onPress, color, isSelected }) => {
             gradient={gradients?.[isSelected ? 'primary' : 'light']}
             margin={sizes.xs}
         >
-            <Block row align='center'>
+            <Block row align="center">
                 <Image
                     radius={sizes.s}
                     width={25}
