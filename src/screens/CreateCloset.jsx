@@ -51,21 +51,6 @@ const CreateCloset = ({ route, navigation }) => {
         [setCredentials],
     )
 
-    const handleSubmit = useCallback(async () => {
-        if (!Object.values(isValid).includes(false)) {
-            try {
-                const response = await closetApi.createNew(credentials)
-                if (response.request.status === 200) {
-                    Alert.alert(response.data.message)
-                    navigation.goBack()
-                    route.params.forceRefresh((prev) => !prev)
-                }
-            } catch (error) {
-                Alert.alert(error.response.data.message)
-            }
-        }
-    }, [isValid, credentials])
-
     const handlePressOccasionTag = (occasionId) => {
         if (credentials.occasion_ids.includes(occasionId)) {
             handleChangeCredentials({
@@ -80,8 +65,27 @@ const CreateCloset = ({ route, navigation }) => {
         }
     }
 
+    const handleSubmit = useCallback(async () => {
+        if (!Object.values(isValid).includes(false)) {
+            try {
+                const response = await closetApi.createNew(credentials)
+                if (response.request.status === 200) {
+                    Alert.alert(response.data.message)
+                    navigation.goBack()
+                }
+            } catch (error) {
+                Alert.alert(error.response.data.message)
+            }
+        }
+    }, [isValid, credentials])
+
     return (
-        <Block flex={1} color={colors.card} justify="space-between">
+        <Block
+            flex={1}
+            color={colors.card}
+            justify="space-between"
+            paddingBottom={70}
+        >
             <Block flex={1} padding={sizes.sm}>
                 <Text h5 marginBottom={sizes.s}>
                     {t('createCloset.name')}
@@ -172,7 +176,14 @@ const CreateCloset = ({ route, navigation }) => {
                 </Block>
             </Block>
 
-            <Block flex={0} padding={sizes.sm}>
+            <Block
+                flex={0}
+                padding={sizes.sm}
+                position="absolute"
+                width="100%"
+                backgroundColor={colors.card}
+                bottom={0}
+            >
                 <Button
                     outlined
                     gray

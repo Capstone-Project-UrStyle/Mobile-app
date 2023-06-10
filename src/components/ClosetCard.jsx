@@ -10,7 +10,7 @@ import Checkbox from './Checkbox'
 import { BASE_API_URL } from '../api/axiosClient'
 import { useTheme } from '../hooks/'
 
-const ClosetCard = ({ create, closet, type, selectMode, forceRefresh }) => {
+const ClosetCard = ({ create, closet, type, selectMode }) => {
     const { assets, colors, sizes } = useTheme()
     const navigation = useNavigation()
 
@@ -66,24 +66,25 @@ const ClosetCard = ({ create, closet, type, selectMode, forceRefresh }) => {
 
     const handlePress = () => {
         if (create) {
-            navigation.navigate('CreateCloset', { forceRefresh: forceRefresh })
+            navigation.navigate('CreateCloset')
         } else {
             navigation.navigate('ClosetDetail', {
                 closetId: closet.id,
                 closetName: closet.name,
-                forceRefresh: forceRefresh,
             })
         }
     }
 
     return (
-        <TouchableWithoutFeedback onPress={() => {
-            if (selectMode) {
-                if (!selectMode.isFixed) return selectMode.onSelect()
-                return null
-            }
-            return handlePress()
-        }}>
+        <TouchableWithoutFeedback
+            onPress={() => {
+                if (selectMode) {
+                    if (!selectMode.isFixed) return selectMode.onSelect()
+                    return null
+                }
+                return handlePress()
+            }}
+        >
             <Block
                 card
                 flex={0}
@@ -123,9 +124,15 @@ const ClosetCard = ({ create, closet, type, selectMode, forceRefresh }) => {
                 {selectMode && (
                     <Block
                         position="absolute"
-                        backgroundColor={selectMode.isSelected ? "rgba(0, 0, 0, 0.5)" : null}
+                        backgroundColor={
+                            selectMode.isSelected ? 'rgba(0, 0, 0, 0.4)' : null
+                        }
                         borderRadius={sizes.cardRadius}
-                        width={isHorizontal ? CARD_WIDTH * 2 + sizes.sm : CARD_WIDTH}
+                        width={
+                            isHorizontal
+                                ? CARD_WIDTH * 2 + sizes.sm
+                                : CARD_WIDTH
+                        }
                         height="110%"
                         padding={sizes.s}
                     >

@@ -234,9 +234,12 @@ const ItemDetail = ({ route, navigation }) => {
                             closet={closet}
                             type={'vertical'}
                             selectMode={{
-                                onSelect: () => handlePressClosetCheckbox(closet.id),
-                                isSelected: credentials.closet_ids.includes(closet.id),
-                                isFixed: closet.name === 'All items'
+                                onSelect: () =>
+                                    handlePressClosetCheckbox(closet.id),
+                                isSelected: credentials.closet_ids.includes(
+                                    closet.id,
+                                ),
+                                isFixed: closet.name === 'All items',
                             }}
                         />
                     </Block>
@@ -261,7 +264,6 @@ const ItemDetail = ({ route, navigation }) => {
                 if (response.request.status === 200) {
                     Alert.alert(response.data.message)
                     navigation.goBack()
-                    route.params.forceRefresh((prev) => !prev)
                 }
             } catch (error) {
                 Alert.alert(error.response.data.message)
@@ -357,7 +359,11 @@ const ItemDetail = ({ route, navigation }) => {
                                     <FormRow
                                         type="Closets"
                                         label={t('itemDetail.closets')}
-                                        values={userClosets.filter(closet => credentials.closet_ids.includes(closet.id))}
+                                        values={userClosets.filter((closet) =>
+                                            credentials.closet_ids.includes(
+                                                closet.id,
+                                            ),
+                                        )}
                                         renderValueSelector={
                                             renderSelectClosets
                                         }

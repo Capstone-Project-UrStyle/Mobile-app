@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons, AntDesign } from '@expo/vector-icons'
+import { useIsFocused } from '@react-navigation/native'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import { useData, useTheme, useTranslation } from '../hooks'
@@ -19,12 +20,21 @@ const Home = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, fonts, sizes, gradients, screenSize } = useTheme()
     const { user, handleSetIsLoading } = useData()
+    const isFocused = useIsFocused()
 
     const [tab, setTab] = useState(0)
     const [cardList, setCardList] = useState([])
     const [openAddMenu, setOpenAddMenu] = useState(false)
     const [refresh, forceRefresh] = useState(false)
 
+    // Force refresh the screen whenever focused
+    useEffect(() => {
+        if (isFocused) {
+            forceRefresh((prev) => !prev)
+        }
+    }, [isFocused])
+
+    // Fetch all user's closets data
     useEffect(() => {
         async function fetchUserClosets() {
             handleSetIsLoading(true)
@@ -70,14 +80,12 @@ const Home = ({ navigation }) => {
                                     key={`card-${card?.id}`}
                                     closet={card}
                                     type={'vertical'}
-                                    forceRefresh={forceRefresh}
                                 />
                             ))}
                             <ClosetCard
                                 key={'create'}
                                 create
                                 type={'vertical'}
-                                forceRefresh={forceRefresh}
                             />
                         </>
                     )
@@ -218,7 +226,7 @@ const Home = ({ navigation }) => {
                     height="100%"
                     alignItems="center"
                     justifyContent="center"
-                    backgroundColor="rgba(0, 0, 0, 0.7)"
+                    backgroundColor="rgba(0, 0, 0, 0.6)"
                 >
                     <Block
                         position="absolute"
@@ -230,9 +238,7 @@ const Home = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() => {
                                 setOpenAddMenu(false)
-                                navigation.navigate('CreateItem', {
-                                    forceRefresh: forceRefresh,
-                                })
+                                navigation.navigate('CreateItem')
                             }}
                         >
                             <Block flex={0} row align="center">

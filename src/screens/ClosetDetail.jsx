@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Alert, TouchableWithoutFeedback } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
 
 import { useTranslation, useTheme, useData } from '../hooks'
-import { Block, Button, Text, Image } from '../components'
+import { Block, Button, Text, ItemCard } from '../components'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import closetApi from '../api/closetApi'
 
 const ClosetDetail = ({ route, navigation }) => {
     const { t } = useTranslation()
-    const { colors, sizes, fonts, screenSize } = useTheme()
+    const { colors, sizes, fonts } = useTheme()
     const { masterData, handleSetIsLoading } = useData()
+    const isFocused = useIsFocused()
 
     const [closetDetail, setClosetDetail] = useState(null)
     const [parentCategories, setParentCategories] = useState([])
@@ -22,6 +24,14 @@ const ClosetDetail = ({ route, navigation }) => {
 
     const { closetId } = route.params
 
+    // Force refresh the screen whenever focused
+    useEffect(() => {
+        if (isFocused) {
+            forceRefresh((prev) => !prev)
+        }
+    }, [isFocused])
+
+    // Fetch closet data
     useEffect(() => {
         async function fetchClosetDetail() {
             handleSetIsLoading(true)
@@ -40,6 +50,7 @@ const ClosetDetail = ({ route, navigation }) => {
         fetchClosetDetail()
     }, [refresh])
 
+    // Get all closet items's parent categories
     useEffect(() => {
         if (masterData && closetDetail) {
             const closetItems = closetDetail.Items
@@ -58,6 +69,7 @@ const ClosetDetail = ({ route, navigation }) => {
         }
     }, [closetDetail])
 
+    // Get all closet items's child categories when select parent category changes
     useEffect(() => {
         if (closetDetail && selectedParentCategoryId !== 0) {
             const closetItems = closetDetail.Items
@@ -78,6 +90,7 @@ const ClosetDetail = ({ route, navigation }) => {
         }
     }, [closetDetail, selectedParentCategoryId])
 
+    // Get item list when selected parent category or selected child category changes
     useEffect(() => {
         if (closetDetail && selectedParentCategoryId === 0) {
             setItemList(closetDetail.Items)
@@ -121,42 +134,7 @@ const ClosetDetail = ({ route, navigation }) => {
     const renderItemList = () => {
         if (itemList && itemList.length > 0) {
             return itemList.map((item) => {
-                return (
-                    <TouchableWithoutFeedback
-                        key={`item-${item.id}`}
-                        onPress={() =>
-                            navigation.navigate('ItemDetail', {
-                                itemId: item.id,
-                                forceRefresh: forceRefresh,
-                            })
-                        }
-                    >
-                        <Block
-                            flex={0}
-                            padding={sizes.s + 0.5}
-                            borderRightWidth={0.8}
-                            borderBottomWidth={0.8}
-                            borderColor={colors.light}
-                        >
-                            <Image
-                                resizeMode="cover"
-                                style={{
-                                    width: screenSize.width / 3.5,
-                                    height: screenSize.width / 3.5,
-                                }}
-                                source={{ uri: BASE_API_URL + item.image }}
-                            />
-                            <Text
-                                p
-                                size={14}
-                                font={fonts?.['light']}
-                                paddingVertical={sizes.xs}
-                            >
-                                {item.brand || t('closetDetail.noBrand')}
-                            </Text>
-                        </Block>
-                    </TouchableWithoutFeedback>
-                )
+                return <ItemCard key={`item-${item.id}`} item={item} />
             })
         } else {
             return (
