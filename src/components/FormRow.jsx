@@ -43,7 +43,8 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
             const valueNames = values.slice(0, 3).map((value) => value.name)
             let displayValue = valueNames.join(', ')
             if (displayValue.length > maxDisplayValueLength) {
-                displayValue = displayValue.slice(0, maxDisplayValueLength) + '...'
+                displayValue =
+                    displayValue.slice(0, maxDisplayValueLength) + '...'
             }
             return displayValue
         }
@@ -68,7 +69,8 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
             const valueNames = typeValues.map((value) => value.name)
             let displayValue = valueNames.join(', ')
             if (displayValue.length > maxDisplayValueLength) {
-                displayValue = displayValue.slice(0, maxDisplayValueLength) + '...'
+                displayValue =
+                    displayValue.slice(0, maxDisplayValueLength) + '...'
             }
             return displayValue
         }

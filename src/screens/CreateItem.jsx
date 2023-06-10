@@ -79,12 +79,15 @@ const CreateItem = ({ route, navigation }) => {
                 handlePressClosetCheckbox(allItemsCloset.id)
             }
         }
+    }, [userClosets])
 
+    // Push params closet id to credentials closet_ids array if exist
+    useEffect(() => {
         if (route.params && route.params.closetId) {
             const closetId = route.params.closetId
             handlePressClosetCheckbox(closetId)
         }
-    }, [userClosets, route])
+    }, [route])
 
     // Force user to choose first item image
     useEffect(() => {
@@ -216,22 +219,19 @@ const CreateItem = ({ route, navigation }) => {
         return (
             <Block row wrap="wrap" justify="space-between">
                 {userClosets.map((closet) => (
-                    <Block
-                        flex={0}
+                    <ClosetCard
                         key={`closet-${closet?.id}`}
-                        alignItems="flex-end"
-                    >
-                        <ClosetCard
-                            key={`closet-${closet?.id}`}
-                            closet={closet}
-                            type={'vertical'}
-                            selectMode={{
-                                onSelect: () => handlePressClosetCheckbox(closet.id),
-                                isSelected: credentials.closet_ids.includes(closet.id),
-                                isFixed: closet.name === 'All items'
-                            }}
-                        />
-                    </Block>
+                        closet={closet}
+                        type={'vertical'}
+                        selectMode={{
+                            onSelect: () =>
+                                handlePressClosetCheckbox(closet.id),
+                            isSelected: credentials.closet_ids.includes(
+                                closet.id,
+                            ),
+                            isFixed: closet.name === 'All items',
+                        }}
+                    />
                 ))}
             </Block>
         )
@@ -256,7 +256,6 @@ const CreateItem = ({ route, navigation }) => {
 
                     Alert.alert(response.data.message)
                     navigation.goBack()
-                    route.params.forceRefresh((prev) => !prev)
                 }
             } catch (error) {
                 Alert.alert(error.response.data.message)
@@ -290,7 +289,9 @@ const CreateItem = ({ route, navigation }) => {
                             <FormRow
                                 type="Closets"
                                 label={t('createItem.closets')}
-                                values={userClosets.filter(closet => credentials.closet_ids.includes(closet.id))}
+                                values={userClosets.filter((closet) =>
+                                    credentials.closet_ids.includes(closet.id),
+                                )}
                                 renderValueSelector={renderSelectClosets}
                             />
                         </Block>

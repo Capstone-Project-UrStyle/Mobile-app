@@ -10,6 +10,7 @@ import Article from './Article'
 import Product from './Product'
 import WeatherCard from './WeatherCard'
 import ClosetCard from './ClosetCard'
+import ItemCard from './ItemCard'
 import FormRow from './FormRow'
 import OccasionTag from './OccasionTag'
 import CategoryTag from './CategoryTag'
@@ -35,6 +36,7 @@ export {
     Modal,
     WeatherCard,
     ClosetCard,
+    ItemCard,
     FormRow,
     OccasionTag,
     CategoryTag,

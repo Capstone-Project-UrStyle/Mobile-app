@@ -25,19 +25,22 @@ const Modal = ({ id = 'Modal', children, style, onRequestClose, ...props }) => {
             onRequestClose={onRequestClose}
         >
             <Block justify="flex-end">
-                <Block safe card flex={0} color={colors.white}>
+                <Block safe card flex={0} color={colors.light}>
                     <Button
+                        top={sizes.s}
+                        right={sizes.s}
+                        position="absolute"
                         onPress={() => onRequestClose?.()}
                     >
                         <Image source={assets.close} color={colors.black} />
                     </Button>
-                    {/* <Block
+                    <Block
                         flex={0}
-                        marginTop={sizes.xxl}
+                        marginTop={sizes.xl}
                         paddingHorizontal={sizes.padding}
-                    > */}
-                    {children}
-                    {/* </Block> */}
+                    >
+                        {children}
+                    </Block>
                 </Block>
             </Block>
         </RNModal>

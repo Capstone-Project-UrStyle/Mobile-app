@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, Alert } from 'react-native'
 import { CardStyleInterpolators } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/core'
@@ -13,6 +13,7 @@ import Text from '../components/Text'
 import useTheme from '../hooks/useTheme'
 import Button from '../components/Button'
 import Block from '../components/Block'
+import Modal from '../components/Modal'
 
 import closetApi from '../api/closetApi'
 import itemApi from '../api/itemApi'
@@ -22,6 +23,108 @@ export default () => {
     const { user } = useData()
     const navigation = useNavigation()
     const { icons, colors, gradients, sizes } = useTheme()
+
+    const [openSelectAddItemModeModal, setOpenSelectAddItemModeModal] =
+        useState(false)
+
+    const renderSelectAddItemModeModal = (closetId) => {
+        return (
+            <Modal
+                visible={openSelectAddItemModeModal}
+                onRequestClose={() => setOpenSelectAddItemModeModal(false)}
+            >
+                <Block flex={0} marginBottom={sizes.m}>
+                    <Button
+                        paddingVertical={sizes.m}
+                        onPress={() => {
+                            navigation.navigate('CreateItem', {
+                                closetId: closetId,
+                            })
+                            setOpenSelectAddItemModeModal(false)
+                        }}
+                    >
+                        <Text p h5 semibold size={18} align="center">
+                            {t('closetDetail.addNewItemToCloset')}
+                        </Text>
+                    </Button>
+                    <Button
+                        paddingVertical={sizes.m}
+                        onPress={() => {
+                            navigation.navigate('EditClosetItemList', {
+                                targetClosetId: closetId,
+                            })
+                            setOpenSelectAddItemModeModal(false)
+                        }}
+                    >
+                        <Text p h5 semibold size={18} align="center">
+                            {t('closetDetail.addCreatedItemToCloset')}
+                        </Text>
+                    </Button>
+                </Block>
+            </Modal>
+        )
+    }
+
+    const handleDeleteCloset = async (closetId) => {
+        try {
+            Alert.alert(
+                t('closetDetail.confirmDeleteCloset'),
+                t('closetDetail.deleteWarning'),
+                [
+                    {
+                        text: t('closetDetail.cancelButton'),
+                        style: 'cancel',
+                    },
+                    {
+                        text: t('closetDetail.deleteButton'),
+                        style: 'destructive',
+                        onPress: async () => {
+                            const response = await closetApi.deleteById(
+                                closetId,
+                            )
+                            if (response.request.status === 200) {
+                                Alert.alert(response.data.message)
+                                navigation.goBack()
+                            }
+                        },
+                    },
+                ],
+                { cancelable: true },
+            )
+        } catch (error) {
+            Alert.alert(error.response.data.message)
+        }
+    }
+
+    const handleDeleteItem = async (itemId) => {
+        try {
+            Alert.alert(
+                t('itemDetail.confirmDeleteItem'),
+                t('itemDetail.deleteWarning'),
+                [
+                    {
+                        text: t('itemDetail.cancelButton'),
+                        style: 'cancel',
+                    },
+                    {
+                        text: t('itemDetail.deleteButton'),
+                        style: 'destructive',
+                        onPress: async () => {
+                            const response = await itemApi.deleteById(itemId)
+
+                            if (response.request.status === 200) {
+                                Alert.alert(response.data.message)
+                                navigation.goBack()
+                            }
+                        },
+                    },
+                ],
+                { cancelable: true },
+            )
+        } catch (error) {
+            Alert.alert(error.response.data.message)
+        }
+    }
 
     const menu = {
         headerStyle: { elevation: 0 },
@@ -171,56 +274,22 @@ export default () => {
                 </Button>
             ),
         },
-        closetDetail: (closetId, closetName, forceRefresh) => {
-            const handleDeleteCloset = async () => {
-                try {
-                    Alert.alert(
-                        t('closetDetail.confirmDeleteCloset'),
-                        t('closetDetail.deleteWarning'),
-                        [
-                            {
-                                text: t('closetDetail.cancelButton'),
-                                style: 'cancel',
-                            },
-                            {
-                                text: t('closetDetail.deleteButton'),
-                                style: 'destructive',
-                                onPress: async () => {
-                                    const response = await closetApi.deleteById(
-                                        closetId,
-                                    )
-                                    if (response.request.status === 200) {
-                                        Alert.alert(response.data.message)
-                                        navigation.goBack()
-                                        forceRefresh((prev) => !prev)
-                                    }
-                                },
-                            },
-                        ],
-                        { cancelable: true },
-                    )
-                } catch (error) {
-                    Alert.alert(error.response.data.message)
-                }
-            }
-
+        closetDetail: (closetId, closetName) => {
             return {
                 ...menu,
                 headerRight: () => (
                     <Block row flex={0} align="center" marginRight={sizes.s}>
                         <Button
-                            onPress={() =>
-                                navigation.navigate('CreateItem', {
-                                    closetId: closetId,
-                                })
-                            }
+                            onPress={() => setOpenSelectAddItemModeModal(true)}
                         >
                             <MaterialIcons
-                                size={20}
+                                size={22}
                                 name="add"
                                 color={colors.icon}
                             />
                         </Button>
+                        {openSelectAddItemModeModal &&
+                            renderSelectAddItemModeModal(closetId)}
                         {closetName !== 'All items' && (
                             <Block row flex={0} align="center">
                                 <Button
@@ -236,7 +305,9 @@ export default () => {
                                         color={colors.icon}
                                     />
                                 </Button>
-                                <Button onPress={handleDeleteCloset}>
+                                <Button
+                                    onPress={() => handleDeleteCloset(closetId)}
+                                >
                                     <MaterialIcons
                                         size={20}
                                         name="delete"
@@ -261,44 +332,12 @@ export default () => {
                 ),
             }
         },
-        itemDetail: (itemId, forceRefresh) => {
-            const handleDeleteItem = async () => {
-                try {
-                    Alert.alert(
-                        t('itemDetail.confirmDeleteItem'),
-                        t('itemDetail.deleteWarning'),
-                        [
-                            {
-                                text: t('itemDetail.cancelButton'),
-                                style: 'cancel',
-                            },
-                            {
-                                text: t('itemDetail.deleteButton'),
-                                style: 'destructive',
-                                onPress: async () => {
-                                    const response = await itemApi.deleteById(
-                                        itemId,
-                                    )
-                                    if (response.request.status === 200) {
-                                        Alert.alert(response.data.message)
-                                        navigation.goBack()
-                                        forceRefresh((prev) => !prev)
-                                    }
-                                },
-                            },
-                        ],
-                        { cancelable: true },
-                    )
-                } catch (error) {
-                    Alert.alert(error.response.data.message)
-                }
-            }
-
+        itemDetail: (itemId) => {
             return {
                 ...menu,
                 headerRight: () => (
                     <Block row flex={0} align="center" marginRight={sizes.s}>
-                        <Button onPress={handleDeleteItem}>
+                        <Button onPress={() => handleDeleteItem(itemId)}>
                             <MaterialIcons
                                 size={20}
                                 name="delete"
