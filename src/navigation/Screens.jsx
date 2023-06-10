@@ -12,6 +12,7 @@ import {
     EditCloset,
     CreateItem,
     ItemDetail,
+    EditClosetItemList,
     Articles,
     Components,
     Pro,
@@ -58,7 +59,6 @@ export default () => {
                     ...screenOptions.closetDetail(
                         route.params.closetId,
                         route.params.closetName,
-                        route.params.forceRefresh,
                     ),
                 })}
             />
@@ -86,10 +86,16 @@ export default () => {
                 component={ItemDetail}
                 options={({ route }) => ({
                     title: t('navigation.itemDetail'),
-                    ...screenOptions.itemDetail(
-                        route.params.itemId,
-                        route.params.forceRefresh,
-                    ),
+                    ...screenOptions.itemDetail(route.params.itemId),
+                })}
+            />
+
+            <Stack.Screen
+                name="EditClosetItemList"
+                component={EditClosetItemList}
+                options={({ route }) => ({
+                    title: t('navigation.editClosetItemList'),
+                    ...screenOptions.back,
                 })}
             />
 

@@ -5,6 +5,10 @@ const closetApi = {
         const url = `api/closets/get-by-user/${userId}`
         return axiosClient.get(url)
     },
+    getAllItemClosetByUserId: (userId) => {
+        const url = `api/closets/get-all-item-closet-by-user/${userId}`
+        return axiosClient.get(url)
+    },
     getOneById: (id) => {
         const url = `api/closets/${id}`
         return axiosClient.get(url)

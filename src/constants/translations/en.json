@@ -71,6 +71,7 @@
     "editCloset": "Edit closet",
     "createItem": "Add new clothes item",
     "itemDetail": "Item detail",
+    "editClosetItemList": "Add or remove item",
     "components": "Components",
     "articles": "UrStyle",
     "rentals": "UrStyle",
@@ -114,7 +115,9 @@
     "cancelButton": "Cancel",
     "deleteButton": "Delete",
     "noBrand": "No brand",
-    "noItemFound":"No item found"
+    "noItemFound":"No item found",
+    "addNewItemToCloset": "Create new item to this closet",
+    "addCreatedItemToCloset": "Choose an item that already been created"
   },
   "editCloset": {
     "name": "Closet Name",
@@ -159,6 +162,10 @@
     "itemPattern": "Pattern",
     "itemBrand": "Brand",
     "done": "Done"
+  },
+  "addItemToCloset": {
+    "done": "Done",
+    "noItemFound":"No item found"
   },
   "login": {
     "title": "Welcome to UrStyle",
