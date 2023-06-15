@@ -129,7 +129,7 @@ const EditCloset = ({ route, navigation }) => {
                     keyboardType="email-address"
                     placeholder={t('editCloset.namePlaceholder')}
                     success={Boolean(credentials.name && isValid.name)}
-                    danger={Boolean(credentials.emnameail && !isValid.name)}
+                    danger={Boolean(credentials.name && !isValid.name)}
                     onChangeText={(value) =>
                         handleChangeCredentials({ name: value })
                     }

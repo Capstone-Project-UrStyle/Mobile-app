@@ -2,7 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
 
 import { useTranslation, useTheme, useData } from '../hooks'
-import { Block, Button, Text, Input, Switch, OccasionTag } from '../components'
+import {
+    Block,
+    Button,
+    Text,
+    Input,
+    Switch,
+    OccasionSelector,
+} from '../components'
 
 import closetApi from '../api/closetApi'
 
@@ -20,7 +27,6 @@ const CreateCloset = ({ route, navigation }) => {
         'September_Europe_Trip',
     ]
 
-    const [occasions, setOccasions] = useState([])
     const [isValid, setIsValid] = useState({
         name: false,
         occasion_ids: false,
@@ -30,11 +36,6 @@ const CreateCloset = ({ route, navigation }) => {
         is_public: false,
         occasion_ids: [],
     })
-
-    // Fetch occasions in master data
-    useEffect(() => {
-        setOccasions(masterData?.Occasions)
-    }, [masterData.Occasions])
 
     useEffect(() => {
         setIsValid((state) => ({
@@ -144,6 +145,7 @@ const CreateCloset = ({ route, navigation }) => {
                         <Block
                             scroll
                             showsVerticalScrollIndicator={false}
+                            nestedScrollEnabled={true}
                             flex={0}
                         >
                             <Block
@@ -152,30 +154,21 @@ const CreateCloset = ({ route, navigation }) => {
                                 wrap="wrap"
                                 justify="flex-start"
                             >
-                                {occasions?.map((occasion) => {
-                                    const isSelected =
-                                        credentials.occasion_ids.includes(
-                                            occasion.id,
-                                        )
-                                    return (
-                                        <OccasionTag
-                                            key={`occasion-${occasion.id}`}
-                                            occasion={occasion}
-                                            isSelected={isSelected}
-                                            onPress={() =>
-                                                handlePressOccasionTag(
-                                                    occasion.id,
-                                                )
-                                            }
-                                        />
-                                    )
-                                })}
+                                <OccasionSelector
+                                    selectedOccasionIds={
+                                        credentials.occasion_ids
+                                    }
+                                    handlePressOccasionTag={
+                                        handlePressOccasionTag
+                                    }
+                                />
                             </Block>
                         </Block>
                     </Block>
                 </Block>
             </Block>
 
+            {/* Submit button */}
             <Block
                 flex={0}
                 padding={sizes.sm}

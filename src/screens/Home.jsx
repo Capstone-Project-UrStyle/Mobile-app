@@ -96,7 +96,13 @@ const Home = ({ navigation }) => {
             }
         } else {
             return (
-                <Text p center font={fonts?.['semibold']} width="100%">
+                <Text
+                    p
+                    center
+                    font={fonts?.['semibold']}
+                    width="100%"
+                    marginTop={sizes.sm}
+                >
                     {t('home.noItemFound')}
                 </Text>
             )
@@ -226,15 +232,26 @@ const Home = ({ navigation }) => {
                     height="100%"
                     alignItems="center"
                     justifyContent="center"
-                    backgroundColor="rgba(0, 0, 0, 0.6)"
+                    backgroundColor="rgba(0, 0, 0, 0.5)"
                 >
                     <Block
                         position="absolute"
                         backgroundColor={colors.card}
-                        borderRadius={10}
+                        borderRadius={sizes.s}
                         padding={sizes.sm}
-                        bottom={80}
+                        bottom={240}
+                        width={250}
                     >
+                        <Text
+                            p
+                            h5
+                            size={sizes.sm}
+                            font={fonts.semibold}
+                            color={colors.gray}
+                            paddingBottom={sizes.s}
+                        >
+                            {t('homeAddModal.createBlockTitle')}
+                        </Text>
                         <TouchableOpacity
                             onPress={() => {
                                 setOpenAddMenu(false)
@@ -244,22 +261,55 @@ const Home = ({ navigation }) => {
                             <Block flex={0} row align="center">
                                 <Ionicons
                                     name="shirt"
-                                    size={30}
+                                    size={25}
                                     color={colors.primary}
                                     paddingRight={sizes.sm}
                                     paddingVertical={sizes.s}
                                 />
-                                <Text p h5 font={fonts.semibold}>
-                                    Add new clothes item
+                                <Text p h5 size={15} font={fonts.semibold}>
+                                    {t('homeAddModal.createItemLable')}
                                 </Text>
                             </Block>
                         </TouchableOpacity>
-                        <Block
-                            flex={0}
-                            height={1}
-                            marginVertical={sizes.xs}
-                            gradient={gradients.menu}
-                        />
+                        <TouchableOpacity
+                            onPress={() => {
+                                setOpenAddMenu(false)
+                                navigation.navigate('CreateOutfit')
+                            }}
+                        >
+                            <Block flex={0} row align="center">
+                                <Ionicons
+                                    name="shirt"
+                                    size={25}
+                                    color={colors.primary}
+                                    paddingRight={sizes.sm}
+                                    paddingVertical={sizes.s}
+                                />
+                                <Text p h5 size={15} font={fonts.semibold}>
+                                    {t('homeAddModal.createOutfitLable')}
+                                </Text>
+                            </Block>
+                        </TouchableOpacity>
+                    </Block>
+
+                    <Block
+                        position="absolute"
+                        backgroundColor={colors.card}
+                        borderRadius={sizes.s}
+                        padding={sizes.sm}
+                        bottom={80}
+                        width={250}
+                    >
+                        <Text
+                            p
+                            h5
+                            size={sizes.sm}
+                            font={fonts.semibold}
+                            color={colors.gray}
+                            paddingBottom={sizes.s}
+                        >
+                            {t('homeAddModal.outfitRecommendTitle')}
+                        </Text>
                         <TouchableOpacity
                             onPress={() => {
                                 setOpenAddMenu(false)
@@ -269,13 +319,33 @@ const Home = ({ navigation }) => {
                             <Block flex={0} row align="center">
                                 <Ionicons
                                     name="man"
-                                    size={30}
+                                    size={25}
                                     color={colors.dark}
                                     paddingRight={sizes.sm}
                                     paddingVertical={sizes.s}
                                 />
-                                <Text p h5 font={fonts.semibold}>
-                                    Create new outfit
+                                <Text p h5 size={15} font={fonts.semibold}>
+                                    {t('homeAddModal.outfitIdeaRecommendation')}
+                                </Text>
+                            </Block>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                setOpenAddMenu(false)
+                                navigation.navigate('CreateOutfit')
+                            }}
+                        >
+                            <Block flex={0} row align="center">
+                                <Ionicons
+                                    name="man"
+                                    size={25}
+                                    color={colors.dark}
+                                    paddingRight={sizes.sm}
+                                    paddingVertical={sizes.s}
+                                />
+                                <Text p h5 size={15} font={fonts.semibold}>
+                                    {t('homeAddModal.outfitIdeaCompatibility')}
                                 </Text>
                             </Block>
                         </TouchableOpacity>

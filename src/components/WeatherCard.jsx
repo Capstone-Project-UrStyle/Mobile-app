@@ -114,4 +114,4 @@ const WeatherCard = (props) => {
     )
 }
 
-export default WeatherCard
+export default React.memo(WeatherCard)

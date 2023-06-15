@@ -57,4 +57,4 @@ const Product = ({ image, title, type, linkLabel }) => {
     )
 }
 
-export default Product
+export default React.memo(Product)

@@ -70,4 +70,4 @@ const ItemCard = ({ item, selectMode }) => {
     )
 }
 
-export default ItemCard
+export default React.memo(ItemCard)

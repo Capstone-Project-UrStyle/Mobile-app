@@ -17,6 +17,7 @@ import CategoryTag from './CategoryTag'
 import ColorTag from './ColorTag'
 import MaterialTag from './MaterialTag'
 import PatternTag from './PatternTag'
+import ItemSelector from './ItemSelector'
 import OccasionSelector from './OccasionSelector'
 import CategorySelector from './CategorySelector'
 import ColorSelector from './ColorSelector'
@@ -43,6 +44,7 @@ export {
     ColorTag,
     MaterialTag,
     PatternTag,
+    ItemSelector,
     OccasionSelector,
     CategorySelector,
     ColorSelector,

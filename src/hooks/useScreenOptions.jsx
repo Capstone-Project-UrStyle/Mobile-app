@@ -50,7 +50,7 @@ export default () => {
                     <Button
                         paddingVertical={sizes.m}
                         onPress={() => {
-                            navigation.navigate('EditClosetItemList', {
+                            navigation.navigate('AddOrRemoveClosetItem', {
                                 targetClosetId: closetId,
                             })
                             setOpenSelectAddItemModeModal(false)

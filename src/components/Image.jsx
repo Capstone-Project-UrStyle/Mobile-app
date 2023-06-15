@@ -99,4 +99,4 @@ const Image = ({
     return <RNImage {...imageID} style={imageStyles} {...props} />
 }
 
-export default Image
+export default React.memo(Image)

@@ -148,4 +148,4 @@ const ClosetCard = ({ create, closet, type, selectMode }) => {
     )
 }
 
-export default ClosetCard
+export default React.memo(ClosetCard)

@@ -1,98 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Platform, Alert } from 'react-native'
-import { useIsFocused } from '@react-navigation/native'
 
 import { useTranslation, useTheme, useData } from '../hooks'
-import { Block, Button, Text, ItemCard } from '../components'
+import Block from './Block'
+import Button from './Button'
+import Text from './Text'
+import ItemCard from './ItemCard'
 
-import closetApi from '../api/closetApi'
-
-const isAndroid = Platform.OS === 'android'
-
-const EditClosetItemList = ({ route, navigation }) => {
+const ItemSelector = ({ closet, forceRefresh, selectMode }) => {
     const { t } = useTranslation()
-    const { colors, sizes, fonts, screenSize } = useTheme()
-    const { user, masterData, handleSetIsLoading } = useData()
-    const isFocused = useIsFocused()
+    const { colors, sizes, fonts } = useTheme()
+    const { masterData, handleSetIsLoading } = useData()
 
-    const [allItemClosetDetail, setAllItemClosetDetail] = useState(null)
-    const [targetClosetDetail, setTargetClosetDetail] = useState(null)
     const [parentCategories, setParentCategories] = useState([])
     const [childCategories, setChildCategories] = useState([])
     const [selectedParentCategoryId, setSelectedParentCategoryId] = useState(0)
     const [selectedChildCategoryId, setSelectedChildCategoryId] = useState(0)
     const [itemList, setItemList] = useState([])
-    const [refresh, forceRefresh] = useState(false)
-    const [isValid, setIsValid] = useState({
-        item_ids: false,
-    })
-    const [credentials, setCredentials] = useState({
-        item_ids: [],
-    })
-
-    const { targetClosetId } = route.params
-
-    // Force refresh the screen whenever focused
-    useEffect(() => {
-        if (isFocused) {
-            forceRefresh((prev) => !prev)
-        }
-    }, [isFocused])
-
-    // Fetch all items closet data
-    useEffect(() => {
-        async function fetchAllItemClosetDetail() {
-            if (user) {
-                handleSetIsLoading(true)
-                try {
-                    const response = await closetApi.getAllItemClosetByUserId(
-                        user.id,
-                    )
-                    if (response.request.status === 200) {
-                        setAllItemClosetDetail(response.data)
-                        handleSetIsLoading(false)
-                    }
-                } catch (error) {
-                    handleSetIsLoading(false)
-                    Alert.alert(error.response.data.message)
-                }
-            }
-        }
-
-        async function fetchTargetClosetDetail() {
-            if (user) {
-                handleSetIsLoading(true)
-                try {
-                    const response = await closetApi.getOneById(targetClosetId)
-                    if (response.request.status === 200) {
-                        setTargetClosetDetail(response.data)
-                        handleSetIsLoading(false)
-                    }
-                } catch (error) {
-                    handleSetIsLoading(false)
-                    Alert.alert(error.response.data.message)
-                }
-            }
-        }
-
-        fetchAllItemClosetDetail()
-        fetchTargetClosetDetail()
-    }, [user, refresh])
-
-    // Set item_ids in credentials with target closet items
-    useEffect(() => {
-        if (targetClosetDetail) {
-            const closetItems = targetClosetDetail.Items
-            handleChangeCredentials({
-                item_ids: closetItems.map((item) => item.id),
-            })
-        }
-    }, [targetClosetDetail])
 
     // Get all closet items's parent categories
     useEffect(() => {
-        if (masterData && allItemClosetDetail) {
-            const closetItems = allItemClosetDetail.Items
+        if (masterData && closet) {
+            const closetItems = closet.Items
             const categories = closetItems.map((item) => item.Category)
 
             // Get closet's unique parent categories
@@ -106,12 +34,12 @@ const EditClosetItemList = ({ route, navigation }) => {
                 ),
             )
         }
-    }, [allItemClosetDetail])
+    }, [closet])
 
     // Get all closet items's child categories when select parent category changes
     useEffect(() => {
-        if (allItemClosetDetail && selectedParentCategoryId !== 0) {
-            const closetItems = allItemClosetDetail.Items
+        if (closet && selectedParentCategoryId !== 0) {
+            const closetItems = closet.Items
             const categories = closetItems.map((item) => item.Category)
 
             // Get closet's unique child categories
@@ -127,39 +55,29 @@ const EditClosetItemList = ({ route, navigation }) => {
             setChildCategories(uniqueChildCategories)
             setSelectedChildCategoryId(0)
         }
-    }, [allItemClosetDetail, selectedParentCategoryId])
+    }, [closet, selectedParentCategoryId])
 
     // Get item list when selected parent category or selected child category changes
     useEffect(() => {
-        if (allItemClosetDetail && selectedParentCategoryId === 0) {
-            setItemList(allItemClosetDetail.Items)
+        if (closet && selectedParentCategoryId === 0) {
+            setItemList(closet.Items)
         }
 
-        if (allItemClosetDetail && selectedParentCategoryId !== 0) {
+        if (closet && selectedParentCategoryId !== 0) {
             if (selectedChildCategoryId === 0) {
-                const filterItems = allItemClosetDetail.Items.filter(
+                const filterItems = closet.Items.filter(
                     (item) =>
                         item.Category.parent_id === selectedParentCategoryId,
                 )
                 setItemList(filterItems)
             } else {
-                const filterItems = allItemClosetDetail.Items.filter(
+                const filterItems = closet.Items.filter(
                     (item) => item.category_id === selectedChildCategoryId,
                 )
                 setItemList(filterItems)
             }
         }
-    }, [allItemClosetDetail, selectedParentCategoryId, selectedChildCategoryId])
-
-    // Update valid status check when credentials change
-    useEffect(() => {
-        setIsValid((state) => ({
-            ...state,
-            item_ids:
-                Array.isArray(credentials.item_ids) &&
-                credentials.item_ids.length > 0,
-        }))
-    }, [credentials, setIsValid])
+    }, [closet, selectedParentCategoryId, selectedChildCategoryId])
 
     const handleSelectCategory = useCallback(
         (category) => {
@@ -180,21 +98,16 @@ const EditClosetItemList = ({ route, navigation }) => {
         [setSelectedParentCategoryId, setSelectedChildCategoryId],
     )
 
-    const handleChangeCredentials = useCallback(
-        (value) => {
-            setCredentials((state) => ({ ...state, ...value }))
-        },
-        [setCredentials],
-    )
-
     const handlePressItemCheckbox = (itemId) => {
-        if (credentials.item_ids.includes(itemId)) {
-            handleChangeCredentials({
-                item_ids: credentials.item_ids.filter((id) => id !== itemId),
+        if (selectMode.credentials.item_ids.includes(itemId)) {
+            selectMode.handleChangeCredentials({
+                item_ids: selectMode.credentials.item_ids.filter(
+                    (id) => id !== itemId,
+                ),
             })
         } else {
-            handleChangeCredentials({
-                item_ids: [...credentials.item_ids, itemId],
+            selectMode.handleChangeCredentials({
+                item_ids: [...selectMode.credentials.item_ids, itemId],
             })
         }
     }
@@ -206,38 +119,35 @@ const EditClosetItemList = ({ route, navigation }) => {
                     <ItemCard
                         key={`item-${item.id}`}
                         item={item}
-                        selectMode={{
-                            onSelect: () => handlePressItemCheckbox(item.id),
-                            isSelected: credentials.item_ids.includes(item.id),
-                        }}
+                        selectMode={
+                            selectMode
+                                ? {
+                                      onSelect: () =>
+                                          handlePressItemCheckbox(item.id),
+                                      isSelected:
+                                          selectMode.credentials.item_ids.includes(
+                                              item.id,
+                                          ),
+                                  }
+                                : null
+                        }
                     />
                 )
             })
         } else {
             return (
-                <Text p center font={fonts?.['semibold']} width="100%">
-                    {t('addItemToCloset.noItemFound')}
+                <Text
+                    p
+                    center
+                    font={fonts?.['semibold']}
+                    width="100%"
+                    marginTop={sizes.sm}
+                >
+                    {t('itemSelector.noItemFound')}
                 </Text>
             )
         }
     }
-
-    const handleSubmit = useCallback(async () => {
-        if (!Object.values(isValid).includes(false)) {
-            try {
-                const response = await closetApi.updateById(
-                    targetClosetId,
-                    credentials,
-                )
-                if (response.request.status === 200) {
-                    Alert.alert(response.data.message)
-                    navigation.goBack()
-                }
-            } catch (error) {
-                Alert.alert(error.response.data.message)
-            }
-        }
-    }, [isValid, credentials])
 
     return (
         <Block color={colors.card}>
@@ -429,35 +339,8 @@ const EditClosetItemList = ({ route, navigation }) => {
                     {renderItemList()}
                 </Block>
             </Block>
-
-            <Block
-                flex={0}
-                padding={sizes.sm}
-                position="absolute"
-                width="100%"
-                backgroundColor={colors.card}
-                bottom={0}
-            >
-                <Button
-                    outlined
-                    gray
-                    shadow={!isAndroid}
-                    disabled={Object.values(isValid).includes(false)}
-                    activeOpacity={
-                        !Object.values(isValid).includes(false) ? 1 : 0.2
-                    }
-                    style={{
-                        opacity: Object.values(isValid).includes(false)
-                            ? 0.5
-                            : 1,
-                    }}
-                    onPress={handleSubmit}
-                >
-                    <Text h5>{t('addItemToCloset.done')}</Text>
-                </Button>
-            </Block>
         </Block>
     )
 }
 
-export default EditClosetItemList
+export default React.memo(ItemSelector)
