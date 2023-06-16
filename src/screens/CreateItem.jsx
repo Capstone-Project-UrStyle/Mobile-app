@@ -120,15 +120,15 @@ const CreateItem = ({ route, navigation }) => {
     const handleUploadItemImage = async (fromCamera) => {
         let result = fromCamera
             ? await ImagePicker.launchCameraAsync({
-                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                  allowsEditing: true,
-                  quality: 1,
-              })
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            })
             : await ImagePicker.launchImageLibraryAsync({
-                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                  allowsEditing: true,
-                  quality: 1,
-              })
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            })
 
         if (!result.canceled) {
             setUploadItemImageUri(result.assets[0].uri)

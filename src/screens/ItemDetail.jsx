@@ -18,6 +18,7 @@ import {
     PatternSelector,
 } from '../components'
 import { createFormDataFromUri } from '../utils/formDataCreator'
+import { showSelectImageSourceAlert } from '../utils/showSelectImageSourceAlert'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import uploadImageApi from '../api/uploadImageApi'
@@ -80,6 +81,7 @@ const ItemDetail = ({ route, navigation }) => {
                 const response = await itemApi.getOneById(itemId)
                 if (response.request.status === 200) {
                     setItemDetail(response.data)
+                    setUploadItemImageUri(BASE_API_URL + response.data.image)
                     handleSetIsLoading(false)
                 }
             } catch (error) {
@@ -119,12 +121,18 @@ const ItemDetail = ({ route, navigation }) => {
         }))
     }, [credentials, setIsValid])
 
-    const handleChooseItemImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        })
+    const handleUploadItemImage = async (fromCamera) => {
+        let result = fromCamera
+            ? await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            })
+            : await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            })
 
         if (!result.canceled) {
             setUploadItemImageUri(result.assets[0].uri)
@@ -281,18 +289,23 @@ const ItemDetail = ({ route, navigation }) => {
                             paddingHorizontal={sizes.s}
                             paddingBottom={sizes.s}
                         >
-                            <TouchableOpacity onPress={handleChooseItemImage}>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    showSelectImageSourceAlert(
+                                        t,
+                                        navigation,
+                                        uploadItemImageUri,
+                                        handleUploadItemImage,
+                                    )
+                                }
+                            >
                                 <Image
                                     resizeMode="cover"
                                     style={{
                                         height: 350,
                                         width: '100%',
                                     }}
-                                    source={{
-                                        uri:
-                                            uploadItemImageUri ||
-                                            BASE_API_URL + itemDetail.image,
-                                    }}
+                                    source={{ uri: uploadItemImageUri }}
                                 />
                             </TouchableOpacity>
                         </Block>

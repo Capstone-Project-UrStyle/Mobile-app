@@ -95,6 +95,13 @@
     "logout": "Logout",
     "documentation": "Documentation"
   },
+  "selectImageSourceAlert": {
+    "chooseImageSourceModalTitle": "Choose Image Source",
+    "chooseImageSourceModalContent": "Where do you want to get image from?",
+    "cancel": "Cancel",
+    "fromCamera": "Camera",
+    "fromLibrary": "Library"
+  },
   "home": {
     "title": "UrStyle",
     "closets": "Closets",

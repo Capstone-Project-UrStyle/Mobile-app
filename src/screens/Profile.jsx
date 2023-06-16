@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { Platform, Linking, TouchableOpacity } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
-
 import * as ImagePicker from 'expo-image-picker'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import { Block, Button, Image, Text } from '../components/'
 import { useData, useTheme, useTranslation } from '../hooks/'
+
 import { createFormDataFromUri } from '../utils/formDataCreator'
+import { showSelectImageSourceAlert } from '../utils/showSelectImageSourceAlert'
 
 import uploadImageApi from '../api/uploadImageApi'
 
@@ -17,6 +18,8 @@ const Profile = ({ route, navigation }) => {
     const { user } = useData()
     const { t } = useTranslation()
     const { assets, colors, sizes } = useTheme()
+
+    const [uploadUserAvatarUri, setUploadUserAvatarUri] = useState(null)
 
     const IMAGE_SIZE = (sizes.width - (sizes.padding + sizes.sm) * 2) / 3
     const IMAGE_VERTICAL_SIZE =
@@ -34,6 +37,23 @@ const Profile = ({ route, navigation }) => {
             ? 'female'
             : 'male-female'
 
+    useEffect(() => {
+        if (user) {
+            setUploadUserAvatarUri(BASE_API_URL + user.UserInfo.avatar)
+        }
+    }, [user])
+
+    useEffect(() => {
+        const uploadUserAvatar = async (uploadUserAvatarUri) => {
+            const postData = createFormDataFromUri('user-avatar', uploadUserAvatarUri)
+            await uploadImageApi.uploadUserAvatar(user.id, postData)
+        }
+
+        if (uploadUserAvatarUri !== null) {
+            uploadUserAvatar(uploadUserAvatarUri)
+        }
+    }, [uploadUserAvatarUri])
+
     const handleSocialLink = useCallback(
         (url) => {
             try {
@@ -47,19 +67,24 @@ const Profile = ({ route, navigation }) => {
         [user],
     )
 
-    const handleChooseUserAvatar = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1,
-        })
+    const handleUploadUserAvatar = async (fromCamera) => {
+        let result = fromCamera
+            ? await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            })
+            : await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                quality: 1,
+            })
 
         if (!result.canceled) {
-            const postData = createFormDataFromUri('user-avatar', result.uri)
-            await uploadImageApi.uploadUserAvatar(user.id, postData)
+            setUploadUserAvatarUri(result.assets[0].uri)
         }
     }
+    
 
     return (
         <Block safe marginTop={sizes.md}>
@@ -113,15 +138,21 @@ const Profile = ({ route, navigation }) => {
                         </Block>
 
                         <Block flex={0} row justify="center" align="center">
-                            <TouchableOpacity onPress={handleChooseUserAvatar}>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    showSelectImageSourceAlert(
+                                        t,
+                                        navigation,
+                                        uploadUserAvatarUri,
+                                        handleUploadUserAvatar,
+                                    )
+                                }
+                            >
                                 <Image
                                     width={80}
                                     height={80}
                                     marginHorizontal={sizes.s}
-                                    source={{
-                                        uri:
-                                            BASE_API_URL + user.UserInfo.avatar,
-                                    }}
+                                    source={{ uri: uploadUserAvatarUri }}
                                 />
                             </TouchableOpacity>
                             <Block flex={0} align="flex-start">
