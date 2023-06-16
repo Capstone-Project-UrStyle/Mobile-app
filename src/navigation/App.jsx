@@ -1,14 +1,23 @@
 import React, { useEffect } from 'react'
-import { Platform, StatusBar } from 'react-native'
+import { Platform, StatusBar, ActivityIndicator } from 'react-native'
 import { useFonts } from 'expo-font'
 import AppLoading from 'expo-app-loading'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 
 import Menu from './Menu'
 import { useData, ThemeProvider, TranslationProvider } from '../hooks'
+import { Block, Modal } from '../components'
 
 export default () => {
-    const { isDark, theme, setTheme } = useData()
+    const {
+        isLoading,
+        isDark,
+        theme,
+        setTheme,
+        showModal,
+        modalContent,
+        handleCloseModal,
+    } = useData()
 
     /* set the status bar based on isDark constant */
     useEffect(() => {
@@ -51,6 +60,39 @@ export default () => {
             <ThemeProvider theme={theme} setTheme={setTheme}>
                 <NavigationContainer theme={navigationTheme}>
                     <Menu />
+                    {isLoading && (
+                        <Block
+                            flex={0}
+                            position="absolute"
+                            width="100%"
+                            height="100%"
+                            alignItems="center"
+                            justifyContent="center"
+                            backgroundColor="rgba(0, 0, 0, 0.5)"
+                        >
+                            <ActivityIndicator
+                                size={70}
+                                color={String(theme.colors.primary)}
+                            />
+                        </Block>
+                    )}
+                    {showModal && (
+                        <Block
+                            flex={0}
+                            position="absolute"
+                            width="100%"
+                            height="100%"
+                            alignItems="center"
+                            backgroundColor="rgba(0, 0, 0, 0.5)"
+                        >
+                            <Modal
+                                visible={showModal}
+                                onRequestClose={handleCloseModal}
+                            >
+                                {modalContent}
+                            </Modal>
+                        </Block>
+                    )}
                 </NavigationContainer>
             </ThemeProvider>
         </TranslationProvider>

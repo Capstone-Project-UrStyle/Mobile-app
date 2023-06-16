@@ -18,6 +18,7 @@ import {
     PatternSelector,
 } from '../components'
 import { createFormDataFromUri } from '../utils/formDataCreator'
+import { showSelectImageSourceAlert } from '../utils/showSelectImageSourceAlert'
 
 import uploadImageApi from '../api/uploadImageApi'
 import itemApi from '../api/itemApi'
@@ -91,18 +92,13 @@ const CreateItem = ({ route, navigation }) => {
 
     // Force user to choose first item image
     useEffect(() => {
-        async function forceChooseFirstItemImage() {
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
-            if (!result.canceled) setUploadItemImageUri(result.assets[0].uri)
-            else navigation.goBack()
-        }
-
         if (uploadItemImageUri === null) {
-            forceChooseFirstItemImage()
+            showSelectImageSourceAlert(
+                t,
+                navigation,
+                uploadItemImageUri,
+                handleUploadItemImage,
+            )
         }
     }, [uploadItemImageUri])
 
@@ -121,16 +117,24 @@ const CreateItem = ({ route, navigation }) => {
         }))
     }, [credentials, uploadItemImageUri, setIsValid])
 
-    const handleChooseItemImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        })
+    const handleUploadItemImage = async (fromCamera) => {
+        let result = fromCamera
+            ? await ImagePicker.launchCameraAsync({
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
+            : await ImagePicker.launchImageLibraryAsync({
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
 
         if (!result.canceled) {
             setUploadItemImageUri(result.assets[0].uri)
         }
+
+        return result
     }
 
     const handleChangeCredentials = useCallback(
@@ -269,7 +273,16 @@ const CreateItem = ({ route, navigation }) => {
                 <Block scroll showsVerticalScrollIndicator={false} flex={1}>
                     {/* Item image */}
                     <Block paddingHorizontal={sizes.s}>
-                        <TouchableOpacity onPress={handleChooseItemImage}>
+                        <TouchableOpacity
+                            onPress={() =>
+                                showSelectImageSourceAlert(
+                                    t,
+                                    navigation,
+                                    uploadItemImageUri,
+                                    handleUploadItemImage,
+                                )
+                            }
+                        >
                             <Image
                                 resizeMode="cover"
                                 style={{

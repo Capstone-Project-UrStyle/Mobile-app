@@ -13,55 +13,46 @@ import Text from '../components/Text'
 import useTheme from '../hooks/useTheme'
 import Button from '../components/Button'
 import Block from '../components/Block'
-import Modal from '../components/Modal'
 
 import closetApi from '../api/closetApi'
 import itemApi from '../api/itemApi'
 
 export default () => {
     const { t } = useTranslation()
-    const { user } = useData()
+    const { user, setShowModal, setModalContent, handleCloseModal } = useData()
     const navigation = useNavigation()
     const { icons, colors, gradients, sizes } = useTheme()
 
-    const [openSelectAddItemModeModal, setOpenSelectAddItemModeModal] =
-        useState(false)
-
     const renderSelectAddItemModeModal = (closetId) => {
         return (
-            <Modal
-                visible={openSelectAddItemModeModal}
-                onRequestClose={() => setOpenSelectAddItemModeModal(false)}
-            >
-                <Block flex={0} marginBottom={sizes.m}>
-                    <Button
-                        paddingVertical={sizes.m}
-                        onPress={() => {
-                            navigation.navigate('CreateItem', {
-                                closetId: closetId,
-                            })
-                            setOpenSelectAddItemModeModal(false)
-                        }}
-                    >
-                        <Text p h5 semibold size={18} align="center">
-                            {t('closetDetail.addNewItemToCloset')}
-                        </Text>
-                    </Button>
-                    <Button
-                        paddingVertical={sizes.m}
-                        onPress={() => {
-                            navigation.navigate('AddOrRemoveClosetItem', {
-                                targetClosetId: closetId,
-                            })
-                            setOpenSelectAddItemModeModal(false)
-                        }}
-                    >
-                        <Text p h5 semibold size={18} align="center">
-                            {t('closetDetail.addCreatedItemToCloset')}
-                        </Text>
-                    </Button>
-                </Block>
-            </Modal>
+            <Block flex={0} marginBottom={sizes.m}>
+                <Button
+                    paddingVertical={sizes.m}
+                    onPress={() => {
+                        navigation.navigate('CreateItem', {
+                            closetId: closetId,
+                        })
+                        handleCloseModal()
+                    }}
+                >
+                    <Text p h5 semibold size={18} align="center">
+                        {t('closetDetail.addNewItemToCloset')}
+                    </Text>
+                </Button>
+                <Button
+                    paddingVertical={sizes.m}
+                    onPress={() => {
+                        navigation.navigate('AddOrRemoveClosetItem', {
+                            targetClosetId: closetId,
+                        })
+                        handleCloseModal()
+                    }}
+                >
+                    <Text p h5 semibold size={18} align="center">
+                        {t('closetDetail.addCreatedItemToCloset')}
+                    </Text>
+                </Button>
+            </Block>
         )
     }
 
@@ -280,7 +271,12 @@ export default () => {
                 headerRight: () => (
                     <Block row flex={0} align="center" marginRight={sizes.s}>
                         <Button
-                            onPress={() => setOpenSelectAddItemModeModal(true)}
+                            onPress={() => {
+                                setShowModal(true)
+                                setModalContent(
+                                    renderSelectAddItemModeModal(closetId),
+                                )
+                            }}
                         >
                             <MaterialIcons
                                 size={22}
@@ -288,8 +284,6 @@ export default () => {
                                 color={colors.icon}
                             />
                         </Button>
-                        {openSelectAddItemModeModal &&
-                            renderSelectAddItemModeModal(closetId)}
                         {closetName !== 'All items' && (
                             <Block row flex={0} align="center">
                                 <Button

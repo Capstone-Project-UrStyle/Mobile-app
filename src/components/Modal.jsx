@@ -25,7 +25,13 @@ const Modal = ({ id = 'Modal', children, style, onRequestClose, ...props }) => {
             onRequestClose={onRequestClose}
         >
             <Block justify="flex-end">
-                <Block safe card flex={0} color={colors.light}>
+                <Block
+                    safe
+                    flex={0}
+                    color={colors.card}
+                    borderTopRightRadius={sizes.cardRadius}
+                    borderTopLeftRadius={sizes.cardRadius}
+                >
                     <Button
                         top={sizes.s}
                         right={sizes.s}

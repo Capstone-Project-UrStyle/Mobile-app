@@ -18,7 +18,7 @@ import closetApi from '../api/closetApi'
 
 const Home = ({ navigation }) => {
     const { t } = useTranslation()
-    const { colors, fonts, sizes, gradients, screenSize } = useTheme()
+    const { colors, fonts, sizes, screenSize } = useTheme()
     const { user, handleSetIsLoading } = useData()
     const isFocused = useIsFocused()
 
@@ -231,7 +231,6 @@ const Home = ({ navigation }) => {
                     width="100%"
                     height="100%"
                     alignItems="center"
-                    justifyContent="center"
                     backgroundColor="rgba(0, 0, 0, 0.5)"
                 >
                     <Block

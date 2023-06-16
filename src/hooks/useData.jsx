@@ -20,6 +20,8 @@ export const DataProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isDark, setIsDark] = useState(false)
     const [theme, setTheme] = useState(light)
+    const [showModal, setShowModal] = useState(false)
+    const [modalContent, setModalContent] = useState(null)
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
     const [masterData, setMasterData] = useState(null)
@@ -30,6 +32,12 @@ export const DataProvider = ({ children }) => {
     const [categories, setCategories] = useState(CATEGORIES)
     const [articles, setArticles] = useState(ARTICLES)
     const [article, setArticle] = useState({})
+
+    // Handle close modal
+    const handleCloseModal = useCallback(() => {
+        setShowModal(false)
+        setModalContent(null)
+    }, [setShowModal, setModalContent])
 
     // Handle set isLoading mode
     const handleSetIsLoading = useCallback(
@@ -195,6 +203,11 @@ export const DataProvider = ({ children }) => {
         handleSetIsDark,
         theme,
         setTheme,
+        showModal,
+        setShowModal,
+        modalContent,
+        setModalContent,
+        handleCloseModal,
         user,
         handleSetUser,
         token,
