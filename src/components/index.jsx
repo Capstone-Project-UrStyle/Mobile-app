@@ -23,6 +23,7 @@ import CategorySelector from './CategorySelector'
 import ColorSelector from './ColorSelector'
 import MaterialSelector from './MaterialSelector'
 import PatternSelector from './PatternSelector'
+import HomeAddModal from './HomeAddModal'
 
 export {
     Block,
@@ -50,4 +51,5 @@ export {
     ColorSelector,
     MaterialSelector,
     PatternSelector,
+    HomeAddModal,
 }

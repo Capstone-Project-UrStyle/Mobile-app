@@ -12,6 +12,7 @@ import {
     Text,
     WeatherCard,
     ClosetCard,
+    HomeAddModal,
 } from '../components'
 
 import closetApi from '../api/closetApi'
@@ -19,12 +20,11 @@ import closetApi from '../api/closetApi'
 const Home = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, fonts, sizes, screenSize } = useTheme()
-    const { user, handleSetIsLoading } = useData()
+    const { user, handleSetIsLoading, setShowModal, setModalContent } = useData()
     const isFocused = useIsFocused()
 
     const [tab, setTab] = useState(0)
     const [cardList, setCardList] = useState([])
-    const [openAddMenu, setOpenAddMenu] = useState(false)
     const [refresh, forceRefresh] = useState(false)
 
     // Force refresh the screen whenever focused
@@ -224,134 +224,6 @@ const Home = ({ navigation }) => {
                 </Block>
             </Block>
 
-            {/* Add Menu */}
-            {openAddMenu && (
-                <Block
-                    position="absolute"
-                    width="100%"
-                    height="100%"
-                    alignItems="center"
-                    backgroundColor="rgba(0, 0, 0, 0.5)"
-                >
-                    <Block
-                        position="absolute"
-                        backgroundColor={colors.card}
-                        borderRadius={sizes.s}
-                        padding={sizes.sm}
-                        bottom={240}
-                        width={250}
-                    >
-                        <Text
-                            p
-                            h5
-                            size={sizes.sm}
-                            font={fonts.semibold}
-                            color={colors.gray}
-                            paddingBottom={sizes.s}
-                        >
-                            {t('homeAddModal.createBlockTitle')}
-                        </Text>
-                        <TouchableOpacity
-                            onPress={() => {
-                                setOpenAddMenu(false)
-                                navigation.navigate('CreateItem')
-                            }}
-                        >
-                            <Block flex={0} row align="center">
-                                <Ionicons
-                                    name="shirt"
-                                    size={25}
-                                    color={colors.primary}
-                                    paddingRight={sizes.sm}
-                                    paddingVertical={sizes.s}
-                                />
-                                <Text p h5 size={15} font={fonts.semibold}>
-                                    {t('homeAddModal.createItemLable')}
-                                </Text>
-                            </Block>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => {
-                                setOpenAddMenu(false)
-                                navigation.navigate('CreateOutfit')
-                            }}
-                        >
-                            <Block flex={0} row align="center">
-                                <Ionicons
-                                    name="shirt"
-                                    size={25}
-                                    color={colors.primary}
-                                    paddingRight={sizes.sm}
-                                    paddingVertical={sizes.s}
-                                />
-                                <Text p h5 size={15} font={fonts.semibold}>
-                                    {t('homeAddModal.createOutfitLable')}
-                                </Text>
-                            </Block>
-                        </TouchableOpacity>
-                    </Block>
-
-                    <Block
-                        position="absolute"
-                        backgroundColor={colors.card}
-                        borderRadius={sizes.s}
-                        padding={sizes.sm}
-                        bottom={80}
-                        width={250}
-                    >
-                        <Text
-                            p
-                            h5
-                            size={sizes.sm}
-                            font={fonts.semibold}
-                            color={colors.gray}
-                            paddingBottom={sizes.s}
-                        >
-                            {t('homeAddModal.outfitRecommendTitle')}
-                        </Text>
-                        <TouchableOpacity
-                            onPress={() => {
-                                setOpenAddMenu(false)
-                                navigation.navigate('CreateOutfit')
-                            }}
-                        >
-                            <Block flex={0} row align="center">
-                                <Ionicons
-                                    name="man"
-                                    size={25}
-                                    color={colors.dark}
-                                    paddingRight={sizes.sm}
-                                    paddingVertical={sizes.s}
-                                />
-                                <Text p h5 size={15} font={fonts.semibold}>
-                                    {t('homeAddModal.outfitIdeaRecommendation')}
-                                </Text>
-                            </Block>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={() => {
-                                setOpenAddMenu(false)
-                                navigation.navigate('CreateOutfit')
-                            }}
-                        >
-                            <Block flex={0} row align="center">
-                                <Ionicons
-                                    name="man"
-                                    size={25}
-                                    color={colors.dark}
-                                    paddingRight={sizes.sm}
-                                    paddingVertical={sizes.s}
-                                />
-                                <Text p h5 size={15} font={fonts.semibold}>
-                                    {t('homeAddModal.outfitIdeaCompatibility')}
-                                </Text>
-                            </Block>
-                        </TouchableOpacity>
-                    </Block>
-                </Block>
-            )}
-
             <Block
                 alignItems="center"
                 justifyContent="center"
@@ -362,21 +234,16 @@ const Home = ({ navigation }) => {
                 borderRadius={100}
             >
                 <TouchableOpacity
-                    onPress={() => setOpenAddMenu((prev) => !prev)}
+                    onPress={() => {
+                        setShowModal(true)
+                        setModalContent(() => <HomeAddModal navigation={navigation} />)
+                    }}
                 >
-                    {openAddMenu ? (
-                        <AntDesign
-                            name="closecircle"
-                            size={55}
-                            color="#01a699"
-                        />
-                    ) : (
-                        <AntDesign
-                            name="pluscircle"
-                            size={55}
-                            color="#01a699"
-                        />
-                    )}
+                    <AntDesign
+                        name="pluscircle"
+                        size={55}
+                        color="#01a699"
+                    />
                 </TouchableOpacity>
             </Block>
         </Block>

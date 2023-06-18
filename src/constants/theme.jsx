@@ -102,6 +102,12 @@ export const ASSETS = {
     x5: require('../assets/images/x5.png'),
     gle: require('../assets/images/gle.png'),
     tesla: require('../assets/images/tesla.png'),
+
+    // add modal images
+    createItem: require('../assets/images/create-item.png'),
+    createOutfit: require('../assets/images/create-outfit.png'),
+    generateOutfit: require('../assets/images/generate-outfit.png'),
+    outfitCompatibility: require('../assets/images/outfit-compatibility.png'),
 }
 
 export const FONTS = {

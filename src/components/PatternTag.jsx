@@ -7,7 +7,7 @@ import Text from '../components/Text'
 import Button from '../components/Button'
 import Image from './Image'
 
-import BASE_API_URL from '../api/axiosClient'
+import { BASE_API_URL } from '../api/axiosClient'
 
 const PatternTag = ({ onPress, pattern, isSelected }) => {
     const { gradients, sizes, colors } = useTheme()
@@ -28,7 +28,7 @@ const PatternTag = ({ onPress, pattern, isSelected }) => {
                     style={{ margin: sizes.xs }}
                     borderWidth={0.5}
                     borderColor={colors.black}
-                    source={BASE_API_URL + pattern.image}
+                    source={{ uri: BASE_API_URL + pattern.image }}
                 />
                 <Text
                     p

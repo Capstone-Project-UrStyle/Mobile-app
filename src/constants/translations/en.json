@@ -110,10 +110,10 @@
     "noItemFound": "No item found"
   },
   "homeAddModal": {
-    "createBlockTitle": "Create your own",
-    "createItemLable": "New clothes item",
-    "createOutfitLable": "New outfit idea",
-    "outfitRecommendTitle": "Recommend outfit idea",
+    "createBlockTitle": "What you feel like to do?",
+    "createItemLable": "Create clothes item",
+    "createOutfitLable": "Create outfit idea",
+    "outfitRecommendTitle": "Recommend outfit idea by AI",
     "outfitIdeaRecommendation": "From specific items",
     "outfitIdeaCompatibility": "From a closet's items"
   },
