@@ -187,13 +187,14 @@
   "createOutfit": {
     "stepOneLabel": "Step 1: Choose a closet",
     "stepTwoLabel": "Step 2: Choose items",
-    "stepThreeLabel": "Step 3: Outfit infomations",
+    "stepThreeLabel": "Step 3: Place items where you want",
+    "stepFourLabel": "Step 4: Outfit infomations",
     "noClosetFound": "No closet found",
     "outfitImage": "Outfit idea",
     "public": "Public to other users",
     "occasions": "Occasions",
     "description": "Description",
-    "descriptionPlaceholder": "Describe something about this outfit...",
+    "descriptionPlaceholder": "Tell us something about this outfit...",
     "prevStep": "Back",
     "nextStep": "Next step",
     "done": "Done"

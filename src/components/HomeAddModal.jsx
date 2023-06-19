@@ -14,10 +14,12 @@ const HomeAddModal = ({ navigation }) => {
 
     const renderCardItem = (title, imageSource, navScreen) => {
         return (
-            <TouchableWithoutFeedback onPress={() => {
-                handleCloseModal()
-                navigation.navigate(navScreen)
-            }}>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    handleCloseModal()
+                    navigation.navigate(navScreen)
+                }}
+            >
                 <Block
                     flex={0}
                     align="center"
@@ -30,7 +32,6 @@ const HomeAddModal = ({ navigation }) => {
                             height: screenSize.width / 3,
                             width: screenSize.width / 3,
                         }}
-                        marginVertical={sizes.xs}
                         source={imageSource}
                     />
                     <Text
@@ -50,13 +51,7 @@ const HomeAddModal = ({ navigation }) => {
         )
     }
     return (
-        <Block
-            flex={0}
-            row
-            wrap="wrap"
-            align="center"
-            justify="space-evenly"
-        >
+        <Block flex={0} row wrap="wrap" align="center" justify="space-evenly">
             <Text
                 p
                 size={20}
@@ -71,12 +66,12 @@ const HomeAddModal = ({ navigation }) => {
             {renderCardItem(
                 t('homeAddModal.createItemLable'),
                 assets.createItem,
-                'CreateItem'
+                'CreateItem',
             )}
             {renderCardItem(
                 t('homeAddModal.createOutfitLable'),
                 assets.createOutfit,
-                'CreateOutfit'
+                'CreateOutfit',
             )}
             <Text
                 p
@@ -92,12 +87,12 @@ const HomeAddModal = ({ navigation }) => {
             {renderCardItem(
                 t('homeAddModal.outfitIdeaRecommendation'),
                 assets.generateOutfit,
-                'CreateOutfit'
+                'CreateOutfit',
             )}
             {renderCardItem(
                 t('homeAddModal.outfitIdeaCompatibility'),
                 assets.outfitCompatibility,
-                'CreateOutfit'
+                'CreateOutfit',
             )}
         </Block>
     )

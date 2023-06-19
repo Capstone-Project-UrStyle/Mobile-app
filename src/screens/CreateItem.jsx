@@ -17,6 +17,7 @@ import {
     MaterialSelector,
     PatternSelector,
 } from '../components'
+
 import { createFormDataFromUri } from '../utils/formDataCreator'
 import { showSelectImageSourceAlert } from '../utils/showSelectImageSourceAlert'
 
@@ -120,15 +121,15 @@ const CreateItem = ({ route, navigation }) => {
     const handleUploadItemImage = async (fromCamera) => {
         let result = fromCamera
             ? await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
             : await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
 
         if (!result.canceled) {
             setUploadItemImageUri(result.assets[0].uri)
@@ -269,205 +270,195 @@ const CreateItem = ({ route, navigation }) => {
 
     return (
         <Block color={colors.card}>
-            <Block>
-                <Block scroll showsVerticalScrollIndicator={false} flex={1}>
-                    {/* Item image */}
-                    <Block paddingHorizontal={sizes.s}>
-                        <TouchableOpacity
-                            onPress={() =>
-                                showSelectImageSourceAlert(
-                                    t,
-                                    navigation,
-                                    uploadItemImageUri,
-                                    handleUploadItemImage,
-                                )
-                            }
-                        >
-                            <Image
-                                resizeMode="cover"
-                                style={{
-                                    height: 350,
-                                    width: '100%',
-                                }}
-                                source={{ uri: uploadItemImageUri }}
-                            />
-                        </TouchableOpacity>
+            <Block scroll showsVerticalScrollIndicator={false} flex={1}>
+                {/* Item image */}
+                <Block paddingHorizontal={sizes.s}>
+                    <TouchableOpacity
+                        onPress={() =>
+                            showSelectImageSourceAlert(
+                                t,
+                                navigation,
+                                uploadItemImageUri,
+                                handleUploadItemImage,
+                            )
+                        }
+                    >
+                        <Image
+                            resizeMode="cover"
+                            style={{
+                                height: 350,
+                                width: '100%',
+                            }}
+                            source={{ uri: uploadItemImageUri }}
+                        />
+                    </TouchableOpacity>
+                </Block>
+
+                {/* Item info */}
+                <Block padding={sizes.sm}>
+                    {/* Item closets */}
+                    <Block paddingVertical={sizes.m}>
+                        <Text h5>{t('createItem.closetInfo')}</Text>
+                        <FormRow
+                            type="Closets"
+                            label={t('createItem.closets')}
+                            values={userClosets.filter((closet) =>
+                                credentials.closet_ids.includes(closet.id),
+                            )}
+                            renderValueSelector={renderSelectClosets}
+                        />
+                    </Block>
+
+                    {/* Item occasions */}
+                    <Block paddingVertical={sizes.m}>
+                        <Text h5>{t('createItem.occasionInfo')}</Text>
+                        <FormRow
+                            type="Occasions"
+                            label={t('createItem.occasions')}
+                            values={credentials.occasion_ids}
+                            renderValueSelector={() => (
+                                <OccasionSelector
+                                    selectedOccasionIds={
+                                        credentials.occasion_ids
+                                    }
+                                    handlePressOccasionTag={
+                                        handlePressOccasionTag
+                                    }
+                                />
+                            )}
+                        />
                     </Block>
 
                     {/* Item info */}
-                    <Block padding={sizes.sm}>
-                        {/* Item closets */}
-                        <Block paddingVertical={sizes.m}>
-                            <Text h5>{t('createItem.closetInfo')}</Text>
-                            <FormRow
-                                type="Closets"
-                                label={t('createItem.closets')}
-                                values={userClosets.filter((closet) =>
-                                    credentials.closet_ids.includes(closet.id),
-                                )}
-                                renderValueSelector={renderSelectClosets}
-                            />
-                        </Block>
+                    <Block paddingVertical={sizes.m}>
+                        <Text h5>{t('createItem.itemInfo')}</Text>
 
-                        {/* Item occasions */}
-                        <Block paddingVertical={sizes.m}>
-                            <Text h5>{t('createItem.occasionInfo')}</Text>
-                            <FormRow
-                                type="Occasions"
-                                label={t('createItem.occasions')}
-                                values={credentials.occasion_ids}
-                                renderValueSelector={() => (
-                                    <OccasionSelector
-                                        selectedOccasionIds={
-                                            credentials.occasion_ids
-                                        }
-                                        handlePressOccasionTag={
-                                            handlePressOccasionTag
-                                        }
-                                    />
-                                )}
-                            />
-                        </Block>
+                        {/* Item category */}
+                        <FormRow
+                            type="Categories"
+                            label={t('createItem.itemCategory')}
+                            categoryId={credentials.category_id}
+                            renderValueSelector={() => (
+                                <CategorySelector
+                                    selectedCategoryId={credentials.category_id}
+                                    handlePressCategoryTag={
+                                        handlePressCategoryTag
+                                    }
+                                />
+                            )}
+                        />
 
-                        {/* Item info */}
-                        <Block paddingVertical={sizes.m}>
-                            <Text h5>{t('createItem.itemInfo')}</Text>
+                        {/* Item color */}
+                        <FormRow
+                            type="Colors"
+                            label={t('createItem.itemColor')}
+                            values={credentials.color_ids}
+                            renderValueSelector={() => (
+                                <ColorSelector
+                                    selectedColorIds={credentials.color_ids}
+                                    handlePressColorTag={handlePressColorTag}
+                                />
+                            )}
+                        />
 
-                            {/* Item category */}
-                            <FormRow
-                                type="Categories"
-                                label={t('createItem.itemCategory')}
-                                categoryId={credentials.category_id}
-                                renderValueSelector={() => (
-                                    <CategorySelector
-                                        selectedCategoryId={
-                                            credentials.category_id
-                                        }
-                                        handlePressCategoryTag={
-                                            handlePressCategoryTag
-                                        }
-                                    />
-                                )}
-                            />
+                        {/* Item material */}
+                        <FormRow
+                            type="Materials"
+                            label={t('createItem.itemMaterial')}
+                            values={credentials.material_ids}
+                            renderValueSelector={() => (
+                                <MaterialSelector
+                                    selectedMaterialIds={
+                                        credentials.material_ids
+                                    }
+                                    handlePressMaterialTag={
+                                        handlePressMaterialTag
+                                    }
+                                />
+                            )}
+                        />
 
-                            {/* Item color */}
-                            <FormRow
-                                type="Colors"
-                                label={t('createItem.itemColor')}
-                                values={credentials.color_ids}
-                                renderValueSelector={() => (
-                                    <ColorSelector
-                                        selectedColorIds={credentials.color_ids}
-                                        handlePressColorTag={
-                                            handlePressColorTag
-                                        }
-                                    />
-                                )}
-                            />
+                        {/* Item pattern */}
+                        <FormRow
+                            type="Patterns"
+                            label={t('createItem.itemPattern')}
+                            values={credentials.pattern_ids}
+                            renderValueSelector={() => (
+                                <PatternSelector
+                                    selectedPatternIds={credentials.pattern_ids}
+                                    handlePressPatternTag={
+                                        handlePressPatternTag
+                                    }
+                                />
+                            )}
+                        />
 
-                            {/* Item material */}
-                            <FormRow
-                                type="Materials"
-                                label={t('createItem.itemMaterial')}
-                                values={credentials.material_ids}
-                                renderValueSelector={() => (
-                                    <MaterialSelector
-                                        selectedMaterialIds={
-                                            credentials.material_ids
-                                        }
-                                        handlePressMaterialTag={
-                                            handlePressMaterialTag
-                                        }
-                                    />
-                                )}
-                            />
-
-                            {/* Item pattern */}
-                            <FormRow
-                                type="Patterns"
-                                label={t('createItem.itemPattern')}
-                                values={credentials.pattern_ids}
-                                renderValueSelector={() => (
-                                    <PatternSelector
-                                        selectedPatternIds={
-                                            credentials.pattern_ids
-                                        }
-                                        handlePressPatternTag={
-                                            handlePressPatternTag
-                                        }
-                                    />
-                                )}
-                            />
-
-                            {/* Item brand */}
+                        {/* Item brand */}
+                        <Block
+                            flex={1}
+                            borderBottomWidth={0.8}
+                            borderColor={colors.light}
+                        >
                             <Block
-                                flex={1}
-                                borderBottomWidth={0.8}
-                                borderColor={colors.light}
+                                row
+                                align="center"
+                                justify="space-between"
+                                paddingVertical={sizes.s}
                             >
+                                <Text p semibold marginRight={sizes.m}>
+                                    {t('createItem.itemBrand')}
+                                </Text>
                                 <Block
-                                    row
-                                    align="center"
-                                    justify="space-between"
-                                    paddingVertical={sizes.s}
+                                    borderBottomWidth={0.8}
+                                    borderColor={colors.light}
                                 >
-                                    <Text p semibold marginRight={sizes.m}>
-                                        {t('createItem.itemBrand')}
-                                    </Text>
-                                    <Block
-                                        borderBottomWidth={0.8}
-                                        borderColor={colors.light}
-                                    >
-                                        <Input
-                                            textAlign="right"
-                                            autoCapitalize="none"
-                                            success={Boolean(
-                                                credentials.brand &&
-                                                    isValid.brand,
-                                            )}
-                                            danger={Boolean(
-                                                credentials.brand &&
-                                                    !isValid.brand,
-                                            )}
-                                            onChangeText={(value) =>
-                                                handleChangeCredentials({
-                                                    brand: value,
-                                                })
-                                            }
-                                            value={credentials.brand}
-                                            noBorder
-                                        />
-                                    </Block>
+                                    <Input
+                                        textAlign="right"
+                                        autoCapitalize="none"
+                                        success={Boolean(
+                                            credentials.brand && isValid.brand,
+                                        )}
+                                        danger={Boolean(
+                                            credentials.brand && !isValid.brand,
+                                        )}
+                                        onChangeText={(value) =>
+                                            handleChangeCredentials({
+                                                brand: value,
+                                            })
+                                        }
+                                        value={credentials.brand}
+                                        noBorder
+                                    />
                                 </Block>
                             </Block>
                         </Block>
                     </Block>
                 </Block>
+            </Block>
 
-                {/* Submit button */}
-                <Block
-                    flex={0}
-                    paddingHorizontal={sizes.sm}
-                    paddingVertical={sizes.s}
+            {/* Submit button */}
+            <Block
+                flex={0}
+                paddingHorizontal={sizes.sm}
+                paddingVertical={sizes.s}
+            >
+                <Button
+                    outlined
+                    gray
+                    shadow={!isAndroid}
+                    disabled={Object.values(isValid).includes(false)}
+                    activeOpacity={
+                        !Object.values(isValid).includes(false) ? 1 : 0.2
+                    }
+                    style={{
+                        opacity: Object.values(isValid).includes(false)
+                            ? 0.5
+                            : 1,
+                    }}
+                    onPress={handleSubmit}
                 >
-                    <Button
-                        outlined
-                        gray
-                        shadow={!isAndroid}
-                        disabled={Object.values(isValid).includes(false)}
-                        activeOpacity={
-                            !Object.values(isValid).includes(false) ? 1 : 0.2
-                        }
-                        style={{
-                            opacity: Object.values(isValid).includes(false)
-                                ? 0.5
-                                : 1,
-                        }}
-                        onPress={handleSubmit}
-                    >
-                        <Text h5>{t('createItem.done')}</Text>
-                    </Button>
-                </Block>
+                    <Text h5>{t('createItem.done')}</Text>
+                </Button>
             </Block>
         </Block>
     )

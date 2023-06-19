@@ -16,7 +16,7 @@ const uploadImageApi = {
         return axiosClient.post(url, image, headerConfig)
     },
     uploadOutfitImage: (outfitId, image) => {
-        const url = `/api/upload/iamge/outfit/${outfitId}`
+        const url = `/api/upload/image/outfit/${outfitId}`
         return axiosClient.post(url, image, headerConfig)
     },
 }

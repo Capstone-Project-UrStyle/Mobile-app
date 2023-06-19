@@ -17,6 +17,7 @@ import {
     MaterialSelector,
     PatternSelector,
 } from '../components'
+
 import { createFormDataFromUri } from '../utils/formDataCreator'
 import { showSelectImageSourceAlert } from '../utils/showSelectImageSourceAlert'
 
@@ -124,15 +125,15 @@ const ItemDetail = ({ route, navigation }) => {
     const handleUploadItemImage = async (fromCamera) => {
         let result = fromCamera
             ? await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
             : await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
 
         if (!result.canceled) {
             setUploadItemImageUri(result.assets[0].uri)

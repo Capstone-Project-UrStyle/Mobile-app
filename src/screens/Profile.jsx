@@ -45,7 +45,10 @@ const Profile = ({ route, navigation }) => {
 
     useEffect(() => {
         const uploadUserAvatar = async (uploadUserAvatarUri) => {
-            const postData = createFormDataFromUri('user-avatar', uploadUserAvatarUri)
+            const postData = createFormDataFromUri(
+                'user-avatar',
+                uploadUserAvatarUri,
+            )
             await uploadImageApi.uploadUserAvatar(user.id, postData)
         }
 
@@ -70,21 +73,20 @@ const Profile = ({ route, navigation }) => {
     const handleUploadUserAvatar = async (fromCamera) => {
         let result = fromCamera
             ? await ImagePicker.launchCameraAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
             : await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
+                  mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                  allowsEditing: true,
+                  quality: 1,
+              })
 
         if (!result.canceled) {
             setUploadUserAvatarUri(result.assets[0].uri)
         }
     }
-    
 
     return (
         <Block safe marginTop={sizes.md}>

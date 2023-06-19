@@ -164,19 +164,21 @@ const Button = ({
     /* handle onPress event */
     const handlePress = useCallback(
         (event) => {
-            onPress?.(event)
+            if (!disabled) {
+                onPress?.(event)
 
-            /* vibrate onPress */
-            if (vibrate) {
-                Vibration.vibrate(vibrate, vibrateRepeat)
+                /* vibrate onPress */
+                if (vibrate) {
+                    Vibration.vibrate(vibrate, vibrateRepeat)
+                }
+
+                /* haptic feedback onPress */
+                // if (haptic) {
+                //   Haptics.selectionAsync()
+                // }
             }
-
-            /* haptic feedback onPress */
-            // if (haptic) {
-            //   Haptics.selectionAsync()
-            // }
         },
-        [haptic, vibrate, vibrateRepeat, onPress],
+        [disabled, haptic, vibrate, vibrateRepeat, onPress],
     )
 
     if (round) {

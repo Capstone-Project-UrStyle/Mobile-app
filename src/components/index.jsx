@@ -24,6 +24,7 @@ import ColorSelector from './ColorSelector'
 import MaterialSelector from './MaterialSelector'
 import PatternSelector from './PatternSelector'
 import HomeAddModal from './HomeAddModal'
+import DraggableImage from './DraggableImage'
 
 export {
     Block,
@@ -52,4 +53,5 @@ export {
     MaterialSelector,
     PatternSelector,
     HomeAddModal,
+    DraggableImage,
 }

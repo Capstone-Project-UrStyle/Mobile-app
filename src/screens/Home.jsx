@@ -20,7 +20,8 @@ import closetApi from '../api/closetApi'
 const Home = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, fonts, sizes, screenSize } = useTheme()
-    const { user, handleSetIsLoading, setShowModal, setModalContent } = useData()
+    const { user, handleSetIsLoading, setShowModal, setModalContent } =
+        useData()
     const isFocused = useIsFocused()
 
     const [tab, setTab] = useState(0)
@@ -236,14 +237,12 @@ const Home = ({ navigation }) => {
                 <TouchableOpacity
                     onPress={() => {
                         setShowModal(true)
-                        setModalContent(() => <HomeAddModal navigation={navigation} />)
+                        setModalContent(() => (
+                            <HomeAddModal navigation={navigation} />
+                        ))
                     }}
                 >
-                    <AntDesign
-                        name="pluscircle"
-                        size={55}
-                        color="#01a699"
-                    />
+                    <AntDesign name="pluscircle" size={55} color="#01a699" />
                 </TouchableOpacity>
             </Block>
         </Block>

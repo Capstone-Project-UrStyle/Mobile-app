@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { Platform, Alert, TouchableOpacity } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
+import { AntDesign } from '@expo/vector-icons'
+import ViewShot from 'react-native-view-shot'
 
 import { useTranslation, useTheme, useData } from '../hooks'
 import {
@@ -14,8 +16,13 @@ import {
     ClosetCard,
     ItemSelector,
     OccasionSelector,
+    DraggableImage,
 } from '../components'
 
+import { createFormDataFromUri } from '../utils/formDataCreator'
+
+import { BASE_API_URL } from '../api/axiosClient'
+import uploadImageApi from '../api/uploadImageApi'
 import closetApi from '../api/closetApi'
 import outfitApi from '../api/outfitApi'
 
@@ -23,16 +30,21 @@ const isAndroid = Platform.OS === 'android'
 
 const CreateOutfit = ({ route, navigation }) => {
     const { t } = useTranslation()
-    const { colors, sizes, fonts } = useTheme()
+    const { colors, sizes, fonts, screenSize } = useTheme()
     const { user, handleSetIsLoading } = useData()
     const isFocused = useIsFocused()
+    const viewShotRef = useRef()
 
     const [refresh, forceRefresh] = useState(false)
     const [currentStep, setCurrentStep] = useState(1)
     const [userClosets, setUserClosets] = useState(null)
     const [selectedClosetId, setSelectedClosetId] = useState(null)
     const [closetDetail, setClosetDetail] = useState(null)
+    const [itemImageSizes, setItemImageSizes] = useState([])
+    const [lastTouchedItemIndex, setLastTouchedItemIndex] = useState(null)
+    const [itemImageLastPositions, setItemImageLastPositions] = useState([])
     const [outfitImageUri, setOutfitImageUri] = useState(null)
+    const [selfieImageUris, setSelfieImageUris] = useState(null)
     const [isValid, setIsValid] = useState({
         outfit_image_uri: false,
         occasion_ids: false,
@@ -88,25 +100,10 @@ const CreateOutfit = ({ route, navigation }) => {
             }
         }
 
-        if (selectedClosetId) {
+        if (currentStep == 2 && selectedClosetId) {
             fetchClosetDetail()
         }
-    }, [refresh, selectedClosetId])
-
-    // Force user to choose items
-    useEffect(() => {
-        async function forceChooseItems() {
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                quality: 1,
-            })
-            if (!result.canceled) setUploadItemImageUri(result.assets[0].uri)
-            else navigation.goBack()
-        }
-
-        // forceChooseItems()
-    }, [outfitImageUri])
+    }, [refresh, currentStep, selectedClosetId])
 
     // Update valid status check when credentials change
     useEffect(() => {
@@ -164,17 +161,41 @@ const CreateOutfit = ({ route, navigation }) => {
         }
     }
 
-    const isEnableSubmitButton = () => {
+    const isEnableSubmitButton = useCallback(() => {
         switch (currentStep) {
             case 1:
                 return selectedClosetId !== null
             case 2:
                 return isValid.item_ids
             case 3:
+                return true
+            case 4:
                 return !Object.values(isValid).includes(false)
             default:
                 break
         }
+    }, [currentStep, selectedClosetId, isValid])
+
+    const handleChangeImageSize = (sizes, index, value) => {
+        if (index !== null) {
+            const minSize = 100,
+                maxSize = 200
+            const newSizes = [...sizes]
+            const newSize = newSizes[index] + value
+            if (newSize >= minSize && newSize <= maxSize)
+                newSizes[index] = newSize
+            return newSizes
+        }
+        return sizes
+    }
+
+    const handleDragItemImage = (index, lastPosition) => {
+        setLastTouchedItemIndex(index)
+
+        // Update last position of touched item image
+        const updatedPositions = [...itemImageLastPositions]
+        updatedPositions[index] = lastPosition
+        setItemImageLastPositions(updatedPositions)
     }
 
     const handleSubmit = useCallback(async () => {
@@ -184,43 +205,78 @@ const CreateOutfit = ({ route, navigation }) => {
                 setCurrentStep(2)
                 break
             case 2:
+                // Initiate image's sizes
+                setItemImageSizes(Array(credentials.item_ids.length).fill(150))
+
+                // Initiate image's positions
+                setItemImageLastPositions(
+                    Array(credentials.item_ids.length).fill({ x: 0, y: 0 }),
+                )
+
                 // Move to step 3
                 setCurrentStep(3)
                 break
             case 3:
+                try {
+                    // Save composit image
+                    const compositImageUri = await viewShotRef.current.capture()
+                    setOutfitImageUri(compositImageUri)
+
+                    // Move to step 4
+                    setCurrentStep(4)
+                } catch (error) {
+                    console.log('error')
+                    console.log(error)
+                }
+                break
+            case 4:
                 // Submit new outfit
                 if (!Object.values(isValid).includes(false)) {
                     try {
                         const response = await outfitApi.createNew(credentials)
                         if (response.request.status === 200) {
+                            console.log(response.data)
+                            // Upload outfit image
+                            if (outfitImageUri) {
+                                const postData = createFormDataFromUri(
+                                    'outfit-image',
+                                    outfitImageUri,
+                                )
+                                await uploadImageApi.uploadOutfitImage(
+                                    response.data.outfitId,
+                                    postData,
+                                )
+                            }
+
                             Alert.alert(response.data.message)
                             navigation.goBack()
                         }
                     } catch (error) {
+                        console.log(error)
                         Alert.alert(error.response.data.message)
                     }
                 }
-                break
             default:
                 break
         }
-    }, [isValid, credentials])
+    }, [currentStep, isValid, credentials])
 
     return (
         <Block color={colors.card}>
             <Block
                 flex={0}
-                padding={sizes.sm}
                 width="100%"
                 backgroundColor={colors.card}
-                top={0}
+                padding={sizes.sm}
             >
                 <Text h5 font={fonts?.['semibold']} width="100%">
                     {currentStep === 1 && t('createOutfit.stepOneLabel')}
                     {currentStep === 2 && t('createOutfit.stepTwoLabel')}
                     {currentStep === 3 && t('createOutfit.stepThreeLabel')}
+                    {currentStep === 4 && t('createOutfit.stepFourLabel')}
                 </Text>
             </Block>
+
             {currentStep === 1 && (
                 // Render closet selector
                 <Block
@@ -267,6 +323,7 @@ const CreateOutfit = ({ route, navigation }) => {
                     </Block>
                 </Block>
             )}
+
             {currentStep === 2 && (
                 // Render item selector
                 <ItemSelector
@@ -278,7 +335,77 @@ const CreateOutfit = ({ route, navigation }) => {
                     }}
                 />
             )}
+
             {currentStep === 3 && (
+                <Block flex={0} height={screenSize.height - 190}>
+                    {/* Render dragable view */}
+                    <ViewShot ref={viewShotRef}>
+                        {closetDetail.Items.filter((item) =>
+                            credentials.item_ids.includes(item.id),
+                        ).map((item, index) => {
+                            return (
+                                <DraggableImage
+                                    key={`item-${item.id}`}
+                                    index={index}
+                                    width={itemImageSizes[index]}
+                                    height={itemImageSizes[index]}
+                                    source={{ uri: BASE_API_URL + item.image }}
+                                    lastPosition={itemImageLastPositions[index]}
+                                    onDrag={handleDragItemImage}
+                                />
+                            )
+                        })}
+                    </ViewShot>
+                    <Block
+                        flex={0}
+                        row
+                        position="absolute"
+                        bottom={0}
+                        width="100%"
+                        justify="center"
+                        align="center"
+                    >
+                        <TouchableOpacity
+                            onPress={() =>
+                                setItemImageSizes((prev) =>
+                                    handleChangeImageSize(
+                                        prev,
+                                        lastTouchedItemIndex,
+                                        -10,
+                                    ),
+                                )
+                            }
+                            style={{ padding: sizes.s }}
+                        >
+                            <AntDesign
+                                name="minuscircle"
+                                size={30}
+                                color="#01a699"
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() =>
+                                setItemImageSizes((prev) =>
+                                    handleChangeImageSize(
+                                        prev,
+                                        lastTouchedItemIndex,
+                                        10,
+                                    ),
+                                )
+                            }
+                            style={{ padding: sizes.s }}
+                        >
+                            <AntDesign
+                                name="pluscircle"
+                                size={30}
+                                color="#01a699"
+                            />
+                        </TouchableOpacity>
+                    </Block>
+                </Block>
+            )}
+
+            {currentStep === 4 && (
                 // Render outfit's info form
                 <Block
                     scroll
@@ -295,7 +422,7 @@ const CreateOutfit = ({ route, navigation }) => {
                         </Text>
                         <TouchableOpacity onPress={handleChooseOufitImage}>
                             <Image
-                                resizeMode="cover"
+                                resizeMode="contain"
                                 style={{
                                     height: 350,
                                     width: '100%',
@@ -385,13 +512,13 @@ const CreateOutfit = ({ route, navigation }) => {
 
             {/* Submit buttons */}
             <Block
-                flex={1}
+                flex={0}
                 row
-                padding={sizes.sm}
                 position="absolute"
+                bottom={0}
                 width="100%"
                 backgroundColor={colors.card}
-                bottom={0}
+                padding={sizes.sm}
             >
                 <Block marginHorizontal={sizes.xs}>
                     <Button
@@ -421,7 +548,7 @@ const CreateOutfit = ({ route, navigation }) => {
                         }}
                         onPress={handleSubmit}
                     >
-                        {currentStep === 3 ? (
+                        {currentStep === 4 ? (
                             <Text h5>{t('createOutfit.done')}</Text>
                         ) : (
                             <Text h5>{t('createOutfit.nextStep')}</Text>
