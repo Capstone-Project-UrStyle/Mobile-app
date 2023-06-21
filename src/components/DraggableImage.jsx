@@ -52,7 +52,7 @@ const DraggableImage = ({
             onTouchStart={() => onDrag(index, position)}
         >
             <Image
-                resizeMode="cover"
+                resizeMode="contain"
                 style={{
                     width: width,
                     height: height,

@@ -87,12 +87,12 @@ const HomeAddModal = ({ navigation }) => {
             {renderCardItem(
                 t('homeAddModal.outfitIdeaRecommendation'),
                 assets.generateOutfit,
-                'CreateOutfit',
+                'RecommendOutfitIdeaByQuery',
             )}
             {renderCardItem(
                 t('homeAddModal.outfitIdeaCompatibility'),
                 assets.outfitCompatibility,
-                'CreateOutfit',
+                'RecommendOutfitIdeaFromCloset',
             )}
         </Block>
     )

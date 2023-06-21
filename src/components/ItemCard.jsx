@@ -10,6 +10,8 @@ import Checkbox from './Checkbox'
 import { BASE_API_URL } from '../api/axiosClient'
 import { useTranslation, useTheme } from '../hooks/'
 
+import { shortenDisplayText } from '../utils/shortenDisplayText'
+
 const ItemCard = ({ item, selectMode }) => {
     const { t } = useTranslation()
     const { colors, fonts, sizes, screenSize } = useTheme()
@@ -33,7 +35,7 @@ const ItemCard = ({ item, selectMode }) => {
                 borderColor={colors.light}
             >
                 <Image
-                    resizeMode="cover"
+                    resizeMode="contain"
                     style={{
                         width: screenSize.width / 3.5,
                         height: screenSize.width / 3.5,
@@ -46,7 +48,8 @@ const ItemCard = ({ item, selectMode }) => {
                     font={fonts?.['light']}
                     paddingVertical={sizes.xs}
                 >
-                    {item.brand || t('closetDetail.noBrand')}
+                    {shortenDisplayText(item.brand, 14) ||
+                        t('closetDetail.noBrand')}
                 </Text>
 
                 {selectMode && (

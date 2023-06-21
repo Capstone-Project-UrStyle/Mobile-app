@@ -7,6 +7,8 @@ import { useTheme, useData } from '../hooks/'
 import Text from '../components/Text'
 import Block from '../components/Block'
 
+import { shortenDisplayText } from '../utils/shortenDisplayText'
+
 const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     const { sizes, colors } = useTheme()
     const { masterData } = useData()
@@ -39,14 +41,15 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     }, [masterData])
 
     const formatValue = () => {
+        if (type === 'Weathers' && values) {
+            let displayValue = values.join(', ')
+            return shortenDisplayText(displayValue, maxDisplayValueLength)
+        }
+
         if (type === 'Closets' && values) {
             const valueNames = values.slice(0, 3).map((value) => value.name)
             let displayValue = valueNames.join(', ')
-            if (displayValue.length > maxDisplayValueLength) {
-                displayValue =
-                    displayValue.slice(0, maxDisplayValueLength) + '...'
-            }
-            return displayValue
+            return shortenDisplayText(displayValue, maxDisplayValueLength)
         }
 
         if (type === 'Categories' && categoryId) {
@@ -68,11 +71,7 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
             )
             const valueNames = typeValues.map((value) => value.name)
             let displayValue = valueNames.join(', ')
-            if (displayValue.length > maxDisplayValueLength) {
-                displayValue =
-                    displayValue.slice(0, maxDisplayValueLength) + '...'
-            }
-            return displayValue
+            return shortenDisplayText(displayValue, maxDisplayValueLength)
         }
     }
 

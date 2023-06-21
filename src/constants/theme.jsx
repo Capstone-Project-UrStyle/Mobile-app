@@ -61,6 +61,7 @@ export const ICONS = {
     warning: require('../assets/icons/warning.png'),
     logout: require('../assets/icons/logout.png'),
     createCloset: require('../assets/icons/create-closet.png'),
+    weather: require('../assets/icons/weather.png'),
 }
 
 export const ASSETS = {

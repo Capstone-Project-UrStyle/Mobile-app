@@ -23,6 +23,7 @@ import CategorySelector from './CategorySelector'
 import ColorSelector from './ColorSelector'
 import MaterialSelector from './MaterialSelector'
 import PatternSelector from './PatternSelector'
+import WeatherSelector from './WeatherSelector'
 import HomeAddModal from './HomeAddModal'
 import DraggableImage from './DraggableImage'
 
@@ -52,6 +53,7 @@ export {
     ColorSelector,
     MaterialSelector,
     PatternSelector,
+    WeatherSelector,
     HomeAddModal,
     DraggableImage,
 }

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { Platform, Alert, TouchableOpacity } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
-import * as ImagePicker from 'expo-image-picker'
 import { AntDesign } from '@expo/vector-icons'
 import ViewShot from 'react-native-view-shot'
 
@@ -28,7 +27,7 @@ import outfitApi from '../api/outfitApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const CreateOutfit = ({ route, navigation }) => {
+const CreateOutfit = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts, screenSize } = useTheme()
     const { user, handleSetIsLoading } = useData()
@@ -38,8 +37,7 @@ const CreateOutfit = ({ route, navigation }) => {
     const [refresh, forceRefresh] = useState(false)
     const [currentStep, setCurrentStep] = useState(1)
     const [userClosets, setUserClosets] = useState(null)
-    const [selectedClosetId, setSelectedClosetId] = useState(null)
-    const [closetDetail, setClosetDetail] = useState(null)
+    const [selectedClosetDetail, setSelectedClosetDetail] = useState(null)
     const [itemImageSizes, setItemImageSizes] = useState([])
     const [lastTouchedItemIndex, setLastTouchedItemIndex] = useState(null)
     const [itemImageLastPositions, setItemImageLastPositions] = useState([])
@@ -82,28 +80,7 @@ const CreateOutfit = ({ route, navigation }) => {
         if (user) {
             fetchUserClosets()
         }
-    }, [refresh, selectedClosetId])
-
-    // Fetch selected closet data
-    useEffect(() => {
-        async function fetchClosetDetail() {
-            handleSetIsLoading(true)
-            try {
-                const response = await closetApi.getOneById(selectedClosetId)
-                if (response.request.status === 200) {
-                    setClosetDetail(response.data)
-                    handleSetIsLoading(false)
-                }
-            } catch (error) {
-                handleSetIsLoading(false)
-                Alert.alert(error.response.data.message)
-            }
-        }
-
-        if (currentStep == 2 && selectedClosetId) {
-            fetchClosetDetail()
-        }
-    }, [refresh, currentStep, selectedClosetId])
+    }, [refresh, user])
 
     // Update valid status check when credentials change
     useEffect(() => {
@@ -127,24 +104,14 @@ const CreateOutfit = ({ route, navigation }) => {
         [setCredentials],
     )
 
-    const handleChooseOufitImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 1,
-        })
-
-        if (!result.canceled) {
-            setOutfitImageUri(result.assets[0].uri)
+    const handlePressClosetCheckbox = (closet) => {
+        if (selectedClosetDetail) {
+            if (selectedClosetDetail.id === closet.id) {
+                return setSelectedClosetDetail(null)
+            }
         }
-    }
 
-    const handlePressClosetCheckbox = (closetId) => {
-        if (selectedClosetId === closetId) {
-            setSelectedClosetId(null)
-        } else {
-            setSelectedClosetId(closetId)
-        }
+        return setSelectedClosetDetail(closet)
     }
 
     const handlePressOccasionTag = (occasionId) => {
@@ -164,7 +131,7 @@ const CreateOutfit = ({ route, navigation }) => {
     const isEnableSubmitButton = useCallback(() => {
         switch (currentStep) {
             case 1:
-                return selectedClosetId !== null
+                return selectedClosetDetail !== null
             case 2:
                 return isValid.item_ids
             case 3:
@@ -174,7 +141,7 @@ const CreateOutfit = ({ route, navigation }) => {
             default:
                 break
         }
-    }, [currentStep, selectedClosetId, isValid])
+    }, [currentStep, selectedClosetDetail, isValid])
 
     const handleChangeImageSize = (sizes, index, value) => {
         if (index !== null) {
@@ -225,7 +192,6 @@ const CreateOutfit = ({ route, navigation }) => {
                     // Move to step 4
                     setCurrentStep(4)
                 } catch (error) {
-                    console.log('error')
                     console.log(error)
                 }
                 break
@@ -235,7 +201,6 @@ const CreateOutfit = ({ route, navigation }) => {
                     try {
                         const response = await outfitApi.createNew(credentials)
                         if (response.request.status === 200) {
-                            console.log(response.data)
                             // Upload outfit image
                             if (outfitImageUri) {
                                 const postData = createFormDataFromUri(
@@ -252,7 +217,6 @@ const CreateOutfit = ({ route, navigation }) => {
                             navigation.goBack()
                         }
                     } catch (error) {
-                        console.log(error)
                         Alert.alert(error.response.data.message)
                     }
                 }
@@ -267,7 +231,8 @@ const CreateOutfit = ({ route, navigation }) => {
                 flex={0}
                 width="100%"
                 backgroundColor={colors.card}
-                padding={sizes.sm}
+                paddingHorizontal={sizes.sm}
+                paddingVertical={sizes.s}
             >
                 <Text h5 font={fonts?.['semibold']} width="100%">
                     {currentStep === 1 && t('createOutfit.stepOneLabel')}
@@ -301,11 +266,11 @@ const CreateOutfit = ({ route, navigation }) => {
                                     type={'vertical'}
                                     selectMode={{
                                         onSelect: () =>
-                                            handlePressClosetCheckbox(
-                                                closet.id,
-                                            ),
-                                        isSelected:
-                                            selectedClosetId === closet.id,
+                                            handlePressClosetCheckbox(closet),
+                                        isSelected: selectedClosetDetail
+                                            ? selectedClosetDetail.id ===
+                                              closet.id
+                                            : false,
                                     }}
                                 />
                             ))
@@ -327,7 +292,7 @@ const CreateOutfit = ({ route, navigation }) => {
             {currentStep === 2 && (
                 // Render item selector
                 <ItemSelector
-                    closet={closetDetail}
+                    closet={selectedClosetDetail}
                     forceRefresh={forceRefresh}
                     selectMode={{
                         credentials: credentials,
@@ -337,10 +302,10 @@ const CreateOutfit = ({ route, navigation }) => {
             )}
 
             {currentStep === 3 && (
-                <Block flex={0} height={screenSize.height - 190}>
+                <Block flex={0} height={screenSize.height - 175}>
                     {/* Render dragable view */}
                     <ViewShot ref={viewShotRef}>
-                        {closetDetail.Items.filter((item) =>
+                        {selectedClosetDetail.Items.filter((item) =>
                             credentials.item_ids.includes(item.id),
                         ).map((item, index) => {
                             return (
@@ -420,16 +385,14 @@ const CreateOutfit = ({ route, navigation }) => {
                         <Text h5 paddingBottom={sizes.s}>
                             {t('createOutfit.outfitImage')}
                         </Text>
-                        <TouchableOpacity onPress={handleChooseOufitImage}>
-                            <Image
-                                resizeMode="contain"
-                                style={{
-                                    height: 350,
-                                    width: '100%',
-                                }}
-                                source={{ uri: outfitImageUri }}
-                            />
-                        </TouchableOpacity>
+                        <Image
+                            resizeMode="contain"
+                            style={{
+                                height: 350,
+                                width: '100%',
+                            }}
+                            source={{ uri: outfitImageUri }}
+                        />
                     </Block>
 
                     {/* Public switch */}
