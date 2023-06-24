@@ -12,10 +12,12 @@ import {
     Text,
     WeatherCard,
     ClosetCard,
+    OutfitCard,
     HomeAddModal,
 } from '../components'
 
 import closetApi from '../api/closetApi'
+import outfitApi from '../api/outfitApi'
 
 const Home = ({ navigation }) => {
     const { t } = useTranslation()
@@ -49,15 +51,31 @@ const Home = ({ navigation }) => {
             }
         }
 
+        async function fetchUserOutfits() {
+            handleSetIsLoading(true)
+            try {
+                const response = await outfitApi.getListByUserId(user.id)
+                setCardList(response.data)
+                handleSetIsLoading(false)
+            } catch (error) {
+                handleSetIsLoading(false)
+                alert(error.response.data.message)
+            }
+        }
+
         if (user) {
             switch (tab) {
                 case 0:
                     // Fetch user closets
                     fetchUserClosets()
+                    break
                 case 1:
-                // Fetch user outfits
+                    // Fetch user outfits
+                    fetchUserOutfits()
+                    break
                 case 2:
-                // Fetch user bookmarked outfits
+                    // Fetch user bookmarked outfits
+                    break
                 default:
             }
         }
@@ -91,6 +109,17 @@ const Home = ({ navigation }) => {
                         </>
                     )
                 case 1:
+                    return (
+                        <>
+                            {cardList.map((card) => (
+                                <OutfitCard
+                                    key={`card-${card?.id}`}
+                                    outfit={card}
+                                    type={'hirizontal'}
+                                />
+                            ))}
+                        </>
+                    )
                 case 2:
                 default:
                     return
@@ -201,7 +230,7 @@ const Home = ({ navigation }) => {
                             p
                             font={fonts?.[tab === 2 ? 'semibold' : 'normal']}
                         >
-                            {t('home.bookmarked')}
+                            {t('home.bookmarks')}
                         </Text>
                     </Button>
                 </Block>
