@@ -13,6 +13,7 @@ export { default as ItemDetail } from './ItemDetail'
 export { default as AddOrRemoveClosetItem } from './AddOrRemoveClosetItem'
 
 export { default as CreateOutfit } from './CreateOutfit'
+export { default as OutfitDetail } from './OutfitDetail'
 
 export { default as RecommendOutfitIdeaByQuery } from './RecommendOutfitIdeaByQuery'
 

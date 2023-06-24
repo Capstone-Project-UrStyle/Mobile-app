@@ -14,6 +14,7 @@ import {
     ItemDetail,
     AddOrRemoveClosetItem,
     CreateOutfit,
+    OutfitDetail,
     RecommendOutfitIdeaByQuery,
     Articles,
     Components,
@@ -106,6 +107,15 @@ export default () => {
                 component={CreateOutfit}
                 options={{
                     title: t('navigation.createOutfit'),
+                    ...screenOptions.back,
+                }}
+            />
+
+            <Stack.Screen
+                name="OutfitDetail"
+                component={OutfitDetail}
+                options={{
+                    title: t('navigation.outfitDetail'),
                     ...screenOptions.back,
                 }}
             />

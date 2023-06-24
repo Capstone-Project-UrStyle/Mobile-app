@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { Platform, Alert, TouchableOpacity } from 'react-native'
+import { Platform, Alert } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
-import { AntDesign } from '@expo/vector-icons'
 import ViewShot from 'react-native-view-shot'
 
 import { useTranslation, useTheme, useData } from '../hooks'
@@ -36,7 +35,8 @@ const isAndroid = Platform.OS === 'android'
 const RecommendOutfitIdeaByQuery = ({ navigation }) => {
     const { t } = useTranslation()
     const { icons, colors, sizes, fonts, screenSize } = useTheme()
-    const { user, handleSetIsLoading, masterData } = useData()
+    const { user, handleSetIsLoading, setLoadingMessage, masterData } =
+        useData()
     const isFocused = useIsFocused()
     const viewShotRef = useRef()
 
@@ -56,7 +56,6 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
     })
     const [recommendItems, setRecommendItems] = useState(null)
     const [itemImageSizes, setItemImageSizes] = useState([])
-    const [lastTouchedItemIndex, setLastTouchedItemIndex] = useState(null)
     const [itemImageLastPositions, setItemImageLastPositions] = useState([])
     const [outfitImageUri, setOutfitImageUri] = useState(null)
     const [isValid, setIsValid] = useState({
@@ -116,6 +115,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
     const handleChangeQueryItemIds = useCallback(
         (value) => {
             setQueryItemIds(value.item_ids)
+            handleChangeCredentials({ item_ids: value.item_ids })
         },
         [setQueryItemIds],
     )
@@ -266,8 +266,6 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
     }
 
     const handleDragItemImage = (index, lastPosition) => {
-        setLastTouchedItemIndex(index)
-
         // Update last position of touched item image
         const updatedPositions = [...itemImageLastPositions]
         updatedPositions[index] = lastPosition
@@ -321,6 +319,9 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                 // Call API to generate outfit recommendation by query
                 try {
                     handleSetIsLoading(true)
+                    setLoadingMessage(
+                        t('recommendOutfitIdeaByQuery.modelRunningMessage'),
+                    )
                     const recommendResponse =
                         await lstmModalApi.generateOutfitRecommendation(
                             recommendCredentials,
@@ -328,12 +329,14 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     if (recommendResponse.request.status === 200) {
                         setRecommendItems(recommendResponse.data)
                         handleSetIsLoading(false)
+                        setLoadingMessage(null)
 
                         // Move to step 4
                         setCurrentStep(4)
                     }
                 } catch (error) {
                     handleSetIsLoading(false)
+                    setLoadingMessage(null)
                     Alert.alert(error.response.data.message)
                 }
                 break
@@ -356,7 +359,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     setOutfitImageUri(compositImageUri)
 
                     // Move to step 5
-                    setCurrentStep(5)
+                    setCurrentStep(6)
                 } catch (error) {
                     console.log(error)
                 }
@@ -703,8 +706,13 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
             {currentStep === 5 && (
                 <Block flex={0} height={screenSize.height - 175}>
                     {/* Render dragable view */}
-                    <ViewShot ref={viewShotRef}>
+                    <ViewShot ref={viewShotRef} style={{ flex: 1 }}>
                         {recommendItems
+                            .concat(
+                                selectedClosetDetail
+                                    ? selectedClosetDetail.Items
+                                    : [],
+                            )
                             .filter((item) =>
                                 credentials.item_ids.includes(item.id),
                             )
@@ -726,52 +734,6 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                 )
                             })}
                     </ViewShot>
-                    <Block
-                        flex={0}
-                        row
-                        position="absolute"
-                        bottom={0}
-                        width="100%"
-                        justify="center"
-                        align="center"
-                    >
-                        <TouchableOpacity
-                            onPress={() =>
-                                setItemImageSizes((prev) =>
-                                    handleChangeImageSize(
-                                        prev,
-                                        lastTouchedItemIndex,
-                                        -10,
-                                    ),
-                                )
-                            }
-                            style={{ padding: sizes.s }}
-                        >
-                            <AntDesign
-                                name="minuscircle"
-                                size={30}
-                                color="#01a699"
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() =>
-                                setItemImageSizes((prev) =>
-                                    handleChangeImageSize(
-                                        prev,
-                                        lastTouchedItemIndex,
-                                        10,
-                                    ),
-                                )
-                            }
-                            style={{ padding: sizes.s }}
-                        >
-                            <AntDesign
-                                name="pluscircle"
-                                size={30}
-                                color="#01a699"
-                            />
-                        </TouchableOpacity>
-                    </Block>
                 </Block>
             )}
 
@@ -782,11 +744,10 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                     flex={1}
                     paddingHorizontal={sizes.sm}
-                    paddingBottom={sizes.sm}
-                    marginBottom={80}
+                    paddingBottom={sizes.s}
                 >
                     {/* Outfit image */}
-                    <Block marginBottom={sizes.sm}>
+                    <Block>
                         <Text h5 paddingBottom={sizes.s}>
                             {t('recommendOutfitIdeaByQuery.outfitImage')}
                         </Text>
@@ -800,25 +761,8 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                         />
                     </Block>
 
-                    {/* Public switch */}
-                    <Block
-                        flex={0}
-                        row
-                        paddingVertical={sizes.s}
-                        align="center"
-                        justify="space-between"
-                    >
-                        <Text h5>{t('recommendOutfitIdeaByQuery.public')}</Text>
-                        <Switch
-                            checked={credentials.is_public}
-                            onPress={(checked) =>
-                                handleChangeCredentials({ is_public: checked })
-                            }
-                        />
-                    </Block>
-
                     {/* Occasion selectors */}
-                    <Block marginBottom={sizes.sm}>
+                    <Block paddingVertical={sizes.sm}>
                         <Text h5 paddingBottom={sizes.s}>
                             {t('recommendOutfitIdeaByQuery.occasions')}
                         </Text>
@@ -854,7 +798,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     </Block>
 
                     {/* Outfit description */}
-                    <Block>
+                    <Block paddingVertical={sizes.sm}>
                         <Text h5 paddingBottom={sizes.s}>
                             {t('recommendOutfitIdeaByQuery.description')}
                         </Text>
@@ -873,6 +817,23 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                 handleChangeCredentials({ description: value })
                             }
                             value={credentials.description}
+                        />
+                    </Block>
+
+                    {/* Public switch */}
+                    <Block
+                        flex={0}
+                        row
+                        align="center"
+                        justify="space-between"
+                        marginBottom={sizes.sm}
+                    >
+                        <Text h5>{t('recommendOutfitIdeaByQuery.public')}</Text>
+                        <Switch
+                            checked={credentials.is_public}
+                            onPress={(checked) =>
+                                handleChangeCredentials({ is_public: checked })
+                            }
                         />
                     </Block>
                 </Block>

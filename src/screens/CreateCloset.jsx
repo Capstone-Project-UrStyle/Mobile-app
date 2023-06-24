@@ -116,24 +116,8 @@ const CreateCloset = ({ route, navigation }) => {
                     })}
                 </Block>
 
-                <Block
-                    flex={0}
-                    row
-                    paddingVertical={sizes.m}
-                    align="center"
-                    justify="space-between"
-                >
-                    <Text h5>{t('createCloset.public')}</Text>
-                    <Switch
-                        checked={credentials.is_public}
-                        onPress={(checked) =>
-                            handleChangeCredentials({ is_public: checked })
-                        }
-                    />
-                </Block>
-
                 {/* Occasion selectors */}
-                <Block flex={1}>
+                <Block flex={1} paddingVertical={sizes.sm}>
                     <Text h5 paddingBottom={sizes.s}>
                         {t('createCloset.occasions')}
                     </Text>
@@ -165,6 +149,23 @@ const CreateCloset = ({ route, navigation }) => {
                             </Block>
                         </Block>
                     </Block>
+                </Block>
+
+                {/* Public switch */}
+                <Block
+                    flex={0}
+                    row
+                    paddingVertical={sizes.sm}
+                    align="center"
+                    justify="space-between"
+                >
+                    <Text h5>{t('createCloset.public')}</Text>
+                    <Switch
+                        checked={credentials.is_public}
+                        onPress={(checked) =>
+                            handleChangeCredentials({ is_public: checked })
+                        }
+                    />
                 </Block>
             </Block>
 

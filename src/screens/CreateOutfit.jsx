@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { Platform, Alert, TouchableOpacity } from 'react-native'
+import { Platform, Alert } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
-import { AntDesign } from '@expo/vector-icons'
 import ViewShot from 'react-native-view-shot'
 
 import { useTranslation, useTheme, useData } from '../hooks'
@@ -39,7 +38,6 @@ const CreateOutfit = ({ navigation }) => {
     const [userClosets, setUserClosets] = useState(null)
     const [selectedClosetDetail, setSelectedClosetDetail] = useState(null)
     const [itemImageSizes, setItemImageSizes] = useState([])
-    const [lastTouchedItemIndex, setLastTouchedItemIndex] = useState(null)
     const [itemImageLastPositions, setItemImageLastPositions] = useState([])
     const [outfitImageUri, setOutfitImageUri] = useState(null)
     const [selfieImageUris, setSelfieImageUris] = useState(null)
@@ -143,22 +141,7 @@ const CreateOutfit = ({ navigation }) => {
         }
     }, [currentStep, selectedClosetDetail, isValid])
 
-    const handleChangeImageSize = (sizes, index, value) => {
-        if (index !== null) {
-            const minSize = 100,
-                maxSize = 200
-            const newSizes = [...sizes]
-            const newSize = newSizes[index] + value
-            if (newSize >= minSize && newSize <= maxSize)
-                newSizes[index] = newSize
-            return newSizes
-        }
-        return sizes
-    }
-
     const handleDragItemImage = (index, lastPosition) => {
-        setLastTouchedItemIndex(index)
-
         // Update last position of touched item image
         const updatedPositions = [...itemImageLastPositions]
         updatedPositions[index] = lastPosition
@@ -304,7 +287,7 @@ const CreateOutfit = ({ navigation }) => {
             {currentStep === 3 && (
                 <Block flex={0} height={screenSize.height - 175}>
                     {/* Render dragable view */}
-                    <ViewShot ref={viewShotRef}>
+                    <ViewShot ref={viewShotRef} style={{ flex: 1 }}>
                         {selectedClosetDetail.Items.filter((item) =>
                             credentials.item_ids.includes(item.id),
                         ).map((item, index) => {
@@ -321,52 +304,6 @@ const CreateOutfit = ({ navigation }) => {
                             )
                         })}
                     </ViewShot>
-                    <Block
-                        flex={0}
-                        row
-                        position="absolute"
-                        bottom={0}
-                        width="100%"
-                        justify="center"
-                        align="center"
-                    >
-                        <TouchableOpacity
-                            onPress={() =>
-                                setItemImageSizes((prev) =>
-                                    handleChangeImageSize(
-                                        prev,
-                                        lastTouchedItemIndex,
-                                        -10,
-                                    ),
-                                )
-                            }
-                            style={{ padding: sizes.s }}
-                        >
-                            <AntDesign
-                                name="minuscircle"
-                                size={30}
-                                color="#01a699"
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() =>
-                                setItemImageSizes((prev) =>
-                                    handleChangeImageSize(
-                                        prev,
-                                        lastTouchedItemIndex,
-                                        10,
-                                    ),
-                                )
-                            }
-                            style={{ padding: sizes.s }}
-                        >
-                            <AntDesign
-                                name="pluscircle"
-                                size={30}
-                                color="#01a699"
-                            />
-                        </TouchableOpacity>
-                    </Block>
                 </Block>
             )}
 
@@ -381,7 +318,7 @@ const CreateOutfit = ({ navigation }) => {
                     marginBottom={80}
                 >
                     {/* Outfit image */}
-                    <Block marginBottom={sizes.sm}>
+                    <Block paddingVertical={sizes.s}>
                         <Text h5 paddingBottom={sizes.s}>
                             {t('createOutfit.outfitImage')}
                         </Text>
@@ -395,25 +332,8 @@ const CreateOutfit = ({ navigation }) => {
                         />
                     </Block>
 
-                    {/* Public switch */}
-                    <Block
-                        flex={0}
-                        row
-                        paddingVertical={sizes.s}
-                        align="center"
-                        justify="space-between"
-                    >
-                        <Text h5>{t('createOutfit.public')}</Text>
-                        <Switch
-                            checked={credentials.is_public}
-                            onPress={(checked) =>
-                                handleChangeCredentials({ is_public: checked })
-                            }
-                        />
-                    </Block>
-
                     {/* Occasion selectors */}
-                    <Block marginBottom={sizes.sm}>
+                    <Block paddingVertical={sizes.s}>
                         <Text h5 paddingBottom={sizes.s}>
                             {t('createOutfit.occasions')}
                         </Text>
@@ -449,7 +369,7 @@ const CreateOutfit = ({ navigation }) => {
                     </Block>
 
                     {/* Outfit description */}
-                    <Block>
+                    <Block paddingVertical={sizes.s}>
                         <Text h5 paddingBottom={sizes.s}>
                             {t('createOutfit.description')}
                         </Text>
@@ -468,6 +388,23 @@ const CreateOutfit = ({ navigation }) => {
                                 handleChangeCredentials({ description: value })
                             }
                             value={credentials.description}
+                        />
+                    </Block>
+
+                    {/* Public switch */}
+                    <Block
+                        flex={0}
+                        row
+                        align="center"
+                        justify="space-between"
+                        paddingVertical={sizes.s}
+                    >
+                        <Text h5>{t('createOutfit.public')}</Text>
+                        <Switch
+                            checked={credentials.is_public}
+                            onPress={(checked) =>
+                                handleChangeCredentials({ is_public: checked })
+                            }
                         />
                     </Block>
                 </Block>
