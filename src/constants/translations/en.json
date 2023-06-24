@@ -73,6 +73,7 @@
     "itemDetail": "Item detail",
     "addOrRemoveClosetItem": "Add or remove item",
     "createOutfit": "Create an outfit",
+    "outfitDetail": "Outfit detail",
     "recommendOutfitIdeaByQuery": "Recommend outfit idea by query",
     "components": "Components",
     "articles": "UrStyle",
@@ -107,7 +108,7 @@
     "title": "UrStyle",
     "closets": "Closets",
     "outfits": "Outfits",
-    "bookmarked": "Bookmarked",
+    "bookmarks": "Bookmarks",
     "noItemFound": "No item found"
   },
   "homeAddModal": {
@@ -200,6 +201,15 @@
     "nextStep": "Next step",
     "done": "Done"
   },
+  "outfitDetail": {
+    "itemInfo": "Item info",
+    "items": "Items",
+    "public": "Public to other users",
+    "occasionInfo": "Occasion info",
+    "occasions": "Occasions",
+    "description": "Description",
+    "descriptionPlaceholder": "Tell us something about this outfit..."
+  },
   "recommendOutfitIdeaByQuery": {
     "stepOneLabel": "Step 1: Choose a closet",
     "stepTwoLabel": "Step 2: Choose some items for AI to query out best ideas",
@@ -208,6 +218,7 @@
     "stepFiveLabel": "Step 5: Place items wherever you want",
     "stepSixLabel": "Step 6: Outfit infomations",
     "noClosetFound": "No closet found",
+    "modelRunningMessage": "AI is finding suitable items...",
     "weatherInfo": "Just right for the weather",
     "weathers": "Weathers",
     "occasionInfo": "Outfit base on occasion",

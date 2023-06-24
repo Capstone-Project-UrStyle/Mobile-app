@@ -18,6 +18,7 @@ export const DataContext = React.createContext({})
 
 export const DataProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false)
+    const [loadingMessage, setLoadingMessage] = useState(null)
     const [isDark, setIsDark] = useState(false)
     const [theme, setTheme] = useState(light)
     const [showModal, setShowModal] = useState(false)
@@ -199,6 +200,8 @@ export const DataProvider = ({ children }) => {
     const contextValue = {
         isLoading,
         handleSetIsLoading,
+        loadingMessage,
+        setLoadingMessage,
         isDark,
         handleSetIsDark,
         theme,

@@ -20,7 +20,7 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     const [patterns, setPatterns] = useState([])
     const [openValueSelector, setOpenValueSelector] = useState(false)
 
-    const maxDisplayValueLength = 30
+    const maxDisplayValueLength = 25
     const typeValuesMap = {
         Occasions: occasions,
         Categories: categories,
@@ -50,6 +50,10 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
             const valueNames = values.slice(0, 3).map((value) => value.name)
             let displayValue = valueNames.join(', ')
             return shortenDisplayText(displayValue, maxDisplayValueLength)
+        }
+
+        if (type === 'Items' && values) {
+            return values.length
         }
 
         if (type === 'Categories' && categoryId) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { TouchableWithoutFeedback } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { Feather } from '@expo/vector-icons'
 
 import Block from './Block'
 import Image from './Image'
@@ -66,6 +67,24 @@ const ItemCard = ({ item, selectMode }) => {
                             checked={selectMode.isSelected}
                             onPress={selectMode.onSelect}
                         />
+                    </Block>
+                )}
+
+                {selectMode && (
+                    <Block position="absolute" bottom={sizes.s} right={0}>
+                        <TouchableWithoutFeedback
+                            onPress={() =>
+                                navigation.navigate('ItemDetail', {
+                                    itemId: item.id,
+                                })
+                            }
+                        >
+                            <Feather
+                                name="more-vertical"
+                                size={25}
+                                color={colors.info}
+                            />
+                        </TouchableWithoutFeedback>
                     </Block>
                 )}
             </Block>

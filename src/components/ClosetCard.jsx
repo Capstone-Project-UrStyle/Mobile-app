@@ -1,6 +1,7 @@
 import React from 'react'
 import { TouchableWithoutFeedback } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { Feather } from '@expo/vector-icons'
 
 import Block from './Block'
 import Image from './Image'
@@ -9,6 +10,8 @@ import Checkbox from './Checkbox'
 
 import { BASE_API_URL } from '../api/axiosClient'
 import { useTheme } from '../hooks/'
+
+import { shortenDisplayText } from '../utils/shortenDisplayText'
 
 const ClosetCard = ({ create, closet, type, selectMode }) => {
     const { assets, colors, sizes } = useTheme()
@@ -46,7 +49,7 @@ const ClosetCard = ({ create, closet, type, selectMode }) => {
                                 ? `item-${closetItems[index].id}`
                                 : index
                         }
-                        resizeMode="cover"
+                        resizeMode="contain"
                         style={{
                             height: 60,
                             width: 60,
@@ -113,7 +116,7 @@ const ClosetCard = ({ create, closet, type, selectMode }) => {
                         paddingBottom={isHorizontal ? sizes.s : 0}
                     >
                         <Text p color={colors.link} semibold size={sizes.sm}>
-                            {closet.name}
+                            {shortenDisplayText(closet.name, 20)}
                         </Text>
                         <Text p size={sizes.sm}>
                             Items: {closet.Items.length}
@@ -141,6 +144,22 @@ const ClosetCard = ({ create, closet, type, selectMode }) => {
                             checked={selectMode.isSelected}
                             onPress={selectMode.onSelect}
                         />
+                    </Block>
+                )}
+
+                {selectMode && (
+                    <Block
+                        position="absolute"
+                        bottom={sizes.sm}
+                        right={sizes.s}
+                    >
+                        <TouchableWithoutFeedback onPress={handlePress}>
+                            <Feather
+                                name="more-vertical"
+                                size={30}
+                                color={colors.info}
+                            />
+                        </TouchableWithoutFeedback>
                     </Block>
                 )}
             </Block>

@@ -6,11 +6,12 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 
 import Menu from './Menu'
 import { useData, ThemeProvider, TranslationProvider } from '../hooks'
-import { Block, Modal } from '../components'
+import { Block, Text, Modal } from '../components'
 
 export default () => {
     const {
         isLoading,
+        loadingMessage,
         isDark,
         theme,
         setTheme,
@@ -72,8 +73,18 @@ export default () => {
                         >
                             <ActivityIndicator
                                 size={70}
-                                color={String(theme.colors.primary)}
+                                color={String(theme.colors.white)}
                             />
+                            <Text
+                                h5
+                                width="100%"
+                                font={navigationTheme.fonts?.['semibold']}
+                                color={theme.colors.white}
+                                align="center"
+                                marginTop={theme.sizes.s}
+                            >
+                                {loadingMessage || 'Loading'}
+                            </Text>
                         </Block>
                     )}
                     {showModal && (
