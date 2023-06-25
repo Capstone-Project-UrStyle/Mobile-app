@@ -51,20 +51,6 @@ const CreateCloset = ({ route, navigation }) => {
         [setCredentials],
     )
 
-    const handlePressOccasionTag = (occasionId) => {
-        if (credentials.occasion_ids.includes(occasionId)) {
-            handleChangeCredentials({
-                occasion_ids: credentials.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                occasion_ids: [...credentials.occasion_ids, occasionId],
-            })
-        }
-    }
-
     const handleSubmit = useCallback(async () => {
         if (!Object.values(isValid).includes(false)) {
             try {
@@ -141,8 +127,8 @@ const CreateCloset = ({ route, navigation }) => {
                                     selectedOccasionIds={
                                         credentials.occasion_ids
                                     }
-                                    handlePressOccasionTag={
-                                        handlePressOccasionTag
+                                    handleChangeCredentials={
+                                        handleChangeCredentials
                                     }
                                 />
                             </Block>

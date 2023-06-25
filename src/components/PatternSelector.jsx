@@ -5,7 +5,7 @@ import { useData } from '../hooks/'
 import Block from './Block'
 import PatternTag from './PatternTag'
 
-const PatternSelector = ({ selectedPatternIds, handlePressPatternTag }) => {
+const PatternSelector = ({ selectedPatternIds, handleChangeCredentials }) => {
     const { masterData } = useData()
 
     const [patterns, setPatterns] = useState([])
@@ -14,6 +14,20 @@ const PatternSelector = ({ selectedPatternIds, handlePressPatternTag }) => {
     useEffect(() => {
         setPatterns(masterData?.Patterns)
     }, [masterData.Patterns])
+
+    const handlePressPatternTag = (patternId) => {
+        if (selectedPatternIds.includes(patternId)) {
+            handleChangeCredentials({
+                pattern_ids: selectedPatternIds.filter(
+                    (id) => id !== patternId,
+                ),
+            })
+        } else {
+            handleChangeCredentials({
+                pattern_ids: [...selectedPatternIds, patternId],
+            })
+        }
+    }
 
     return (
         <Block row flex={1} wrap="wrap" justify="flex-start">

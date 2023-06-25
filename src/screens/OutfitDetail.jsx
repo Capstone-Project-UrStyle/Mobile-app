@@ -98,20 +98,6 @@ const OutfitDetail = ({ route, navigation }) => {
         [setCredentials],
     )
 
-    const handlePressOccasionTag = (occasionId) => {
-        if (credentials.occasion_ids.includes(occasionId)) {
-            handleChangeCredentials({
-                occasion_ids: credentials.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                occasion_ids: [...credentials.occasion_ids, occasionId],
-            })
-        }
-    }
-
     const renderOutfitItems = () => {
         if (outfitDetail) {
             return (
@@ -213,8 +199,8 @@ const OutfitDetail = ({ route, navigation }) => {
                                             selectedOccasionIds={
                                                 credentials.occasion_ids
                                             }
-                                            handlePressOccasionTag={
-                                                handlePressOccasionTag
+                                            handleChangeCredentials={
+                                                handleChangeCredentials
                                             }
                                         />
                                     )}

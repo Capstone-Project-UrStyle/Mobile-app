@@ -5,7 +5,7 @@ import { useData } from '../hooks/'
 import Block from './Block'
 import CategoryTag from './CategoryTag'
 
-const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
+const CategorySelector = ({ selectedCategoryId, handleChangeCredentials }) => {
     const { masterData } = useData()
 
     const [categories, setCategories] = useState([])
@@ -32,6 +32,13 @@ const CategorySelector = ({ selectedCategoryId, handlePressCategoryTag }) => {
             return setSelectedParentCategoryId(null)
         }
         return setSelectedParentCategoryId(parentCategoryId)
+    }
+
+    const handlePressCategoryTag = (categoryId) => {
+        if (selectedCategoryId === categoryId) {
+            return handleChangeCredentials({ category_id: null })
+        }
+        return handleChangeCredentials({ category_id: categoryId })
     }
 
     const renderParentCategoryTags = () => {

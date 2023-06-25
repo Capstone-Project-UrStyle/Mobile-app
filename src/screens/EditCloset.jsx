@@ -98,20 +98,6 @@ const EditCloset = ({ route, navigation }) => {
         }
     }, [isValid, credentials])
 
-    const handlePressOccasionTag = (occasionId) => {
-        if (credentials.occasion_ids.includes(occasionId)) {
-            handleChangeCredentials({
-                occasion_ids: credentials.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                occasion_ids: [...credentials.occasion_ids, occasionId],
-            })
-        }
-    }
-
     return (
         <Block flex={1} color={colors.card} justify="space-between">
             <Block
@@ -183,7 +169,7 @@ const EditCloset = ({ route, navigation }) => {
                         >
                             <OccasionSelector
                                 selectedOccasionIds={credentials.occasion_ids}
-                                handlePressOccasionTag={handlePressOccasionTag}
+                                handleChangeCredentials={handleChangeCredentials}
                             />
                         </Block>
                     </Block>

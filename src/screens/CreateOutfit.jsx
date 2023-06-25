@@ -112,20 +112,6 @@ const CreateOutfit = ({ navigation }) => {
         return setSelectedClosetDetail(closet)
     }
 
-    const handlePressOccasionTag = (occasionId) => {
-        if (credentials.occasion_ids.includes(occasionId)) {
-            handleChangeCredentials({
-                occasion_ids: credentials.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                occasion_ids: [...credentials.occasion_ids, occasionId],
-            })
-        }
-    }
-
     const isEnableSubmitButton = useCallback(() => {
         switch (currentStep) {
             case 1:
@@ -359,8 +345,8 @@ const CreateOutfit = ({ navigation }) => {
                                         selectedOccasionIds={
                                             credentials.occasion_ids
                                         }
-                                        handlePressOccasionTag={
-                                            handlePressOccasionTag
+                                        handleChangeCredentials={
+                                            handleChangeCredentials
                                         }
                                     />
                                 </Block>

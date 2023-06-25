@@ -159,67 +159,6 @@ const CreateItem = ({ route, navigation }) => {
         }
     }
 
-    const handlePressOccasionTag = (occasionId) => {
-        if (credentials.occasion_ids.includes(occasionId)) {
-            handleChangeCredentials({
-                occasion_ids: credentials.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                occasion_ids: [...credentials.occasion_ids, occasionId],
-            })
-        }
-    }
-
-    const handlePressCategoryTag = (categoryId) => {
-        if (credentials.category_id === categoryId) {
-            return handleChangeCredentials({ category_id: null })
-        }
-        return handleChangeCredentials({ category_id: categoryId })
-    }
-
-    const handlePressColorTag = (colorId) => {
-        if (credentials.color_ids.includes(colorId)) {
-            handleChangeCredentials({
-                color_ids: credentials.color_ids.filter((id) => id !== colorId),
-            })
-        } else {
-            handleChangeCredentials({
-                color_ids: [...credentials.color_ids, colorId],
-            })
-        }
-    }
-
-    const handlePressMaterialTag = (materialId) => {
-        if (credentials.material_ids.includes(materialId)) {
-            handleChangeCredentials({
-                material_ids: credentials.material_ids.filter(
-                    (id) => id !== materialId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                material_ids: [...credentials.material_ids, materialId],
-            })
-        }
-    }
-
-    const handlePressPatternTag = (patternId) => {
-        if (credentials.pattern_ids.includes(patternId)) {
-            handleChangeCredentials({
-                pattern_ids: credentials.pattern_ids.filter(
-                    (id) => id !== patternId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                pattern_ids: [...credentials.pattern_ids, patternId],
-            })
-        }
-    }
-
     const renderSelectClosets = () => {
         return (
             <Block row wrap="wrap" justify="space-between">
@@ -321,8 +260,8 @@ const CreateItem = ({ route, navigation }) => {
                                     selectedOccasionIds={
                                         credentials.occasion_ids
                                     }
-                                    handlePressOccasionTag={
-                                        handlePressOccasionTag
+                                    handleChangeCredentials={
+                                        handleChangeCredentials
                                     }
                                 />
                             )}
@@ -341,8 +280,8 @@ const CreateItem = ({ route, navigation }) => {
                             renderValueSelector={() => (
                                 <CategorySelector
                                     selectedCategoryId={credentials.category_id}
-                                    handlePressCategoryTag={
-                                        handlePressCategoryTag
+                                    handleChangeCredentials={
+                                        handleChangeCredentials
                                     }
                                 />
                             )}
@@ -356,7 +295,7 @@ const CreateItem = ({ route, navigation }) => {
                             renderValueSelector={() => (
                                 <ColorSelector
                                     selectedColorIds={credentials.color_ids}
-                                    handlePressColorTag={handlePressColorTag}
+                                    handleChangeCredentials={handleChangeCredentials}
                                 />
                             )}
                         />
@@ -371,8 +310,8 @@ const CreateItem = ({ route, navigation }) => {
                                     selectedMaterialIds={
                                         credentials.material_ids
                                     }
-                                    handlePressMaterialTag={
-                                        handlePressMaterialTag
+                                    handleChangeCredentials={
+                                        handleChangeCredentials
                                     }
                                 />
                             )}
@@ -386,8 +325,8 @@ const CreateItem = ({ route, navigation }) => {
                             renderValueSelector={() => (
                                 <PatternSelector
                                     selectedPatternIds={credentials.pattern_ids}
-                                    handlePressPatternTag={
-                                        handlePressPatternTag
+                                    handleChangeCredentials={
+                                        handleChangeCredentials
                                     }
                                 />
                             )}

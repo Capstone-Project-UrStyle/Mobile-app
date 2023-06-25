@@ -163,76 +163,6 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
         }
     }
 
-    const handlePressQueryOccasionTag = (occasionId) => {
-        if (queryKeywords.occasion_ids.includes(occasionId)) {
-            handleChangeQueryKeywords({
-                occasion_ids: queryKeywords.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeQueryKeywords({
-                occasion_ids: [...queryKeywords.occasion_ids, occasionId],
-            })
-        }
-    }
-
-    const handlePressQueryColorTag = (colorId) => {
-        if (queryKeywords.color_ids.includes(colorId)) {
-            handleChangeQueryKeywords({
-                color_ids: queryKeywords.color_ids.filter(
-                    (id) => id !== colorId,
-                ),
-            })
-        } else {
-            handleChangeQueryKeywords({
-                color_ids: [...queryKeywords.color_ids, colorId],
-            })
-        }
-    }
-
-    const handlePressQueryMaterialTag = (materialId) => {
-        if (queryKeywords.material_ids.includes(materialId)) {
-            handleChangeQueryKeywords({
-                material_ids: queryKeywords.material_ids.filter(
-                    (id) => id !== materialId,
-                ),
-            })
-        } else {
-            handleChangeQueryKeywords({
-                material_ids: [...queryKeywords.material_ids, materialId],
-            })
-        }
-    }
-
-    const handlePressQueryPatternTag = (patternId) => {
-        if (queryKeywords.pattern_ids.includes(patternId)) {
-            handleChangeQueryKeywords({
-                pattern_ids: queryKeywords.pattern_ids.filter(
-                    (id) => id !== patternId,
-                ),
-            })
-        } else {
-            handleChangeQueryKeywords({
-                pattern_ids: [...queryKeywords.pattern_ids, patternId],
-            })
-        }
-    }
-
-    const handlePressOccasionTag = (occasionId) => {
-        if (credentials.occasion_ids.includes(occasionId)) {
-            handleChangeCredentials({
-                occasion_ids: credentials.occasion_ids.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
-        } else {
-            handleChangeCredentials({
-                occasion_ids: [...credentials.occasion_ids, occasionId],
-            })
-        }
-    }
-
     const isEnableSubmitButton = useCallback(() => {
         switch (currentStep) {
             case 1:
@@ -251,19 +181,6 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                 break
         }
     }, [currentStep, selectedClosetDetail, queryItemIds, isValid])
-
-    const handleChangeImageSize = (sizes, index, value) => {
-        if (index !== null) {
-            const minSize = 100,
-                maxSize = 200
-            const newSizes = [...sizes]
-            const newSize = newSizes[index] + value
-            if (newSize >= minSize && newSize <= maxSize)
-                newSizes[index] = newSize
-            return newSizes
-        }
-        return sizes
-    }
 
     const handleDragItemImage = (index, lastPosition) => {
         // Update last position of touched item image
@@ -536,7 +453,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                             queryKeywords.occasion_ids
                                         }
                                         handlePressOccasionTag={
-                                            handlePressQueryOccasionTag
+                                            handleChangeQueryKeywords
                                         }
                                     />
                                 )}
@@ -561,8 +478,8 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                         selectedColorIds={
                                             queryKeywords.color_ids
                                         }
-                                        handlePressColorTag={
-                                            handlePressQueryColorTag
+                                        handleChangeCredentials={
+                                            handleChangeQueryKeywords
                                         }
                                     />
                                 )}
@@ -580,8 +497,8 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                         selectedMaterialIds={
                                             queryKeywords.material_ids
                                         }
-                                        handlePressMaterialTag={
-                                            handlePressQueryMaterialTag
+                                        handleChangeCredentials={
+                                            handleChangeQueryKeywords
                                         }
                                     />
                                 )}
@@ -599,8 +516,8 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                         selectedPatternIds={
                                             queryKeywords.pattern_ids
                                         }
-                                        handlePressPatternTag={
-                                            handlePressQueryPatternTag
+                                        handleChangeCredentials={
+                                            handleChangeQueryKeywords
                                         }
                                     />
                                 )}
@@ -788,8 +705,8 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                         selectedOccasionIds={
                                             credentials.occasion_ids
                                         }
-                                        handlePressOccasionTag={
-                                            handlePressOccasionTag
+                                        handleChangeCredentials={
+                                            handleChangeCredentials
                                         }
                                     />
                                 </Block>

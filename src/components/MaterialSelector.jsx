@@ -5,7 +5,7 @@ import { useData } from '../hooks/'
 import Block from './Block'
 import MaterialTag from './MaterialTag'
 
-const OccasionSelector = ({ selectedMaterialIds, handlePressMaterialTag }) => {
+const OccasionSelector = ({ selectedMaterialIds, handleChangeCredentials }) => {
     const { masterData } = useData()
 
     const [materials, setMaterials] = useState([])
@@ -14,6 +14,20 @@ const OccasionSelector = ({ selectedMaterialIds, handlePressMaterialTag }) => {
     useEffect(() => {
         setMaterials(masterData?.Materials)
     }, [masterData.Materials])
+
+    const handlePressMaterialTag = (materialId) => {
+        if (selectedMaterialIds.includes(materialId)) {
+            handleChangeCredentials({
+                material_ids: selectedMaterialIds.filter(
+                    (id) => id !== materialId,
+                ),
+            })
+        } else {
+            handleChangeCredentials({
+                material_ids: [...selectedMaterialIds, materialId],
+            })
+        }
+    }
 
     return (
         <Block row flex={1} wrap="wrap" justify="flex-start">
