@@ -82,7 +82,7 @@ const ItemDetail = ({ route, navigation }) => {
                 const response = await itemApi.getOneById(itemId)
                 if (response.request.status === 200) {
                     setItemDetail(response.data)
-                    setUploadItemImageUri(BASE_API_URL + response.data.image)
+                    setUploadItemImageUri(BASE_API_URL + response.data.image + "?time=" + new Date())
                     handleSetIsLoading(false)
                 }
             } catch (error) {
@@ -200,7 +200,7 @@ const ItemDetail = ({ route, navigation }) => {
         if (!Object.values(isValid).includes(false)) {
             try {
                 // Upload item image
-                if (uploadItemImageUri) {
+                if (uploadItemImageUri !== BASE_API_URL + itemDetail.image) {
                     const postData = createFormDataFromUri(
                         'item-image',
                         uploadItemImageUri,
@@ -217,7 +217,7 @@ const ItemDetail = ({ route, navigation }) => {
                 Alert.alert(error.response.data.message)
             }
         }
-    }, [isValid, credentials])
+    }, [isValid, uploadItemImageUri, credentials])
 
     return (
         <Block color={colors.card}>

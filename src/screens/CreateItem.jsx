@@ -205,7 +205,7 @@ const CreateItem = ({ route, navigation }) => {
                 Alert.alert(error.response.data.message)
             }
         }
-    }, [isValid, credentials])
+    }, [isValid, uploadItemImageUri, credentials])
 
     return (
         <Block color={colors.card}>

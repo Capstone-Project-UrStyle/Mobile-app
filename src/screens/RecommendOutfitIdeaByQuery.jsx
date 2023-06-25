@@ -312,7 +312,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
             default:
                 break
         }
-    }, [currentStep, queryKeywords, isValid, credentials])
+    }, [currentStep, queryKeywords, isValid, outfitImageUri, credentials])
 
     return (
         <Block color={colors.card}>

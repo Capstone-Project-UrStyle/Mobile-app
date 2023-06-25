@@ -192,7 +192,7 @@ const CreateOutfit = ({ navigation }) => {
             default:
                 break
         }
-    }, [currentStep, isValid, credentials])
+    }, [currentStep, isValid, outfitImageUri, credentials])
 
     return (
         <Block color={colors.card}>
