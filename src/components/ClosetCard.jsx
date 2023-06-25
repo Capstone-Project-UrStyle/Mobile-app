@@ -57,7 +57,7 @@ const ClosetCard = ({ create, closet, type, selectMode }) => {
                         marginVertical={sizes.xs}
                         source={{
                             uri: closetItems[index]
-                                ? BASE_API_URL + closetItems[index].image
+                                ? BASE_API_URL + closetItems[index].image + "?time=" + new Date()
                                 : '-',
                         }}
                     />,

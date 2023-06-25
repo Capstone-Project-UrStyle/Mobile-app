@@ -41,7 +41,7 @@ const ItemCard = ({ item, selectMode }) => {
                         width: screenSize.width / 3.5,
                         height: screenSize.width / 3.5,
                     }}
-                    source={{ uri: BASE_API_URL + item.image }}
+                    source={{ uri: BASE_API_URL + item.image + "?time=" + new Date()}}
                 />
                 <Text
                     p

@@ -74,6 +74,7 @@
     "addOrRemoveClosetItem": "Add or remove item",
     "createOutfit": "Create an outfit",
     "outfitDetail": "Outfit detail",
+    "editOutfitItem": " Edit outfit's items",
     "recommendOutfitIdeaByQuery": "Recommend outfit idea by query",
     "components": "Components",
     "articles": "UrStyle",
@@ -139,6 +140,13 @@
     "addNewItemToCloset": "Create new item to this closet",
     "addCreatedItemToCloset": "Choose an item that already been created"
   },
+  "editOutfitItem": {
+    "stepOneLabel":"Step 1: Choose some items",
+    "stepTwoLabel": "Step 2: Place items wherever you want",
+    "prevStep": "Back",
+    "nextStep": "Next step",
+    "done": "Done"
+  },
   "editCloset": {
     "name": "Closet Name",
     "namePlaceholder": "ex. Daily Summer Closet",
@@ -202,6 +210,10 @@
     "done": "Done"
   },
   "outfitDetail": {
+    "confirmDeleteOutfit": "Confirm delete oufit",
+    "deleteWarning": "Are you sure you want to delete this outfit?",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete",
     "itemInfo": "Item info",
     "items": "Items",
     "public": "Public to other users",
@@ -209,6 +221,9 @@
     "occasions": "Occasions",
     "description": "Description",
     "descriptionPlaceholder": "Tell us something about this outfit..."
+  },
+  "outfitCard": {
+    "noDescription": "No description"
   },
   "recommendOutfitIdeaByQuery": {
     "stepOneLabel": "Step 1: Choose a closet",

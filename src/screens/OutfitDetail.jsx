@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
-import ViewShot from 'react-native-view-shot'
+import { MaterialIcons } from '@expo/vector-icons'
+import { useIsFocused } from '@react-navigation/native'
 
 import { useTranslation, useTheme, useData } from '../hooks'
 import {
@@ -12,23 +13,23 @@ import {
     Switch,
     Input,
     OccasionSelector,
+    ItemCard,
 } from '../components'
 
-import { createFormDataFromUri } from '../utils/formDataCreator'
-
 import { BASE_API_URL } from '../api/axiosClient'
-import uploadImageApi from '../api/uploadImageApi'
 import outfitApi from '../api/outfitApi'
 
 const isAndroid = Platform.OS === 'android'
 
 const OutfitDetail = ({ route, navigation }) => {
     const { t } = useTranslation()
-    const { colors, sizes, fonts, screenSize } = useTheme()
+    const { colors, sizes } = useTheme()
     const { handleSetIsLoading } = useData()
+    const isFocused = useIsFocused()
 
     const { outfitId } = route.params
-
+    
+    const [refresh, forceRefresh] = useState(false)
     const [outfitDetail, setOutfitDetail] = useState(null)
     const [selfieImageUris, setSelfieImageUris] = useState(null)
     const [isValid, setIsValid] = useState({
@@ -40,6 +41,13 @@ const OutfitDetail = ({ route, navigation }) => {
         is_public: false,
         description: '',
     })
+
+    // Force refresh the screen whenever focused
+    useEffect(() => {
+        if (isFocused) {
+            forceRefresh((prev) => !prev)
+        }
+    }, [isFocused])
 
     // Fetch outfit's data
     useEffect(() => {
@@ -60,9 +68,9 @@ const OutfitDetail = ({ route, navigation }) => {
         }
     }, [outfitId])
 
+    // Update credentials when outfit detail data is fetched
     useEffect(() => {
         if (outfitDetail) {
-            // Update credentials
             handleChangeCredentials({
                 occasion_ids: outfitDetail.Occasions.map(
                     (occasion) => occasion.id,
@@ -105,7 +113,20 @@ const OutfitDetail = ({ route, navigation }) => {
     }
 
     const renderOutfitItems = () => {
-        return
+        if (outfitDetail) {
+            return (
+                <Block flex={0} row wrap="wrap">
+                    {outfitDetail.Items.map(item => {
+                        return (
+                            <ItemCard
+                                key={`item-${item.id}`}
+                                item={item}
+                            />
+                        )
+                    })}
+                </Block>
+            )
+        }
     }
 
     const handleSubmit = useCallback(async () => {
@@ -143,9 +164,28 @@ const OutfitDetail = ({ route, navigation }) => {
                                     width: '100%',
                                 }}
                                 source={{
-                                    uri: BASE_API_URL + outfitDetail.image,
+                                    uri: BASE_API_URL + outfitDetail.image + "?time=" + new Date(),
                                 }}
                             />
+                            <Block
+                                position="absolute"
+                                top={0}
+                                right={sizes.s}
+                            >
+                                <Button
+                                    onPress={() => {
+                                        navigation.navigate('EditOutfitItem', {
+                                            outfitId: outfitDetail.id,
+                                        }
+                                    )}}
+                                >
+                                    <MaterialIcons
+                                        size={25}
+                                        name="edit"
+                                        color={colors.icon}
+                                    />
+                                </Button>
+                            </Block>
                         </Block>
 
                         {/* Outfit infomation tab */}

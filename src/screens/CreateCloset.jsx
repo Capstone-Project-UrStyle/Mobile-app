@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
 
-import { useTranslation, useTheme, useData } from '../hooks'
+import { useTranslation, useTheme } from '../hooks'
 import {
     Block,
     Button,
@@ -18,7 +18,6 @@ const isAndroid = Platform.OS === 'android'
 const CreateCloset = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
-    const { masterData } = useData()
 
     const exampleNames = [
         'island_vacation',

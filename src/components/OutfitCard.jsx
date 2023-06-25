@@ -7,12 +7,13 @@ import Image from './Image'
 import Text from './Text'
 
 import { BASE_API_URL } from '../api/axiosClient'
-import { useTheme } from '../hooks/'
+import { useTranslation, useTheme } from '../hooks/'
 
 import { shortenDisplayText } from '../utils/shortenDisplayText'
 
 const OutfitCard = ({ outfit, type }) => {
-    const { colors, sizes, fonts } = useTheme()
+    const { t } = useTranslation()
+    const { colors, sizes } = useTheme()
     const navigation = useNavigation()
 
     const isHorizontal = type !== 'vertical'
@@ -46,7 +47,7 @@ const OutfitCard = ({ outfit, type }) => {
                             width: CARD_WIDTH,
                         }}
                         marginVertical={sizes.xs}
-                        source={{ uri: BASE_API_URL + outfit.image }}
+                        source={{ uri: BASE_API_URL + outfit.image + "?time=" + new Date() }}
                     />
                 </Block>
                 <Block flex={1} padding={sizes.xs} marginLeft={sizes.s}>
@@ -56,7 +57,8 @@ const OutfitCard = ({ outfit, type }) => {
                         align="justify"
                         paddingVertical={sizes.xs}
                     >
-                        {shortenDisplayText(outfit.description, 30)}
+                        {shortenDisplayText(outfit.description, 30) ||
+                        t('outfitCard.noDescription')}
                     </Text>
 
                     <Block flex={0} row paddingVertical={sizes.xs}>

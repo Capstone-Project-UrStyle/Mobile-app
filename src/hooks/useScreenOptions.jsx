@@ -16,6 +16,7 @@ import Block from '../components/Block'
 
 import closetApi from '../api/closetApi'
 import itemApi from '../api/itemApi'
+import outfitApi from '../api/outfitApi'
 
 export default () => {
     const { t } = useTranslation()
@@ -102,6 +103,36 @@ export default () => {
                         style: 'destructive',
                         onPress: async () => {
                             const response = await itemApi.deleteById(itemId)
+
+                            if (response.request.status === 200) {
+                                Alert.alert(response.data.message)
+                                navigation.goBack()
+                            }
+                        },
+                    },
+                ],
+                { cancelable: true },
+            )
+        } catch (error) {
+            Alert.alert(error.response.data.message)
+        }
+    }
+
+    const handleDeleteOutfit = async (outfitId) => {
+        try {
+            Alert.alert(
+                t('outfitDetail.confirmDeleteOutfit'),
+                t('outfitDetail.deleteWarning'),
+                [
+                    {
+                        text: t('outfitDetail.cancelButton'),
+                        style: 'cancel',
+                    },
+                    {
+                        text: t('outfitDetail.deleteButton'),
+                        style: 'destructive',
+                        onPress: async () => {
+                            const response = await outfitApi.deleteById(outfitId)
 
                             if (response.request.status === 200) {
                                 Alert.alert(response.data.message)
@@ -279,7 +310,7 @@ export default () => {
                             }}
                         >
                             <MaterialIcons
-                                size={22}
+                                size={25}
                                 name="add"
                                 color={colors.icon}
                             />
@@ -294,7 +325,7 @@ export default () => {
                                     }
                                 >
                                     <MaterialIcons
-                                        size={20}
+                                        size={25}
                                         name="edit"
                                         color={colors.icon}
                                     />
@@ -303,7 +334,7 @@ export default () => {
                                     onPress={() => handleDeleteCloset(closetId)}
                                 >
                                     <MaterialIcons
-                                        size={20}
+                                        size={25}
                                         name="delete"
                                         color={colors.icon}
                                     />
@@ -333,7 +364,35 @@ export default () => {
                     <Block row flex={0} align="center" marginRight={sizes.s}>
                         <Button onPress={() => handleDeleteItem(itemId)}>
                             <MaterialIcons
-                                size={20}
+                                size={25}
+                                name="delete"
+                                color={colors.icon}
+                            />
+                        </Button>
+                    </Block>
+                ),
+                headerLeft: () => (
+                    <Button onPress={() => navigation.goBack()}>
+                        <Image
+                            radius={0}
+                            width={10}
+                            height={18}
+                            color={colors.icon}
+                            source={icons.arrow}
+                            transform={[{ rotate: '180deg' }]}
+                        />
+                    </Button>
+                ),
+            }
+        },
+        outfitDetail: (outfitId) => {
+            return {
+                ...menu,
+                headerRight: () => (
+                    <Block row flex={0} align="center" marginRight={sizes.s}>
+                        <Button onPress={() => handleDeleteOutfit(outfitId)}>
+                            <MaterialIcons
+                                size={25}
                                 name="delete"
                                 color={colors.icon}
                             />
@@ -394,7 +453,7 @@ export default () => {
                             radius={6}
                             width={24}
                             height={24}
-                            source={{ uri: user.avatar }}
+                            source={{ uri: user.avatar + "?time=" + new Date() }}
                         />
                     </TouchableOpacity>
                 </Block>

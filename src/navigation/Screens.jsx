@@ -15,6 +15,7 @@ import {
     AddOrRemoveClosetItem,
     CreateOutfit,
     OutfitDetail,
+    EditOutfitItem,
     RecommendOutfitIdeaByQuery,
     Articles,
     Components,
@@ -114,8 +115,17 @@ export default () => {
             <Stack.Screen
                 name="OutfitDetail"
                 component={OutfitDetail}
-                options={{
+                options={({ route }) => ({
                     title: t('navigation.outfitDetail'),
+                    ...screenOptions.outfitDetail(route.params.outfitId),
+                })}
+            />
+
+            <Stack.Screen
+                name="EditOutfitItem"
+                component={EditOutfitItem}
+                options={{
+                    title: t('navigation.editOutfitItem'),
                     ...screenOptions.back,
                 }}
             />

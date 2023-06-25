@@ -153,7 +153,7 @@ const Home = ({ navigation }) => {
                     width={50}
                     height={50}
                     marginHorizontal={sizes.s}
-                    source={{ uri: BASE_API_URL + user?.UserInfo.avatar }}
+                    source={{ uri: BASE_API_URL + user?.UserInfo.avatar + "?time=" + new Date() }}
                 />
                 <Block align="flex-start" marginHorizontal={sizes.s}>
                     <Text h5 center marginRight={sizes.s}>

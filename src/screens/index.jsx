@@ -14,6 +14,7 @@ export { default as AddOrRemoveClosetItem } from './AddOrRemoveClosetItem'
 
 export { default as CreateOutfit } from './CreateOutfit'
 export { default as OutfitDetail } from './OutfitDetail'
+export { default as EditOutfitItem } from './EditOutfitItem'
 
 export { default as RecommendOutfitIdeaByQuery } from './RecommendOutfitIdeaByQuery'
 
