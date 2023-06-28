@@ -1,12 +1,12 @@
 import axiosClient from './axiosClient'
 
 const lstmModalApi = {
-    generateOutfitRecommendation: (data) => {
-        const url = `api/lstm-model/generate-outfit-recommendation`
+    generateItemRecommendations: (data) => {
+        const url = `api/lstm-model/generate-item-recommendations`
         return axiosClient.post(url, data)
     },
-    createNewOccasion: (data) => {
-        const url = `api/lstm-model/predict-fashion-compatibility`
+    generateOutfitRecommendations: (data) => {
+        const url = `api/lstm-model/generate-outfit-recommendations`
         return axiosClient.post(url, data)
     },
 }

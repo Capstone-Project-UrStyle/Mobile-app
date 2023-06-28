@@ -74,8 +74,8 @@
     "addOrRemoveClosetItem": "Add or remove item",
     "createOutfit": "Create an outfit",
     "outfitDetail": "Outfit detail",
-    "editOutfitItem": " Edit outfit's items",
-    "recommendOutfitIdeaByQuery": "Recommend outfit idea by query",
+    "editOutfitItem": "Edit outfit's items",
+    "recommendCompatibleItems": "Recommend compatible items",
     "components": "Components",
     "articles": "UrStyle",
     "rentals": "UrStyle",
@@ -116,9 +116,9 @@
     "createBlockTitle": "What do you want to do?",
     "createItemLable": "Create clothes item",
     "createOutfitLable": "Create outfit idea",
-    "outfitRecommendTitle": "Recommend outfit idea by AI",
-    "outfitIdeaRecommendation": "From specific items",
-    "outfitIdeaCompatibility": "From a closet's items"
+    "recommendByAiTitle": "Recommendations by AI",
+    "recommendCompatibleItems": "Recommend compatible items",
+    "recommendOutfitIdeas": "Recommend outfit ideas"
   },
   "itemSelector": {
     "noItemFound":"No item found"
@@ -225,9 +225,9 @@
   "outfitCard": {
     "noDescription": "No description"
   },
-  "recommendOutfitIdeaByQuery": {
+  "recommendCompatibleItems": {
     "stepOneLabel": "Step 1: Choose a closet",
-    "stepTwoLabel": "Step 2: Choose some items for AI to query out best ideas",
+    "stepTwoLabel": "Step 2: Choose some items for AI to query",
     "stepThreeLabel": "Step 3: What'd you like your outfit to be?",
     "stepFourLabel": "Step 4: Here are AI-recommended items! Which item do you want to have?",
     "stepFiveLabel": "Step 5: Place items wherever you want",

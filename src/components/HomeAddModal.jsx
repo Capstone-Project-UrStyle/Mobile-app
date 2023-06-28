@@ -82,17 +82,17 @@ const HomeAddModal = ({ navigation }) => {
                 align="left"
                 padding={sizes.s}
             >
-                {t('homeAddModal.outfitRecommendTitle')}
+                {t('homeAddModal.recommendByAiTitle')}
             </Text>
             {renderCardItem(
-                t('homeAddModal.outfitIdeaRecommendation'),
-                assets.generateOutfit,
-                'RecommendOutfitIdeaByQuery',
+                t('homeAddModal.recommendCompatibleItems'),
+                assets.recommendCompatibleItems,
+                'RecommendCompatibleItems',
             )}
             {renderCardItem(
-                t('homeAddModal.outfitIdeaCompatibility'),
-                assets.outfitCompatibility,
-                'RecommendOutfitIdeaFromCloset',
+                t('homeAddModal.recommendOutfitIdeas'),
+                assets.recommendOutfitIdeas,
+                'RecommendOutfitIdeas',
             )}
         </Block>
     )

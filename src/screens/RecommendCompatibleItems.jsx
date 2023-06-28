@@ -32,7 +32,7 @@ import lstmModalApi from '../api/lstmModalApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const RecommendOutfitIdeaByQuery = ({ navigation }) => {
+const RecommendCompatibleItems = ({ navigation }) => {
     const { t } = useTranslation()
     const { icons, colors, sizes, fonts, screenSize } = useTheme()
     const { user, handleSetIsLoading, setLoadingMessage, masterData } =
@@ -237,10 +237,10 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                 try {
                     handleSetIsLoading(true)
                     setLoadingMessage(
-                        t('recommendOutfitIdeaByQuery.modelRunningMessage'),
+                        t('recommendCompatibleItems.modelRunningMessage'),
                     )
                     const recommendResponse =
-                        await lstmModalApi.generateOutfitRecommendation(
+                        await lstmModalApi.generateItemRecommendations(
                             recommendCredentials,
                         )
                     if (recommendResponse.request.status === 200) {
@@ -325,17 +325,17 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
             >
                 <Text h5 font={fonts?.['semibold']} width="100%">
                     {currentStep === 1 &&
-                        t('recommendOutfitIdeaByQuery.stepOneLabel')}
+                        t('recommendCompatibleItems.stepOneLabel')}
                     {currentStep === 2 &&
-                        t('recommendOutfitIdeaByQuery.stepTwoLabel')}
+                        t('recommendCompatibleItems.stepTwoLabel')}
                     {currentStep === 3 &&
-                        t('recommendOutfitIdeaByQuery.stepThreeLabel')}
+                        t('recommendCompatibleItems.stepThreeLabel')}
                     {currentStep === 4 &&
-                        t('recommendOutfitIdeaByQuery.stepFourLabel')}
+                        t('recommendCompatibleItems.stepFourLabel')}
                     {currentStep === 5 &&
-                        t('recommendOutfitIdeaByQuery.stepFiveLabel')}
+                        t('recommendCompatibleItems.stepFiveLabel')}
                     {currentStep === 6 &&
-                        t('recommendOutfitIdeaByQuery.stepSixLabel')}
+                        t('recommendCompatibleItems.stepSixLabel')}
                 </Text>
             </Block>
 
@@ -379,7 +379,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                 width="100%"
                                 marginTop={sizes.sm}
                             >
-                                {t('recommendOutfitIdeaByQuery.noClosetFound')}
+                                {t('recommendCompatibleItems.noClosetFound')}
                             </Text>
                         )}
                     </Block>
@@ -407,7 +407,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                             <Block flex={0} row align="center">
                                 <Text h5 marginRight={sizes.xs}>
                                     {t(
-                                        'recommendOutfitIdeaByQuery.weatherInfo',
+                                        'recommendCompatibleItems.weatherInfo',
                                     )}
                                 </Text>
                                 <Image
@@ -419,7 +419,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                             </Block>
                             <FormRow
                                 type="Weathers"
-                                label={t('recommendOutfitIdeaByQuery.weathers')}
+                                label={t('recommendCompatibleItems.weathers')}
                                 values={queryKeywords.weathers.map(
                                     (weather) => weather.displayName,
                                 )}
@@ -439,12 +439,12 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                         {/* Occasion selector */}
                         <Block paddingVertical={sizes.m}>
                             <Text h5>
-                                {t('recommendOutfitIdeaByQuery.occasionInfo')}
+                                {t('recommendCompatibleItems.occasionInfo')}
                             </Text>
                             <FormRow
                                 type="Occasions"
                                 label={t(
-                                    'recommendOutfitIdeaByQuery.occasions',
+                                    'recommendCompatibleItems.occasions',
                                 )}
                                 values={queryKeywords.occasion_ids}
                                 renderValueSelector={() => (
@@ -463,14 +463,14 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                         {/* Item info */}
                         <Block paddingVertical={sizes.m}>
                             <Text h5>
-                                {t('recommendOutfitIdeaByQuery.itemInfo')}
+                                {t('recommendCompatibleItems.itemInfo')}
                             </Text>
 
                             {/* Color selector */}
                             <FormRow
                                 type="Colors"
                                 label={t(
-                                    'recommendOutfitIdeaByQuery.itemColor',
+                                    'recommendCompatibleItems.itemColor',
                                 )}
                                 values={queryKeywords.color_ids}
                                 renderValueSelector={() => (
@@ -489,7 +489,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                             <FormRow
                                 type="Materials"
                                 label={t(
-                                    'recommendOutfitIdeaByQuery.itemMaterial',
+                                    'recommendCompatibleItems.itemMaterial',
                                 )}
                                 values={queryKeywords.material_ids}
                                 renderValueSelector={() => (
@@ -508,7 +508,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                             <FormRow
                                 type="Patterns"
                                 label={t(
-                                    'recommendOutfitIdeaByQuery.itemPattern',
+                                    'recommendCompatibleItems.itemPattern',
                                 )}
                                 values={queryKeywords.pattern_ids}
                                 renderValueSelector={() => (
@@ -537,7 +537,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                                 >
                                     <Text p semibold marginRight={sizes.m}>
                                         {t(
-                                            'recommendOutfitIdeaByQuery.itemBrand',
+                                            'recommendCompatibleItems.itemBrand',
                                         )}
                                     </Text>
                                     <Block
@@ -573,7 +573,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                         {/* Other keywords */}
                         <Block paddingTop={sizes.m}>
                             <Text h5>
-                                {t('recommendOutfitIdeaByQuery.otherKeywords')}
+                                {t('recommendCompatibleItems.otherKeywords')}
                             </Text>
                             <Block
                                 borderBottomWidth={0.8}
@@ -581,7 +581,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                             >
                                 <Input
                                     placeholder={t(
-                                        'recommendOutfitIdeaByQuery.otherKeywordsPlaceholder',
+                                        'recommendCompatibleItems.otherKeywordsPlaceholder',
                                     )}
                                     autoCapitalize="none"
                                     success={Boolean(
@@ -666,7 +666,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     {/* Outfit image */}
                     <Block>
                         <Text h5 paddingBottom={sizes.s}>
-                            {t('recommendOutfitIdeaByQuery.outfitImage')}
+                            {t('recommendCompatibleItems.outfitImage')}
                         </Text>
                         <Image
                             resizeMode="contain"
@@ -681,7 +681,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     {/* Occasion selectors */}
                     <Block paddingVertical={sizes.sm}>
                         <Text h5 paddingBottom={sizes.s}>
-                            {t('recommendOutfitIdeaByQuery.occasions')}
+                            {t('recommendCompatibleItems.occasions')}
                         </Text>
                         <Block
                             borderWidth={0.5}
@@ -717,12 +717,12 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     {/* Outfit description */}
                     <Block paddingVertical={sizes.sm}>
                         <Text h5 paddingBottom={sizes.s}>
-                            {t('recommendOutfitIdeaByQuery.description')}
+                            {t('recommendCompatibleItems.description')}
                         </Text>
                         <Input
                             marginBottom={sizes.sm}
                             placeholder={t(
-                                'recommendOutfitIdeaByQuery.descriptionPlaceholder',
+                                'recommendCompatibleItems.descriptionPlaceholder',
                             )}
                             success={Boolean(
                                 credentials.description && isValid.description,
@@ -745,7 +745,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                         justify="space-between"
                         marginBottom={sizes.sm}
                     >
-                        <Text h5>{t('recommendOutfitIdeaByQuery.public')}</Text>
+                        <Text h5>{t('recommendCompatibleItems.public')}</Text>
                         <Switch
                             checked={credentials.is_public}
                             onPress={(checked) =>
@@ -777,7 +777,7 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                         onPress={() => setCurrentStep((prev) => prev - 1)}
                     >
                         <Text h5>
-                            {t('recommendOutfitIdeaByQuery.prevStep')}
+                            {t('recommendCompatibleItems.prevStep')}
                         </Text>
                     </Button>
                 </Block>
@@ -796,11 +796,11 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
                     >
                         {currentStep === 6 ? (
                             <Text h5>
-                                {t('recommendOutfitIdeaByQuery.done')}
+                                {t('recommendCompatibleItems.done')}
                             </Text>
                         ) : (
                             <Text h5>
-                                {t('recommendOutfitIdeaByQuery.nextStep')}
+                                {t('recommendCompatibleItems.nextStep')}
                             </Text>
                         )}
                     </Button>
@@ -810,4 +810,4 @@ const RecommendOutfitIdeaByQuery = ({ navigation }) => {
     )
 }
 
-export default RecommendOutfitIdeaByQuery
+export default RecommendCompatibleItems

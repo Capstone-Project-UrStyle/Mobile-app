@@ -16,7 +16,7 @@ import {
     CreateOutfit,
     OutfitDetail,
     EditOutfitItem,
-    RecommendOutfitIdeaByQuery,
+    RecommendCompatibleItems,
     Articles,
     Components,
     Pro,
@@ -131,10 +131,10 @@ export default () => {
             />
 
             <Stack.Screen
-                name="RecommendOutfitIdeaByQuery"
-                component={RecommendOutfitIdeaByQuery}
+                name="RecommendCompatibleItems"
+                component={RecommendCompatibleItems}
                 options={{
-                    title: t('navigation.recommendOutfitIdeaByQuery'),
+                    title: t('navigation.recommendCompatibleItems'),
                     ...screenOptions.back,
                 }}
             />

@@ -16,7 +16,7 @@ export { default as CreateOutfit } from './CreateOutfit'
 export { default as OutfitDetail } from './OutfitDetail'
 export { default as EditOutfitItem } from './EditOutfitItem'
 
-export { default as RecommendOutfitIdeaByQuery } from './RecommendOutfitIdeaByQuery'
+export { default as RecommendCompatibleItems } from './RecommendCompatibleItems'
 
 export { default as About } from './Pro'
 export { default as Agreement } from './Pro'
