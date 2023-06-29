@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Linking, Platform } from 'react-native'
+import { Linking, Platform, Alert } from 'react-native'
 
 import { useData, useTheme, useTranslation } from '../hooks/'
 import * as regex from '../constants/regex'
@@ -43,7 +43,7 @@ const Register = ({ navigation }) => {
                     navigation.navigate('Login')
                 }
             } catch (error) {
-                console.log(error)
+                Alert.alert(error.response.data.message)
             }
         }
     }, [isValid, registration])
@@ -229,7 +229,6 @@ const Register = ({ navigation }) => {
                             <Block
                                 row
                                 flex={0}
-                                align="center"
                                 paddingHorizontal={sizes.sm}
                             >
                                 <Checkbox

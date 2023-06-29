@@ -107,7 +107,7 @@ export const ASSETS = {
     // add modal images
     createItem: require('../assets/images/create-item.png'),
     createOutfit: require('../assets/images/create-outfit.png'),
-    recommendItems: require('../assets/images/recommend-items.png'),
+    recommendCompatibleItems: require('../assets/images/recommend-compatible-items.png'),
     recommendOutfitIdeas: require('../assets/images/recommend-outfit-ideas.png'),
 }
 

@@ -301,22 +301,22 @@ export default () => {
                 ...menu,
                 headerRight: () => (
                     <Block row flex={0} align="center" marginRight={sizes.s}>
-                        <Button
-                            onPress={() => {
-                                setShowModal(true)
-                                setModalContent(
-                                    renderSelectAddItemModeModal(closetId),
-                                )
-                            }}
-                        >
-                            <MaterialIcons
-                                size={25}
-                                name="add"
-                                color={colors.icon}
-                            />
-                        </Button>
                         {closetName !== 'All items' && (
                             <Block row flex={0} align="center">
+                                <Button
+                                    onPress={() => {
+                                        setShowModal(true)
+                                        setModalContent(
+                                            renderSelectAddItemModeModal(closetId),
+                                        )
+                                    }}
+                                >
+                                    <MaterialIcons
+                                        size={25}
+                                        name="add"
+                                        color={colors.icon}
+                                    />
+                                </Button>
                                 <Button
                                     onPress={() =>
                                         navigation.navigate('EditCloset', {

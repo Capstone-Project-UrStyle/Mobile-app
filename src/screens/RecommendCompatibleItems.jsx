@@ -452,7 +452,7 @@ const RecommendCompatibleItems = ({ navigation }) => {
                                         selectedOccasionIds={
                                             queryKeywords.occasion_ids
                                         }
-                                        handlePressOccasionTag={
+                                        handleChangeCredentials={
                                             handleChangeQueryKeywords
                                         }
                                     />
@@ -589,7 +589,7 @@ const RecommendCompatibleItems = ({ navigation }) => {
                                             queryKeywords.otherKeywords
                                                 .length <= 50,
                                     )}
-                                    danger={Boolean(
+                                    danger={!Boolean(
                                         queryKeywords.otherKeywords &&
                                             !queryKeywords.otherKeywords
                                                 .length <= 50,

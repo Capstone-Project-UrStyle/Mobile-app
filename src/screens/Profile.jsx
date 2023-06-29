@@ -321,7 +321,7 @@ const Profile = ({ route, navigation }) => {
                     </Block>
 
                     {/* profile: photo album */}
-                    <Block paddingHorizontal={sizes.sm} marginTop={sizes.s}>
+                    {/* <Block paddingHorizontal={sizes.sm} marginTop={sizes.s}>
                         <Block row align="center" justify="space-between">
                             <Text h5 semibold>
                                 {t('common.album')}
@@ -364,7 +364,7 @@ const Profile = ({ route, navigation }) => {
                                 />
                             </Block>
                         </Block>
-                    </Block>
+                    </Block> */}
                 </Block>
             </Block>
         </Block>

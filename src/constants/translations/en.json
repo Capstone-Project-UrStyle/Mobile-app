@@ -117,8 +117,8 @@
     "createItemLable": "Create clothes item",
     "createOutfitLable": "Create outfit idea",
     "recommendByAiTitle": "Recommendations by AI",
-    "recommendCompatibleItems": "Recommend compatible items",
-    "recommendOutfitIdeas": "Recommend outfit ideas"
+    "recommendCompatibleItems": "Compatible items",
+    "recommendOutfitIdeas": "Outfit ideas"
   },
   "itemSelector": {
     "noItemFound":"No item found"
@@ -227,7 +227,7 @@
   },
   "recommendCompatibleItems": {
     "stepOneLabel": "Step 1: Choose a closet",
-    "stepTwoLabel": "Step 2: Choose some items for AI to query",
+    "stepTwoLabel": "Step 2: Choose some items for AI to query recommends",
     "stepThreeLabel": "Step 3: What'd you like your outfit to be?",
     "stepFourLabel": "Step 4: Here are AI-recommended items! Which item do you want to have?",
     "stepFiveLabel": "Step 5: Place items wherever you want",
