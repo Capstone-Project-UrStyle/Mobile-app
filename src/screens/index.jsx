@@ -10,11 +10,11 @@ export { default as EditCloset } from './EditCloset'
 export { default as CreateItem } from './CreateItem'
 export { default as ItemDetail } from './ItemDetail'
 
-export { default as AddOrRemoveClosetItem } from './AddOrRemoveClosetItem'
+export { default as EditClosetItems } from './EditClosetItems'
 
 export { default as CreateOutfit } from './CreateOutfit'
 export { default as OutfitDetail } from './OutfitDetail'
-export { default as EditOutfitItem } from './EditOutfitItem'
+export { default as EditOutfitItems } from './EditOutfitItems'
 
 export { default as RecommendCompatibleItems } from './RecommendCompatibleItems'
 

@@ -160,7 +160,7 @@ const OutfitDetail = ({ route, navigation }) => {
                             >
                                 <Button
                                     onPress={() => {
-                                        navigation.navigate('EditOutfitItem', {
+                                        navigation.navigate('EditOutfitItems', {
                                             outfitId: outfitDetail.id,
                                         }
                                     )}}

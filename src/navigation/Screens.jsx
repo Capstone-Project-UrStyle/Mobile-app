@@ -12,10 +12,10 @@ import {
     EditCloset,
     CreateItem,
     ItemDetail,
-    AddOrRemoveClosetItem,
+    EditClosetItems,
     CreateOutfit,
     OutfitDetail,
-    EditOutfitItem,
+    EditOutfitItems,
     RecommendCompatibleItems,
     Articles,
     Components,
@@ -95,10 +95,10 @@ export default () => {
             />
 
             <Stack.Screen
-                name="AddOrRemoveClosetItem"
-                component={AddOrRemoveClosetItem}
+                name="EditClosetItems"
+                component={EditClosetItems}
                 options={({ route }) => ({
-                    title: t('navigation.addOrRemoveClosetItem'),
+                    title: t('navigation.editClosetItems'),
                     ...screenOptions.back,
                 })}
             />
@@ -122,10 +122,10 @@ export default () => {
             />
 
             <Stack.Screen
-                name="EditOutfitItem"
-                component={EditOutfitItem}
+                name="EditOutfitItems"
+                component={EditOutfitItems}
                 options={{
-                    title: t('navigation.editOutfitItem'),
+                    title: t('navigation.editOutfitItems'),
                     ...screenOptions.back,
                 }}
             />

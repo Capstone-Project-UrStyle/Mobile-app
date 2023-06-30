@@ -20,7 +20,7 @@ import outfitApi from '../api/outfitApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const EditOutfitItem = ({ route, navigation }) => {
+const EditOutfitItems = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts, screenSize } = useTheme()
     const { user, handleSetIsLoading } = useData()
@@ -189,8 +189,8 @@ const EditOutfitItem = ({ route, navigation }) => {
                 paddingVertical={sizes.s}
             >
                 <Text h5 font={fonts?.['semibold']} width="100%">
-                    {currentStep === 1 && t('editOutfitItem.stepOneLabel')}
-                    {currentStep === 2 && t('editOutfitItem.stepTwoLabel')}
+                    {currentStep === 1 && t('editOutfitItems.stepOneLabel')}
+                    {currentStep === 2 && t('editOutfitItems.stepTwoLabel')}
                 </Text>
             </Block>
 
@@ -251,7 +251,7 @@ const EditOutfitItem = ({ route, navigation }) => {
                         }}
                         onPress={() => setCurrentStep((prev) => prev - 1)}
                     >
-                        <Text h5>{t('createOutfit.prevStep')}</Text>
+                        <Text h5>{t('editOutfitItems.prevStep')}</Text>
                     </Button>
                 </Block>
                 <Block marginHorizontal={sizes.xs}>
@@ -267,9 +267,9 @@ const EditOutfitItem = ({ route, navigation }) => {
                         onPress={handleSubmit}
                     >
                         {currentStep === 2 ? (
-                            <Text h5>{t('createOutfit.done')}</Text>
+                            <Text h5>{t('editOutfitItems.done')}</Text>
                         ) : (
-                            <Text h5>{t('createOutfit.nextStep')}</Text>
+                            <Text h5>{t('editOutfitItems.nextStep')}</Text>
                         )}
                     </Button>
                 </Block>
@@ -278,4 +278,4 @@ const EditOutfitItem = ({ route, navigation }) => {
     )
 }
 
-export default EditOutfitItem
+export default EditOutfitItems

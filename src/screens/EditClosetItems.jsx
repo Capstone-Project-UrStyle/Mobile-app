@@ -9,7 +9,7 @@ import closetApi from '../api/closetApi'
 
 const isAndroid = Platform.OS === 'android'
 
-const AddOrRemoveClosetItem = ({ route, navigation }) => {
+const EditClosetItems = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
     const { user, handleSetIsLoading } = useData()
@@ -151,11 +151,11 @@ const AddOrRemoveClosetItem = ({ route, navigation }) => {
                     }}
                     onPress={handleSubmit}
                 >
-                    <Text h5>{t('addItemToCloset.done')}</Text>
+                    <Text h5>{t('editClosetItems.done')}</Text>
                 </Button>
             </Block>
         </Block>
     )
 }
 
-export default AddOrRemoveClosetItem
+export default EditClosetItems

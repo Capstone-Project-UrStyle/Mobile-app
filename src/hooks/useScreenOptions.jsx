@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TouchableOpacity, Alert } from 'react-native'
 import { CardStyleInterpolators } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/core'
@@ -43,7 +43,7 @@ export default () => {
                 <Button
                     paddingVertical={sizes.m}
                     onPress={() => {
-                        navigation.navigate('AddOrRemoveClosetItem', {
+                        navigation.navigate('EditClosetItems', {
                             targetClosetId: closetId,
                         })
                         handleCloseModal()

@@ -71,10 +71,10 @@
     "editCloset": "Edit closet",
     "createItem": "Add new clothes item",
     "itemDetail": "Item detail",
-    "addOrRemoveClosetItem": "Add or remove item",
+    "editClosetItems": "Edit closet's items",
     "createOutfit": "Create an outfit",
     "outfitDetail": "Outfit detail",
-    "editOutfitItem": "Edit outfit's items",
+    "editOutfitItems": "Edit outfit's items",
     "recommendCompatibleItems": "Recommend compatible items",
     "components": "Components",
     "articles": "UrStyle",
@@ -140,7 +140,7 @@
     "addNewItemToCloset": "Create new item to this closet",
     "addCreatedItemToCloset": "Choose an item that already been created"
   },
-  "editOutfitItem": {
+  "editOutfitItems": {
     "stepOneLabel":"Step 1: Choose some items",
     "stepTwoLabel": "Step 2: Place items wherever you want",
     "prevStep": "Back",
@@ -191,12 +191,12 @@
     "itemBrand": "Brand",
     "done": "Done"
   },
-  "addItemToCloset": {
+  "editClosetItems": {
     "done": "Done"
   },
   "createOutfit": {
     "stepOneLabel": "Step 1: Choose a closet",
-    "stepTwoLabel": "Step 2: Choose items",
+    "stepTwoLabel": "Step 2: Choose some items",
     "stepThreeLabel": "Step 3: Place items wherever you want",
     "stepFourLabel": "Step 4: Outfit infomations",
     "noClosetFound": "No closet found",
