@@ -26,6 +26,8 @@ export const DataProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
     const [masterData, setMasterData] = useState(null)
+    const [refreshImage, forceRefreshImage] = useState(false)
+    const [homeTab, setHomeTab] = useState(0)
 
     const [users, setUsers] = useState(USERS)
     const [following, setFollowing] = useState(FOLLOWING)
@@ -217,6 +219,10 @@ export const DataProvider = ({ children }) => {
         handleSetToken,
         masterData,
         handleSetMasterData,
+        refreshImage,
+        forceRefreshImage,
+        homeTab,
+        setHomeTab,
 
         users,
         handleUsers,

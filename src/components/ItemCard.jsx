@@ -49,7 +49,7 @@ const ItemCard = ({ item, selectMode }) => {
                     font={fonts?.['light']}
                     paddingVertical={sizes.xs}
                 >
-                    {shortenDisplayText(item.brand, 14) ||
+                    {shortenDisplayText(item.brand, 12) ||
                         t('closetDetail.noBrand')}
                 </Text>
 

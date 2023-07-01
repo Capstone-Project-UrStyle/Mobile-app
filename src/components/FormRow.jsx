@@ -20,7 +20,7 @@ const FormRow = ({ type, label, values, renderValueSelector, categoryId }) => {
     const [patterns, setPatterns] = useState([])
     const [openValueSelector, setOpenValueSelector] = useState(false)
 
-    const maxDisplayValueLength = 25
+    const maxDisplayValueLength = 22
     const typeValuesMap = {
         Occasions: occasions,
         Categories: categories,

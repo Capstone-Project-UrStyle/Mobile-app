@@ -589,11 +589,6 @@ const RecommendCompatibleItems = ({ navigation }) => {
                                             queryKeywords.otherKeywords
                                                 .length <= 50,
                                     )}
-                                    danger={!Boolean(
-                                        queryKeywords.otherKeywords &&
-                                            !queryKeywords.otherKeywords
-                                                .length <= 50,
-                                    )}
                                     onChangeText={(value) =>
                                         handleChangeQueryKeywords({
                                             otherKeywords: value,

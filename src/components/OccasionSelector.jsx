@@ -5,9 +5,8 @@ import { useData } from '../hooks/'
 import Block from './Block'
 import OccasionTag from './OccasionTag'
 
-const OccasionSelector = ({ selectedOccasionIds, handleChangeCredentials }) => {
+const OccasionSelector = ({ selectedOccasionIds, handleChangeCredentials, credentialIndex }) => {
     const { masterData } = useData()
-
     const [occasions, setOccasions] = useState([])
 
     // Fetch occasions in master data
@@ -17,12 +16,24 @@ const OccasionSelector = ({ selectedOccasionIds, handleChangeCredentials }) => {
 
     const handlePressOccasionTag = (occasionId) => {
         if (selectedOccasionIds.includes(occasionId)) {
+            if (credentialIndex !== null) {
+                return handleChangeCredentials(credentialIndex, {
+                    occasion_ids: selectedOccasionIds.filter(
+                        (id) => id !== occasionId,
+                    ),
+                })
+            }
             handleChangeCredentials({
                 occasion_ids: selectedOccasionIds.filter(
                     (id) => id !== occasionId,
                 ),
             })
         } else {
+            if (credentialIndex !== null) {
+                return handleChangeCredentials(credentialIndex, {
+                    occasion_ids: [...selectedOccasionIds, occasionId],
+                })
+            }
             handleChangeCredentials({
                 occasion_ids: [...selectedOccasionIds, occasionId],
             })

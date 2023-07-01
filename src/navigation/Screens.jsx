@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/core'
 
@@ -17,6 +17,7 @@ import {
     OutfitDetail,
     EditOutfitItems,
     RecommendCompatibleItems,
+    RecommendOutfitIdeas,
     Articles,
     Components,
     Pro,
@@ -135,6 +136,15 @@ export default () => {
                 component={RecommendCompatibleItems}
                 options={{
                     title: t('navigation.recommendCompatibleItems'),
+                    ...screenOptions.back,
+                }}
+            />
+
+            <Stack.Screen
+                name="RecommendOutfitIdeas"
+                component={RecommendOutfitIdeas}
+                options={{
+                    title: t('navigation.recommendOutfitIdeas'),
                     ...screenOptions.back,
                 }}
             />
