@@ -30,7 +30,7 @@ const isAndroid = Platform.OS === 'android'
 const CreateItem = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
-    const { user, handleSetIsLoading } = useData()
+    const { user, handleSetIsLoading, forceRefreshImage } = useData()
 
     const [userClosets, setUserClosets] = useState([])
     const [uploadItemImageUri, setUploadItemImageUri] = useState(null)
@@ -196,6 +196,7 @@ const CreateItem = ({ route, navigation }) => {
                             response.data.itemId,
                             postData,
                         )
+                        forceRefreshImage(prev => !prev)
                     }
 
                     Alert.alert(response.data.message)

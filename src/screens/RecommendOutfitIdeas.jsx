@@ -30,7 +30,7 @@ const isAndroid = Platform.OS === 'android'
 const RecommendOutfitIdeas = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts } = useTheme()
-    const { user, handleSetIsLoading, setLoadingMessage } = useData()
+    const { user, handleSetIsLoading, setLoadingMessage, forceRefreshImage } = useData()
     const isFocused = useIsFocused()
 
     const [refresh, forceRefresh] = useState(false)
@@ -213,6 +213,7 @@ const RecommendOutfitIdeas = ({ navigation }) => {
                                         response.data.outfitId,
                                         postData,
                                     )
+                                    forceRefreshImage(prev => !prev)
                                 }
 
                                 alertMessage = response.data.message
@@ -334,6 +335,7 @@ const RecommendOutfitIdeas = ({ navigation }) => {
                 <Block
                     scroll
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: sizes.sm }}
                     flex={1}
                     padding={sizes.sm}
                     color={colors.light}

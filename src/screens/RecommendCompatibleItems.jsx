@@ -35,7 +35,7 @@ const isAndroid = Platform.OS === 'android'
 const RecommendCompatibleItems = ({ navigation }) => {
     const { t } = useTranslation()
     const { icons, colors, sizes, fonts, screenSize } = useTheme()
-    const { user, handleSetIsLoading, setLoadingMessage, masterData } =
+    const { user, handleSetIsLoading, setLoadingMessage, masterData, forceRefreshImage } =
         useData()
     const isFocused = useIsFocused()
     const viewShotRef = useRef()
@@ -298,6 +298,7 @@ const RecommendCompatibleItems = ({ navigation }) => {
                                     response.data.outfitId,
                                     postData,
                                 )
+                                forceRefreshImage(prev => !prev)
                             }
 
                             handleSetIsLoading(false)

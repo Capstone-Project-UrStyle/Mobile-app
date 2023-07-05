@@ -23,7 +23,7 @@ const isAndroid = Platform.OS === 'android'
 const EditOutfitItems = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts, screenSize } = useTheme()
-    const { user, handleSetIsLoading } = useData()
+    const { user, handleSetIsLoading, forceRefreshImage } = useData()
     const viewShotRef = useRef()
 
     const { outfitId } = route.params
@@ -161,6 +161,7 @@ const EditOutfitItems = ({ route, navigation }) => {
                                         outfitId,
                                         postData,
                                     )
+                                    forceRefreshImage(prev => !prev)
                                 }
 
                                 Alert.alert(response.data.message)

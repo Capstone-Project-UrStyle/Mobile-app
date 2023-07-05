@@ -24,7 +24,7 @@ const isAndroid = Platform.OS === 'android'
 const OutfitDetail = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
-    const { handleSetIsLoading } = useData()
+    const { handleSetIsLoading, useData } = useData()
     const isFocused = useIsFocused()
 
     const { outfitId } = route.params
@@ -150,7 +150,7 @@ const OutfitDetail = ({ route, navigation }) => {
                                     width: '100%',
                                 }}
                                 source={{
-                                    uri: BASE_API_URL + outfitDetail.image + "?time=" + new Date(),
+                                    uri: BASE_API_URL + outfitDetail.image + `?refresh=${refreshImage}`,
                                 }}
                             />
                             <Block

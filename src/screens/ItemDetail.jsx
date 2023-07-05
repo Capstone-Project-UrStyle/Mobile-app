@@ -31,7 +31,7 @@ const isAndroid = Platform.OS === 'android'
 const ItemDetail = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts } = useTheme()
-    const { user, handleSetIsLoading } = useData()
+    const { user, handleSetIsLoading, refreshImage, forceRefreshImage } = useData()
 
     const [tab, setTab] = useState(0)
     const [itemDetail, setItemDetail] = useState(null)
@@ -206,6 +206,7 @@ const ItemDetail = ({ route, navigation }) => {
                         uploadItemImageUri,
                     )
                     await uploadImageApi.uploadItemImage(itemId, postData)
+                    forceRefreshImage(prev => !prev)
                 }
 
                 const response = await itemApi.updateById(itemId, credentials)
@@ -245,7 +246,7 @@ const ItemDetail = ({ route, navigation }) => {
                                         height: 350,
                                         width: '100%',
                                     }}
-                                    source={{ uri: uploadItemImageUri + "?time=" + new Date()}}
+                                    source={{ uri: uploadItemImageUri + `?refresh=${refreshImage}` }}
                                 />
                             </TouchableOpacity>
                         </Block>

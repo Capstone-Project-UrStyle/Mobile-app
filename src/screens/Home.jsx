@@ -22,7 +22,7 @@ import outfitApi from '../api/outfitApi'
 const Home = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, fonts, sizes, screenSize } = useTheme()
-    const { user, handleSetIsLoading, setShowModal, setModalContent } =
+    const { user, handleSetIsLoading, setShowModal, setModalContent, refreshImage } =
         useData()
     const isFocused = useIsFocused()
 
@@ -153,7 +153,7 @@ const Home = ({ navigation }) => {
                     width={50}
                     height={50}
                     marginHorizontal={sizes.s}
-                    source={{ uri: BASE_API_URL + user?.UserInfo.avatar + "?time=" + new Date() }}
+                    source={{ uri: BASE_API_URL + user?.UserInfo.avatar + `?refresh=${refreshImage}` }}
                 />
                 <Block align="flex-start" marginHorizontal={sizes.s}>
                     <Text h5 center marginRight={sizes.s}>
@@ -241,7 +241,7 @@ const Home = ({ navigation }) => {
                 scroll
                 paddingHorizontal={sizes.padding}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: sizes.l }}
+                contentContainerStyle={{ paddingBottom: sizes.sm }}
                 forceRefresh={forceRefresh}
             >
                 <Block

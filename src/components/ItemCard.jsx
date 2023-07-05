@@ -9,14 +9,15 @@ import Text from './Text'
 import Checkbox from './Checkbox'
 
 import { BASE_API_URL } from '../api/axiosClient'
-import { useTranslation, useTheme } from '../hooks/'
+import { useTranslation, useTheme, useData } from '../hooks/'
 
 import { shortenDisplayText } from '../utils/shortenDisplayText'
 
 const ItemCard = ({ item, selectMode }) => {
     const { t } = useTranslation()
-    const { colors, fonts, sizes, screenSize } = useTheme()
     const navigation = useNavigation()
+    const { colors, fonts, sizes, screenSize } = useTheme()
+    const { refreshImage } = useData()
 
     return (
         <TouchableWithoutFeedback
@@ -41,7 +42,7 @@ const ItemCard = ({ item, selectMode }) => {
                         width: screenSize.width / 3.5,
                         height: screenSize.width / 3.5,
                     }}
-                    source={{ uri: BASE_API_URL + item.image + "?time=" + new Date()}}
+                    source={{ uri: BASE_API_URL + item.image + `?refresh=${refreshImage}` }}
                 />
                 <Text
                     p

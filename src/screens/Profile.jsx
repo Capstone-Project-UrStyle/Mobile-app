@@ -15,9 +15,9 @@ import uploadImageApi from '../api/uploadImageApi'
 const isAndroid = Platform.OS === 'android'
 
 const Profile = ({ route, navigation }) => {
-    const { user } = useData()
     const { t } = useTranslation()
     const { assets, colors, sizes } = useTheme()
+    const { user, forceRefreshImage } = useData()
 
     const [uploadUserAvatarUri, setUploadUserAvatarUri] = useState(null)
 
@@ -50,6 +50,7 @@ const Profile = ({ route, navigation }) => {
                 uploadUserAvatarUri,
             )
             await uploadImageApi.uploadUserAvatar(user.id, postData)
+            forceRefreshImage(prev => !prev)
         }
 
         if (uploadUserAvatarUri !== null) {

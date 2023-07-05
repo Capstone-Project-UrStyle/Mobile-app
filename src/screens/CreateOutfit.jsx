@@ -29,7 +29,7 @@ const isAndroid = Platform.OS === 'android'
 const CreateOutfit = ({ navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes, fonts, screenSize } = useTheme()
-    const { user, handleSetIsLoading } = useData()
+    const { user, handleSetIsLoading, forceRefreshImage } = useData()
     const isFocused = useIsFocused()
     const viewShotRef = useRef()
 
@@ -180,6 +180,7 @@ const CreateOutfit = ({ navigation }) => {
                                     response.data.outfitId,
                                     postData,
                                 )
+                                forceRefreshImage(prev => !prev)
                             }
 
                             Alert.alert(response.data.message)

@@ -7,14 +7,15 @@ import Image from './Image'
 import Text from './Text'
 
 import { BASE_API_URL } from '../api/axiosClient'
-import { useTranslation, useTheme } from '../hooks/'
+import { useTranslation, useTheme, useData } from '../hooks/'
 
 import { shortenDisplayText } from '../utils/shortenDisplayText'
 
 const OutfitCard = ({ outfit, type }) => {
     const { t } = useTranslation()
-    const { colors, sizes } = useTheme()
     const navigation = useNavigation()
+    const { colors, sizes } = useTheme()
+    const { refreshImage } = useData()
 
     const isHorizontal = type !== 'vertical'
     const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2
@@ -47,7 +48,7 @@ const OutfitCard = ({ outfit, type }) => {
                             width: CARD_WIDTH,
                         }}
                         marginVertical={sizes.xs}
-                        source={{ uri: BASE_API_URL + outfit.image + "?time=" + new Date() }}
+                        source={{ uri: BASE_API_URL + outfit.image + `?refresh=${refreshImage}` }}
                     />
                 </Block>
                 <Block flex={1} padding={sizes.xs} marginLeft={sizes.s}>

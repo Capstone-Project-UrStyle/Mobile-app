@@ -20,9 +20,9 @@ import outfitApi from '../api/outfitApi'
 
 export default () => {
     const { t } = useTranslation()
-    const { user, setShowModal, setModalContent, handleCloseModal } = useData()
     const navigation = useNavigation()
     const { icons, colors, gradients, sizes } = useTheme()
+    const { user, setShowModal, setModalContent, handleCloseModal, refreshImage } = useData()
 
     const renderSelectAddItemModeModal = (closetId) => {
         return (
@@ -453,7 +453,7 @@ export default () => {
                             radius={6}
                             width={24}
                             height={24}
-                            source={{ uri: user.avatar + "?time=" + new Date() }}
+                            source={{ uri: user.avatar + `?refresh=${refreshImage}` }}
                         />
                     </TouchableOpacity>
                 </Block>

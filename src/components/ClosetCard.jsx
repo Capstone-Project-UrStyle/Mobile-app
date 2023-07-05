@@ -9,13 +9,14 @@ import Text from './Text'
 import Checkbox from './Checkbox'
 
 import { BASE_API_URL } from '../api/axiosClient'
-import { useTheme } from '../hooks/'
+import { useTheme, useData } from '../hooks/'
 
 import { shortenDisplayText } from '../utils/shortenDisplayText'
 
 const ClosetCard = ({ create, closet, type, selectMode }) => {
     const { assets, colors, sizes } = useTheme()
     const navigation = useNavigation()
+    const { refreshImage } = useData()
 
     const isHorizontal = type !== 'vertical'
     const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2
@@ -57,7 +58,7 @@ const ClosetCard = ({ create, closet, type, selectMode }) => {
                         marginVertical={sizes.xs}
                         source={{
                             uri: closetItems[index]
-                                ? BASE_API_URL + closetItems[index].image + "?time=" + new Date()
+                                ? BASE_API_URL + closetItems[index].image + `?refresh=${refreshImage}`
                                 : '-',
                         }}
                     />,
