@@ -81,9 +81,13 @@ const RecommendOutfitIdeas = ({ navigation }) => {
                     description: '',
                 }
             })
-
             setCredentials(initCredentials)
-            setViewShotRefs(Array(recommendOutfits.length).fill(createRef()))
+
+            const initViewShotRefs = recommendOutfits.map((_) => {
+                return createRef()
+            })
+            setViewShotRefs(initViewShotRefs)
+
             setOutfitImageUris(Array(recommendOutfits.length).fill(null))
             setSelectedRecommendOutfitIndexs([])
         }

@@ -16,27 +16,29 @@ const OccasionSelector = ({ selectedOccasionIds, handleChangeCredentials, creden
 
     const handlePressOccasionTag = (occasionId) => {
         if (selectedOccasionIds.includes(occasionId)) {
-            if (credentialIndex !== null) {
-                return handleChangeCredentials(credentialIndex, {
+            if (Number.isInteger(credentialIndex)) {
+                handleChangeCredentials(credentialIndex, {
+                    occasion_ids: selectedOccasionIds.filter(
+                        (id) => id !== occasionId,
+                    ),
+                })
+            } else {
+                handleChangeCredentials({
                     occasion_ids: selectedOccasionIds.filter(
                         (id) => id !== occasionId,
                     ),
                 })
             }
-            handleChangeCredentials({
-                occasion_ids: selectedOccasionIds.filter(
-                    (id) => id !== occasionId,
-                ),
-            })
         } else {
-            if (credentialIndex !== null) {
-                return handleChangeCredentials(credentialIndex, {
+            if (Number.isInteger(credentialIndex)) {
+                handleChangeCredentials(credentialIndex, {
+                    occasion_ids: [...selectedOccasionIds, occasionId],
+                })
+            } else {
+                handleChangeCredentials({
                     occasion_ids: [...selectedOccasionIds, occasionId],
                 })
             }
-            handleChangeCredentials({
-                occasion_ids: [...selectedOccasionIds, occasionId],
-            })
         }
     }
 

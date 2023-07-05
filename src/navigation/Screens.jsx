@@ -23,6 +23,7 @@ import {
     Pro,
 } from '../screens'
 import { useData, useScreenOptions, useTranslation } from '../hooks'
+import { shortenDisplayText } from '../utils/shortenDisplayText'
 
 const Stack = createStackNavigator()
 
@@ -60,7 +61,7 @@ export default () => {
                 name="ClosetDetail"
                 component={ClosetDetail}
                 options={({ route }) => ({
-                    title: route.params.closetName,
+                    title: shortenDisplayText(route.params.closetName, 16),
                     ...screenOptions.closetDetail(
                         route.params.closetId,
                         route.params.closetName,

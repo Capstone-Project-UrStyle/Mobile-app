@@ -24,7 +24,7 @@ const isAndroid = Platform.OS === 'android'
 const OutfitDetail = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
-    const { handleSetIsLoading, useData } = useData()
+    const { handleSetIsLoading, refreshImage } = useData()
     const isFocused = useIsFocused()
 
     const { outfitId } = route.params
