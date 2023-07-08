@@ -1,6 +1,6 @@
 # UrStyle - Personal Fashion Recommendation App
 
-![version](https://img.shields.io/badge/version-1.0.1-blue.svg)  [![GitHub issues open](https://github.com/Capstone-Project-UrStyle/Mobile-app/issues)]
+![version](https://img.shields.io/badge/version-1.0.1-blue.svg)  [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-soft-ui-react-native.svg?style=flat)](https://github.com/Capstone-Project-UrStyle/Mobile-app/issues)
 
 ![Product](![image](https://github.com/Capstone-Project-UrStyle/Mobile-app/assets/87163945/f1a47eca-4108-4237-b5e4-1d65b4f0c7a8))
 
