@@ -167,6 +167,7 @@ const CreateOutfit = ({ navigation }) => {
             case 4:
                 // Submit new outfit
                 if (!Object.values(isValid).includes(false)) {
+                    handleSetIsLoading(true)
                     try {
                         const response = await outfitApi.createNew(credentials)
                         if (response.request.status === 200) {
@@ -183,10 +184,12 @@ const CreateOutfit = ({ navigation }) => {
                                 forceRefreshImage(prev => !prev)
                             }
 
+                            handleSetIsLoading(false)
                             Alert.alert(response.data.message)
                             navigation.goBack()
                         }
                     } catch (error) {
+                        handleSetIsLoading(false)
                         Alert.alert(error.response.data.message)
                     }
                 }

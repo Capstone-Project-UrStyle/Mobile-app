@@ -4,7 +4,7 @@ WORKDIR "/Mobile-app"
 
 COPY . "/Mobile-app"
 
-RUN yarn add expo
+RUN yarn add expo@^48.0.0
 
 RUN yarn add expo-cli
 

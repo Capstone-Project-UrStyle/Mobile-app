@@ -148,6 +148,7 @@ const EditOutfitItems = ({ route, navigation }) => {
 
                     // Submit new outfit
                     if (!Object.values(isValid).includes(false)) {
+                        handleSetIsLoading(true)
                         try {
                             const response = await outfitApi.updateById(outfitId, credentials)
                             if (response.request.status === 200) {
@@ -164,10 +165,12 @@ const EditOutfitItems = ({ route, navigation }) => {
                                     forceRefreshImage(prev => !prev)
                                 }
 
+                                handleSetIsLoading(false)
                                 Alert.alert(response.data.message)
                                 navigation.goBack()
                             }
                         } catch (error) {
+                            handleSetIsLoading(false)
                             Alert.alert(error.response.data.message)
                         }
                     }

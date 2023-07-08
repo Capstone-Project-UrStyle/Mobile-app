@@ -12,27 +12,27 @@ const WeatherSelector = ({ selectedWeathers, handlePressWeatherTag }) => {
 
     const weathers = [
         {
-            name: 'hot',
+            keywords: 'hot warm sun',
             displayName: 'Sunny',
             icon: '113.png',
         },
         {
-            name: 'rain',
+            keywords: 'rain wet waterproof water',
             displayName: 'Rainy',
             icon: '266.png',
         },
         {
-            name: 'cloud',
+            keywords: 'cloud',
             displayName: 'Cloudy',
             icon: '116.png',
         },
         {
-            name: '',
+            keywords: '',
             displayName: 'Windy',
             icon: '248.png',
         },
         {
-            name: 'snow',
+            keywords: 'snow',
             displayName: 'Snowy',
             icon: '338.png',
         },
@@ -46,7 +46,7 @@ const WeatherSelector = ({ selectedWeathers, handlePressWeatherTag }) => {
                 )
                 return (
                     <Button
-                        key={`weather-${weather.name}`}
+                        key={`weather-${weather.displayName}`}
                         radius={sizes.sm}
                         onPress={() => handlePressWeatherTag(weather)}
                         gradient={gradients?.[isSelected ? 'primary' : 'light']}

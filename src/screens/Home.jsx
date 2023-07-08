@@ -271,7 +271,7 @@ const Home = ({ navigation }) => {
                         ))
                     }}
                 >
-                    <AntDesign name="pluscircle" size={55} color="#01a699" />
+                    <AntDesign name="pluscircle" size={55} color={colors.primary} />
                 </TouchableOpacity>
             </Block>
         </Block>

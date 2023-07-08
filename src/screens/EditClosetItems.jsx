@@ -103,16 +103,19 @@ const EditClosetItems = ({ route, navigation }) => {
 
     const handleSubmit = useCallback(async () => {
         if (!Object.values(isValid).includes(false)) {
+            handleSetIsLoading(true)
             try {
                 const response = await closetApi.updateById(
                     targetClosetId,
                     credentials,
                 )
                 if (response.request.status === 200) {
+                    handleSetIsLoading(false)
                     Alert.alert(response.data.message)
                     navigation.goBack()
                 }
             } catch (error) {
+                handleSetIsLoading(false)
                 Alert.alert(error.response.data.message)
             }
         }

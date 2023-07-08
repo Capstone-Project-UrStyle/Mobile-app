@@ -118,16 +118,19 @@ const OutfitDetail = ({ route, navigation }) => {
     const handleSubmit = useCallback(async () => {
         // Update outfit
         if (!Object.values(isValid).includes(false)) {
+            handleSetIsLoading(true)
             try {
                 const response = await outfitApi.updateById(
                     outfitId,
                     credentials,
                 )
                 if (response.request.status === 200) {
+                    handleSetIsLoading(false)
                     Alert.alert(response.data.message)
                     navigation.goBack()
                 }
             } catch (error) {
+                handleSetIsLoading(false)
                 Alert.alert(error.response.data.message)
             }
         }

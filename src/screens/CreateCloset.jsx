@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Platform, Alert } from 'react-native'
 
-import { useTranslation, useTheme } from '../hooks'
+import { useTranslation, useTheme, useData } from '../hooks'
 import {
     Block,
     Button,
@@ -18,6 +18,7 @@ const isAndroid = Platform.OS === 'android'
 const CreateCloset = ({ route, navigation }) => {
     const { t } = useTranslation()
     const { colors, sizes } = useTheme()
+    const { handleSetIsLoading } = useData()
 
     const exampleNames = [
         'island_vacation',
@@ -53,13 +54,16 @@ const CreateCloset = ({ route, navigation }) => {
 
     const handleSubmit = useCallback(async () => {
         if (!Object.values(isValid).includes(false)) {
+            handleSetIsLoading(true)
             try {
                 const response = await closetApi.createNew(credentials)
                 if (response.request.status === 200) {
+                    handleSetIsLoading(false)
                     Alert.alert(response.data.message)
                     navigation.goBack()
                 }
             } catch (error) {
+                handleSetIsLoading(false)
                 Alert.alert(error.response.data.message)
             }
         }

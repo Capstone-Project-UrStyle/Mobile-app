@@ -202,20 +202,20 @@ const RecommendCompatibleItems = ({ navigation }) => {
             case 3:
                 // Built query_keywords array
                 const weatherNames = queryKeywords.weathers
-                    .map((weather) => weather.name)
+                    .map((weather) => weather.keywords)
                     .filter((name) => name !== '')
                 const occasionNames = masterData.Occasions.filter((occasion) =>
                     queryKeywords.occasion_ids.includes(occasion.id),
                 ).map((occasion) => occasion.name)
                 const colorNames = masterData.Colors.filter((color) =>
                     queryKeywords.color_ids.includes(color.id),
-                ).map((color) => color.name)
+                ).map((color) => color.name.indexOf('-') > -1 ? color.name.split('-')[1] : color.name)
                 const materialNames = masterData.Materials.filter((material) =>
                     queryKeywords.material_ids.includes(material.id),
                 ).map((material) => material.name)
                 const patternNames = masterData.Patterns.filter((pattern) =>
                     queryKeywords.pattern_ids.includes(pattern.id),
-                ).map((pattern) => pattern.name)
+                ).map((pattern) => pattern.name === 'Solid-color' ? 'Solid' : pattern.name)
 
                 const query_keywords = [
                     ...weatherNames,
