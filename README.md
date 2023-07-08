@@ -2,7 +2,7 @@
 
 ![version](https://img.shields.io/badge/version-1.0.1-blue.svg)  [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-soft-ui-react-native.svg?style=flat)](https://github.com/Capstone-Project-UrStyle/Mobile-app/issues)
 
-![Product](![image](https://github.com/Capstone-Project-UrStyle/Mobile-app/assets/87163945/f1a47eca-4108-4237-b5e4-1d65b4f0c7a8))
+![Product](https://github.com/Capstone-Project-UrStyle/Mobile-app/assets/87163945/f1a47eca-4108-4237-b5e4-1d65b4f0c7a8)
 
 This app is builted base on Soft UI React Native template. This is a fully coded app template built over [React Native](https://facebook.github.io/react-native/?ref=creativetim) and [Expo](https://expo.io/?ref=creativetim) to allow you to create powerful and beautiful e-commerce mobile applications. We have redesigned all the usual components in-house to make it look like Soft UI's KIT, minimalistic and easy to use.
 
