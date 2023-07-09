@@ -201,28 +201,28 @@ const RecommendCompatibleItems = ({ navigation }) => {
                 break
             case 3:
                 // Built query_keywords array
-                const weatherNames = queryKeywords.weathers
-                    .map((weather) => weather.keywords)
-                    .filter((name) => name !== '')
+                // const weatherNames = queryKeywords.weathers
+                //     .map((weather) => weather.keywords)
+                //     .filter((name) => name !== '')
                 const occasionNames = masterData.Occasions.filter((occasion) =>
                     queryKeywords.occasion_ids.includes(occasion.id),
                 ).map((occasion) => occasion.name)
                 const colorNames = masterData.Colors.filter((color) =>
                     queryKeywords.color_ids.includes(color.id),
                 ).map((color) => color.name.indexOf('-') > -1 ? color.name.split('-')[1] : color.name)
-                const materialNames = masterData.Materials.filter((material) =>
-                    queryKeywords.material_ids.includes(material.id),
-                ).map((material) => material.name)
-                const patternNames = masterData.Patterns.filter((pattern) =>
-                    queryKeywords.pattern_ids.includes(pattern.id),
-                ).map((pattern) => pattern.name === 'Solid-color' ? 'Solid' : pattern.name)
+                // const materialNames = masterData.Materials.filter((material) =>
+                //     queryKeywords.material_ids.includes(material.id),
+                // ).map((material) => material.name)
+                // const patternNames = masterData.Patterns.filter((pattern) =>
+                //     queryKeywords.pattern_ids.includes(pattern.id),
+                // ).map((pattern) => pattern.name === 'Solid-color' ? 'Solid' : pattern.name)
 
                 const query_keywords = [
-                    ...weatherNames,
+                    // ...weatherNames,
                     ...occasionNames,
                     ...colorNames,
-                    ...materialNames,
-                    ...patternNames,
+                    // ...materialNames,
+                    // ...patternNames,
                 ]
 
                 if (queryKeywords.brand)
@@ -549,11 +549,6 @@ const RecommendCompatibleItems = ({ navigation }) => {
                                             textAlign="right"
                                             autoCapitalize="none"
                                             success={Boolean(
-                                                queryKeywords.brand &&
-                                                    queryKeywords.brand
-                                                        .length <= 50,
-                                            )}
-                                            danger={Boolean(
                                                 queryKeywords.brand &&
                                                     queryKeywords.brand
                                                         .length <= 50,

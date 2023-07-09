@@ -351,7 +351,7 @@ const RecommendOutfitIdeas = ({ navigation }) => {
                                 {/* Outfit image */}
                                 <Block>
                                     <Text h5 paddingBottom={sizes.s}>
-                                        {t('recommendCompatibleItems.outfitImage')} #{index + 1} - Score: {Number.parseInt(recommendOutfit.score) + 100}/100
+                                        {t('recommendCompatibleItems.outfitImage')} #{index + 1} - Score: {(parseFloat(recommendOutfit.score) + 100).toFixed(2)}/100
                                     </Text>
                                     {renderOutfitImages(recommendOutfit, index)}
                                 </Block>

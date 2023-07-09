@@ -76,6 +76,7 @@ const OutfitDetail = ({ route, navigation }) => {
                     (occasion) => occasion.id,
                 ),
                 description: outfitDetail.description,
+                is_public: outfitDetail.is_public,
             })
         }
     }, [outfitDetail])
