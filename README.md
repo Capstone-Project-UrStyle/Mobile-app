@@ -1,168 +1,52 @@
-# [Soft UI React Native](https://demos.creative-tim.com/soft-ui-react-native/index.html) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/home?status=soft-ui%20React%20Native,%20a%20cool%20NowUI%20React%20Native%20App%20Template%20%E2%9D%A4%EF%B8%8F%20https%3A//bit.ly/2KAj86H%20%23reactnative%20%23NowUI%20%23designsystem%20%23developers%20via%20%40CreativeTim)
+# UrStyle - Personal Fashion Recommendation App
 
+![version](https://img.shields.io/badge/version-1.0.1-blue.svg)  [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-soft-ui-react-native.svg?style=flat)](https://github.com/Capstone-Project-UrStyle/Mobile-app/issues)
 
- ![version](https://img.shields.io/badge/version-1.0.1-blue.svg)  [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-soft-ui-react-native.svg?style=flat)](https://github.com/creativetimofficial/ct-soft-ui-react-native/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/ct-soft-ui-react-native.svg?maxAge=2592000)](https://github.com/creativetimofficial/ct-soft-ui-react-native/issues?q=is%3Aissue+is%3Aclosed)
+![Product](https://github.com/Capstone-Project-UrStyle/Mobile-app/assets/87163945/f1a47eca-4108-4237-b5e4-1d65b4f0c7a8)
 
-
-![Product](https://s3.amazonaws.com/creativetim_bucket/products/490/original/opt_soft_ui_react_native_thumbnail.jpg)
-
-Soft UI React Native is a fully coded app template built over [React Native](https://facebook.github.io/react-native/?ref=creativetim) and [Expo](https://expo.io/?ref=creativetim) to allow you to create powerful and beautiful e-commerce mobile applications. We have redesigned all the usual components in-house to make it look like Soft UI's KIT, minimalistic and easy to use.
-
-Start your development with a Design System for React Native inspired by Soft UI KIT. If you like Soft UI's KIT, you will love this react native app template! It features a huge number of components and screens built to fit together and look amazing.
-
-### FULLY CODED COMPONENTS
-
-Soft UI React Native features over 100 variations of components like buttons, inputs, cards, navigations etc, giving you the freedom of choosing and combining. All components can take variations in colour, that you can easily modify inside our theme file.
-
-You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. We wanted the design process to be seamless, so switching from image to the real page is very easy to do.
-
-### Components & Cards
-Soft UI React Native comes packed with a large number of components and cards. Putting together a mobile app has never been easier than matching together different components. From the profile screen to a settings screen, you can easily customise and build your screens. We have created multiple options for you to put together and customise into pixel perfect screens.
+This app is builted base on Soft UI React Native template. This is a fully coded app template built over [React Native](https://facebook.github.io/react-native/?ref=creativetim) and [Expo](https://expo.io/?ref=creativetim) to allow you to create powerful and beautiful e-commerce mobile applications. We have redesigned all the usual components in-house to make it look like Soft UI's KIT, minimalistic and easy to use.
 
 View [all components here](https://demos.creative-tim.com/soft-ui-react-native/).
-
-### Example Screens
-If you want to get inspiration or just show something directly to your clients, you can jump start your development with our pre-built example screens. From onboarding screens to profile or discover screens, you will be able to quickly set up the basic structure for your React Native mobile project.
-
-View [all screens here](https://demos.creative-tim.com/soft-ui-react-native/#screens).
-
-
-Let us know your thoughts below. And good luck with development!
-
 
 ## Table of Contents
 
 * [Versions](#versions)
-* [Demo](#demo)
-* [Quick Start](#quick-start)
-* [Documentation](#documentation)
-* [File Structure](#file-structure)
-* [OS Support](#os-support)
-* [Resources](#resources)
-* [Reporting Issues](#reporting-issues)
-* [Technical Support or Questions](#technical-support-or-questions)
-* [Licensing](#licensing)
+* [Requirements](#requirements)
+* [Install steps](#install-steps)
 * [Useful Links](#useful-links)
 
-## Versions
+## Requirements
 
-[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/html-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/soft-ui-kit-pro)[<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/react-native-logo.jpg?raw=true" width="60" height="60" />](https://www.creative-tim.com/product/soft-ui-react-native)
-
-| HTML | React-Native  |
-| --- | --- |
-| [![Soft UI Kit](https://s3.amazonaws.com/creativetim_bucket/products/448/original/opt_sds_free_thumbnail.jpg?1614876201)](https://www.creative-tim.com/product/soft-ui-design-system)  | [![Soft UI React-Native](https://s3.amazonaws.com/creativetim_bucket/products/490/original/opt_soft_ui_react_native_thumbnail.jpg?1625576346)](https://www.creative-tim.com/product/soft-ui-react-native) |
-
-## Demo
-- [Start page](https://demos.creative-tim.com/soft-ui-react-native)
-- [Quick start](https://www.creative-tim.com/learning-lab/react-native/quick-start/soft)
-
-[View more](https://demos.creative-tim.com/soft-ui-react-native)
-
-## Quick start
-- Try it out on Expo (Simulator for iOS or even your physical device if you have an Android)
-- Download from [Creative Tim](https://www.creative-tim.com/product/soft-ui-react-native)
-
-
-## Documentation
-The documentation for the Soft UI React Native is hosted at our [website](https://www.creative-tim.com/learning-lab/react-native/overview/soft).
-
-
-## File Structure
-Within the download you'll find the following directories and files:
-
+- Clone all three repos into same directory:
+  1. [Backend Server](https://github.com/Capstone-Project-UrStyle/Back-end).
+  2. [AI Server](https://github.com/Capstone-Project-UrStyle/AI-server).
+  3. [Mobile App](https://github.com/Capstone-Project-UrStyle/Mobile-app).
+- [Install Docker and Compose plugin](https://docs.docker.com/compose/install/)
+- Install ifconfig command to get the current network IP address:
+```sh
+  $ sudo apt update
+  $ sudo apt install net-tools
 ```
-soft-ui-react-native/
-├── App.tsx
-├── README.md
-├── app.json
-├── assets
-├── babel.config.js
-├── package.json
-├── src
-│   ├── assets
-│   │   ├── fonts
-│   │   ├── icons
-│   │   └── images
-│   ├── components
-│   │   ├── Article.tsx
-│   │   ├── Block.tsx
-│   │   ├── Button.tsx
-│   │   ├── Checkbox.tsx
-│   │   ├── Image.tsx
-│   │   ├── Input.tsx
-│   │   ├── Modal.tsx
-│   │   ├── Product.tsx
-│   │   ├── Switch.tsx
-│   │   ├── Text.tsx
-│   │   └── index.tsx
-│   ├── constants
-│   │   ├── index.ts
-│   │   ├── light.ts
-│   │   ├── mocks.ts
-│   │   ├── regex.ts
-│   │   ├── theme.ts
-│   │   ├── translations
-│   │   │   ├── en.json
-│   │   │   └── index.ts
-│   │   └── types
-│   │       ├── components.ts
-│   │       ├── index.ts
-│   │       └── theme.ts
-│   ├── hooks
-│   │   ├── index.ts
-│   │   ├── useData.tsx
-│   │   ├── useScreenOptions.tsx
-│   │   ├── useTheme.tsx
-│   │   └── useTranslation.tsx
-│   ├── navigation
-│   │   ├── App.tsx
-│   │   ├── Menu.tsx
-│   │   └── Screens.tsx
-│   └── screens
-│       ├── Articles.tsx
-│       ├── Components.tsx
-│       ├── Home.tsx
-│       ├── Pro.tsx
-│       ├── Profile.tsx
-│       ├── Register.tsx
-│       └── index.ts
-└── tsconfig.json
+- Download the Inception v3 Checkpoint:
+```shell
+# Save the Inception v3 checkpoint in /AI-server/models folder.
+wget "http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz"
+tar -xvf "inception_v3_2016_08_28.tar.gz" -C ${INCEPTION_DIR}
+rm "inception_v3_2016_08_28.tar.gz"
 ```
+- [Download trained model from here](https://drive.google.com/drive/folders/0B4Eo9mft9jwoVDNEWlhEbUNUSE0?resourcekey=0-vQg9TMSLKnmPCuuWwl5Ebw) and save it /AI-server/models folder
+- [Download all the images from here](https://drive.google.com/file/d/0B4Eo9mft9jwoNm5WR3ltVkJWX0k/view?resourcekey=0-U-30d1POF7IlnAE5bzOzPA) and save all in /Back-end/public/images/items folder
 
+## Install steps
 
-## OS Support
-
-At present, we officially aim to support the last two versions of the following operating systems:
-
-[<img src="https://raw.githubusercontent.com/creativetimofficial/ct-material-kit-pro-react-native/master/assets/android-logo.png" width="60" height="60" />](https://www.creative-tim.com/product/soft-ui-react-native)[<img src="https://raw.githubusercontent.com/creativetimofficial/ct-material-kit-pro-react-native/master/assets/apple-logo.png" width="60" height="60" />](https://www.creative-tim.com/product/soft-ui-react-native)
-
-## Resources
-- Demo: <https://demos.creative-tim.com/soft-ui-react-native>
-- Download Page: <https://www.creative-tim.com/product/soft-ui-react-native>
-- Documentation: <https://www.creative-tim.com/learning-lab/react-native/overview/soft>
-- License Agreement: <https://www.creative-tim.com/license>
-- Support: <https://www.creative-tim.com/contact-us>
-- Issues: [Github Issues Page](https://github.com/creativetimofficial/ct-soft-ui-react-native/issues)
-- [Soft UI Design System](https://www.creative-tim.com/product/soft-ui-design-system?ref=soft-uiprn-readme) - For Front End Development
-
-## Reporting Issues
-
-We use GitHub Issues as the official bug tracker for the Soft UI React Native. Here are some advices for our users that want to report an issue:
-
-1. Make sure that you are using the latest version of the Soft UI React Native.
-2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
-3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
-
-
-### Technical Support or Questions
-
-If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us) instead of opening an issue.
-
-
-## Licensing
-
-- Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-- Creative Tim [license](https://www.creative-tim.com/license)
+- cd /AI-server
+- cd /Back-end
+- Run ifconfig and copy the current network IP address
+- Paste copied IP address in file docker-compose.yaml at line 89
+- Run docker compose up -d
+- To view all running container, run docker ps
+- To access into a specific container, run docker exec -it [container's name] /bin/bash
+- To view the logs of a container, run docker logs -f [container's name]
 
 ## Useful Links
 
@@ -179,7 +63,6 @@ If you have questions or need help integrating the product please [contact us](h
 
 
 ### Social Media
-Twitter: <https://twitter.com/CreativeTim>
-Facebook: <https://www.facebook.com/CreativeTim>
-Dribbble: <https://dribbble.com/creativetim>
-Instagram: <https://www.instagram.com/CreativeTimOfficial>
+
+Facebook: <https://www.facebook.com/KietBunzz>
+Instagram: <https://www.instagram.com/_bunzz_0904/>
